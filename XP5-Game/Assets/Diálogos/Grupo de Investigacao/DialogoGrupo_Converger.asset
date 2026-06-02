@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: DialogoGrupo_Converger
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  mensagens:
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "cara\u2026 isso n\xE3o t\xE1 fazendo sentido "
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: calma, charles.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "explica direito o que est\xE1 acontecendo."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Voc\xEA n\xE3o \xE9 o John."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Ent\xE3o quem \xE9 voc\xEA?"
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "e por que voc\xEA est\xE1 com o celular dele?"
+    tempoDeDigitacao: 1
+  escolhas:
+  - textoDaEscolha: "encontrei o celular no ch\xE3o "
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+  - textoDaEscolha: "ele j\xE1 estava desbloqueado"
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+  - textoDaEscolha: coloquei pra carregar pra tentar achar o dono
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+  - textoDaEscolha: 
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
