@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Charles
   m_EditorClassIdentifier: Assembly-CSharp::Personagem
   nome: Charles
-  corDoNome: {r: 0.13572444, g: 0.2877125, b: 0.4716981, a: 1}
+  corDoNome: {r: 0, g: 0, b: 0, a: 1}
   corDoBalao: {r: 0.21176472, g: 0.43529415, b: 0.7058824, a: 1}

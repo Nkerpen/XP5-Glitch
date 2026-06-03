@@ -30,41 +30,35 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         StartCoroutine(TocarMensagensDoNPC());
     }
 
-    // Usaremos essa função pública depois, para carregar o Chat 1 ou o Chat do Puzzle!
-    public void IniciarChat(NoDeDialogo inicio)
-    {
-        dialogoAtual = inicio;
-        painelEscolhas.SetActive(false); // Esconde os botões
-        StartCoroutine(TocarMensagensDoNPC());
-    }
-
     private IEnumerator TocarMensagensDoNPC()
     {
         // Lê cada mensagem da lista do grupo
         foreach (MensagemNPC msg in dialogoAtual.mensagens)
         {
-            // Espera o tempo de digitação (ex: 1.5s)
+            // Espera o tempo de digitação
             yield return new WaitForSeconds(msg.tempoDeDigitacao);
 
-            // Cria o balão
+            // Instancia o contêiner (Content_NPC)
             GameObject balao = Instantiate(prefabBalaoNPC, contentArea);
 
             // Pega as referências de texto dentro do balão (0 é o Nome, 1 é a Mensagem)
             TextMeshProUGUI[] textos = balao.GetComponentsInChildren<TextMeshProUGUI>();
-
-            // Aplica os dados do Personagem
             textos[0].text = msg.autor.nome;
             textos[0].color = msg.autor.corDoNome;
             textos[1].text = msg.textoDaMensagem;
 
-            // Se quiser mudar a cor de fundo do balão:
-            // balao.GetComponent<Image>().color = msg.autor.corDoBalao;
+            // --- A MÁGICA DA COR ENTRA AQUI ---
+            // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
+            Image fundoBalao = balao.GetComponentInChildren<Image>();
+            if (fundoBalao != null)
+            {
+                fundoBalao.color = msg.autor.corDoBalao;
+            }
         }
 
-        // Quando todas as mensagens do grupo forem enviadas, mostra as opções pro jogador
+        // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
         AtualizarBotoesDeEscolha();
     }
-
     private void AtualizarBotoesDeEscolha()
     {
         painelEscolhas.SetActive(true);

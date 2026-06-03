@@ -45,14 +45,14 @@ MonoBehaviour:
     tempoDeDigitacao: 2
   escolhas:
   - textoDaEscolha: John?
-    proximoNo: {fileID: 0}
+    proximoNo: {fileID: 11400000, guid: 65b8f04e644fbca42a660ab045023685, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
   - textoDaEscolha: "Oi, eu n\xE3o sou o John, mas eu posso explicar."
-    proximoNo: {fileID: 0}
+    proximoNo: {fileID: 11400000, guid: 45641409771f7a647ba2333ea628e11b, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
   - textoDaEscolha: "Acho que voc\xEAs est\xE3o procurando a pessoa errada."
-    proximoNo: {fileID: 0}
+    proximoNo: {fileID: 11400000, guid: 901414d492d3c9240bfe02af776ecf04, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0

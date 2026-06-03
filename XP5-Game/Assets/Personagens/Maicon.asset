@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Maicon
   m_EditorClassIdentifier: Assembly-CSharp::Personagem
   nome: Maicon
-  corDoNome: {r: 0.22994569, g: 0.5943396, b: 0.17661978, a: 1}
+  corDoNome: {r: 0, g: 0, b: 0, a: 1}
   corDoBalao: {r: 0.32371515, g: 0.735849, b: 0.24644002, a: 1}
