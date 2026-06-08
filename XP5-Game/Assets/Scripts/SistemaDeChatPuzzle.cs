@@ -19,6 +19,10 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     [SerializeField] private NoDeDialogo dialogoInicial;
     private NoDeDialogo dialogoAtual;
 
+    [Header("Telas de Fim de Jogo")]
+    [SerializeField] private GameObject painelGameOver;
+    // Se quiser, pode criar um painelVitoria também no futuro!
+
     public void IniciarChat(NoDeDialogo inicio)
     {
         // Limpa as mensagens da conversa anterior
@@ -85,7 +89,25 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
         painelEscolhas.SetActive(false);
 
-        if (escolha.encerraPuzzle) return;
+        if (escolha.encerraPuzzle)
+        {
+            if (escolha.jogadorGanhou)
+            {
+                Debug.Log("Vitória! O jogador não caiu no golpe.");
+                // Futuramente você liga uma tela de vitória ou libera uma pista nova aqui.
+            }
+            else
+            {
+                Debug.Log("Game Over!");
+                // Mostra a tela de erro
+                painelGameOver.SetActive(true);
+            }
+            return; // Termina a função para não tentar carregar a próxima mensagem
+        }
+
+        // Se não encerrou o puzzle, continua o papo normalmente...
+        dialogoAtual = escolha.proximoNo;
+        StartCoroutine(TocarMensagensDoNPC());
 
         dialogoAtual = escolha.proximoNo;
         StartCoroutine(TocarMensagensDoNPC());

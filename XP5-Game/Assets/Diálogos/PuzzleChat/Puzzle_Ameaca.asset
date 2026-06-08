@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: Puzzle_Ameaca
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  mensagens:
+  - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
+    textoDaMensagem: ...
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
+    textoDaMensagem: "\xC9 melhor voc\xEA desistir desse celular."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
+    textoDaMensagem: A curiosidade matou o gato.
+    tempoDeDigitacao: 1
+  escolhas:
+  - textoDaEscolha: "Eu vou descobrir o que voc\xEA fez."
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 1
+    jogadorGanhou: 1
