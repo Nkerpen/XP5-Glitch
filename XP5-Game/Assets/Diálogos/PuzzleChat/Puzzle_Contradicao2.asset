@@ -15,13 +15,13 @@ MonoBehaviour:
   mensagens:
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Olha aqui, se voc\xEA n\xE3o passar a droga do c\xF3digo..."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Voc\xEA tem 1 minuto."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 1
   escolhas:
   - textoDaEscolha: "Voc\xEA acabou de confirmar que \xE9 um golpe. Empresas reais
       n\xE3o amea\xE7am clientes dessa forma. Estou bloqueando e denunciando o n\xFAmero."
     proximoNo: {fileID: 11400000, guid: 3a4bd9aa34885ee4fac7c605b807ba03, type: 2}
-    encerraPuzzle: 0
-    jogadorGanhou: 0
+    encerraPuzzle: 1
+    jogadorGanhou: 1

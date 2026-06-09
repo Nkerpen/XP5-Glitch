@@ -15,15 +15,15 @@ MonoBehaviour:
   mensagens:
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Ol\xE1, aqui \xE9 do Suporte de Seguran\xE7a Oficial."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: Identificamos um acesso suspeito na sua conta a partir de outro
       estado.
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Para evitar o bloqueio permanente do seu aplicativo, por favor,
       nos confirme o c\xF3digo de 6 d\xEDgitos que acabou de chegar por SMS."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 3
   escolhas:
   - textoDaEscolha: "Meu Deus, ok! O c\xF3digo \xE9 482-910."
     proximoNo: {fileID: 0}

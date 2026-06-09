@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class SistemaDeChatPuzzle : MonoBehaviour
 {
-    [Header("Estrutura da UI")]
+[Header("Estrutura da UI")]
     [SerializeField] private Transform contentArea;
     [SerializeField] private GameObject prefabBalaoNPC;
     [SerializeField] private GameObject prefabBalaoJogador;
+    [SerializeField] private ScrollRect scrollDoChat;
 
     [Header("Painel de Escolhas")]
     [SerializeField] private GameObject painelEscolhas;
@@ -18,10 +19,12 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     [Header("Dados do Puzzle / Chat")]
     [SerializeField] private NoDeDialogo dialogoInicial;
     private NoDeDialogo dialogoAtual;
+    private Coroutine rotinaDeMensagens;
 
-    [Header("Telas de Fim de Jogo")]
+ [Header("Telas de Fim de Jogo")]
     [SerializeField] private GameObject painelGameOver;
-    // Se quiser, pode criar um painelVitoria também no futuro!
+    [SerializeField] private GameObject painelVitoria;
+    [SerializeField] private GameObject botaoContatoGolpista; // Arraste o botão "Numero_Anonimo" aqui
 
     public void IniciarChat(NoDeDialogo inicio)
     {
@@ -80,6 +83,8 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             //{
             //    fundoBalao.color = msg.autor.corDoBalao;
             //}
+            // Empurra a tela para baixo após a mensagem do NPC aparecer
+            StartCoroutine(ForcarScrollParaBaixo());
         }
 
         // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
@@ -90,14 +95,35 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         painelEscolhas.SetActive(true);
         foreach (var btn in botoesDeEscolha) btn.gameObject.SetActive(false);
 
-        for (int i = 0; i < dialogoAtual.escolhas.Length; i++)
+       for (int i = 0; i < dialogoAtual.escolhas.Length; i++)
         {
+            if (i >= botoesDeEscolha.Length)
+            {
+                Debug.LogWarning("Aviso: O diálogo tem mais escolhas do que botões na UI! A escolha " + i + " foi ignorada.");
+                break; 
+            }
+
             botoesDeEscolha[i].gameObject.SetActive(true);
             textosDosBotoes[i].text = dialogoAtual.escolhas[i].textoDaEscolha;
 
             int indexCopia = i;
             botoesDeEscolha[i].onClick.RemoveAllListeners();
             botoesDeEscolha[i].onClick.AddListener(() => FazerEscolha(indexCopia));
+        }
+    }
+
+    private IEnumerator ForcarScrollParaBaixo()
+    {
+        // Força a Unity a atualizar as caixas do Layout Group
+        Canvas.ForceUpdateCanvases();
+        
+        // Espera a tela terminar de desenhar o frame atual
+        yield return new WaitForEndOfFrame();
+        
+        // Empurra a barra de rolagem para o fundo (0 é o fundo, 1 é o topo)
+        if (scrollDoChat != null)
+        {
+            scrollDoChat.verticalNormalizedPosition = 0f;
         }
     }
 
@@ -109,29 +135,42 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
         balao.GetComponentInChildren<TextMeshProUGUI>().text = escolha.textoDaEscolha;
 
+        // Empurra a tela para baixo após a sua mensagem aparecer
+        StartCoroutine(ForcarScrollParaBaixo());
+
         painelEscolhas.SetActive(false);
 
-        if (escolha.encerraPuzzle)
+       if (escolha.encerraPuzzle)
         {
             if (escolha.jogadorGanhou)
             {
                 Debug.Log("Vitória! O jogador não caiu no golpe.");
-                // Futuramente você liga uma tela de vitória ou libera uma pista nova aqui.
+                
+                // --- APAGA O CONTATO DA LISTA ---
+                if (botaoContatoGolpista != null)
+                {
+                    botaoContatoGolpista.SetActive(false); 
+                }
+
+                painelVitoria.SetActive(true); 
             }
             else
             {
                 Debug.Log("Game Over!");
-                // Mostra a tela de erro
                 painelGameOver.SetActive(true);
             }
-            return; // Termina a função para não tentar carregar a próxima mensagem
+            return; 
         }
 
         // Se não encerrou o puzzle, continua o papo normalmente...
         dialogoAtual = escolha.proximoNo;
-        StartCoroutine(TocarMensagensDoNPC());
+        // Se já existir alguém digitando, manda parar imediatamente
+        if (rotinaDeMensagens != null) 
+        {
+            StopCoroutine(rotinaDeMensagens);
+        }
 
-        dialogoAtual = escolha.proximoNo;
-        StartCoroutine(TocarMensagensDoNPC());
+        // Começa a nova rotina e salva ela na variável
+        rotinaDeMensagens = StartCoroutine(TocarMensagensDoNPC());
     }
 }
