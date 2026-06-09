@@ -1672,6 +1672,7 @@ MonoBehaviour:
   - {fileID: 7425067574807459689}
   - {fileID: 4546748688425211770}
   dialogoInicial: {fileID: 11400000, guid: 03034bd1d8280fc47b5fb5da4840a42a, type: 2}
+  painelGameOver: {fileID: 0}
 --- !u!1 &3094637542345275666
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,9 +4457,9 @@ RectTransform:
   m_Children:
   - {fileID: 5352368640456789322}
   - {fileID: 1192264881653961431}
+  - {fileID: 8733786653720785074}
   - {fileID: 8780189587221195057}
   - {fileID: 5515768938373589164}
-  - {fileID: 8733786653720785074}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -15,3 +15,4 @@ MonoBehaviour:
   nome: Suporte Whatsapp
   corDoNome: {r: 0.6037736, g: 0.07119971, b: 0.07119971, a: 1}
   corDoBalao: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+  foto: {fileID: -5181980498664564796, guid: 983bc6d3cec13da4384becb790d9e9b5, type: 3}

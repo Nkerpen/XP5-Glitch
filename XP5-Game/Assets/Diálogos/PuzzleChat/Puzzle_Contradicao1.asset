@@ -15,11 +15,11 @@ MonoBehaviour:
   mensagens:
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Senhor, n\xF3s somos de um setor terceirizado de conting\xEAncia."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Nosso selo est\xE1 em an\xE1lise. Precisamos do c\xF3digo AGORA
       ou teremos que cobrar uma taxa de R$ 500,00 para o desbloqueio manual."
-    tempoDeDigitacao: 0
+    tempoDeDigitacao: 3
   escolhas:
   - textoDaEscolha: "N\xE3o quero pagar taxa! Toma o c\xF3digo logo."
     proximoNo: {fileID: 0}
