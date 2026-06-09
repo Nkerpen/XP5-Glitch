@@ -15,3 +15,4 @@ MonoBehaviour:
   nome: Charles
   corDoNome: {r: 0, g: 0, b: 0, a: 1}
   corDoBalao: {r: 0.21176472, g: 0.43529415, b: 0.7058824, a: 1}
+  foto: {fileID: 1707581423473456129, guid: bc233fb0bcf39704e91511781c28ab3b, type: 3}

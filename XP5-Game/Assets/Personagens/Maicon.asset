@@ -15,3 +15,4 @@ MonoBehaviour:
   nome: Maicon
   corDoNome: {r: 0, g: 0, b: 0, a: 1}
   corDoBalao: {r: 0.32371515, g: 0.735849, b: 0.24644002, a: 1}
+  foto: {fileID: 2275881303325605943, guid: 663e712139417994a8ef58c55df73339, type: 3}

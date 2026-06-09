@@ -51,13 +51,35 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             textos[0].color = msg.autor.corDoNome;
             textos[1].text = msg.textoDaMensagem;
 
+           // verifica se existe a foto, se existir declara a foto do personagem no chat
+            Transform fotoTransform = balao.transform.Find("FotoPersonagem");
+            if (fotoTransform != null)
+            {
+                Image fotoImage = fotoTransform.GetComponent<Image>();
+                if (fotoImage != null && msg.autor.foto != null)
+                {
+                    fotoImage.sprite = msg.autor.foto;
+                }
+            }
+            
             // --- A MÁGICA DA COR ENTRA AQUI ---
             // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
-            Image fundoBalao = balao.GetComponentInChildren<Image>();
-            if (fundoBalao != null)
+            Transform balaoTransform = balao.transform.Find("balaoNPC");
+            if (balaoTransform != null)
             {
-                fundoBalao.color = msg.autor.corDoBalao;
+                Image fundoBalao = balaoTransform.GetComponent<Image>();
+                if (fundoBalao != null)
+                {
+                    fundoBalao.color = msg.autor.corDoBalao;
+                }
             }
+            // --- A MÁGICA DA COR ENTRA AQUI ---
+            // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
+            //Image fundoBalao = balao.GetComponentInChildren<Image>();
+            //if (fundoBalao != null)
+            //{
+            //    fundoBalao.color = msg.autor.corDoBalao;
+            //}
         }
 
         // Quando todas as mensagens forem enviadas, mostra as opções pro jogador

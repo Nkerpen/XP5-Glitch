@@ -1842,6 +1842,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tela_Logo
       objectReference: {fileID: 0}
+    - target: {fileID: 6246326451225884977, guid: 74d549ae870a84941930f4bc9ed048fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7908908468948065256, guid: 74d549ae870a84941930f4bc9ed048fb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

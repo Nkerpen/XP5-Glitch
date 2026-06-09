@@ -15,3 +15,4 @@ MonoBehaviour:
   nome: Clara
   corDoNome: {r: 0, g: 0, b: 0, a: 1}
   corDoBalao: {r: 0.97735846, g: 0.96018904, b: 0.21206822, a: 1}
+  foto: {fileID: 293658406372049571, guid: c60663ca1d918d541910d0afabccd084, type: 3}
