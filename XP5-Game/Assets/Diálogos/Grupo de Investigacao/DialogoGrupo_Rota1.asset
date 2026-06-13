@@ -25,8 +25,36 @@ MonoBehaviour:
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "Cad\xEA ele? O que voc\xEA fez com ele?"
     tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "cara\u2026 isso n\xE3o t\xE1 fazendo sentido"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: calma, charles.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "explica direito o que est\xE1 acontecendo.\r\n"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Voc\xEA n\xE3o \xE9 o John.\r\n"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Ent\xE3o quem \xE9 voc\xEA?"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "e por que voc\xEA est\xE1 com o celular dele?"
+    tempoDeDigitacao: 2
   escolhas:
-  - textoDaEscolha: ...
-    proximoNo: {fileID: 11400000, guid: 6c7d4b79eed1f6c4c90c9057bb3f3b9f, type: 2}
+  - textoDaEscolha: "Encontrei o celular no ch\xE3o e peguei pra tentar achar o dono"
+    proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+  - textoDaEscolha: "O celular j\xE1 estava desbloqueado, ent\xE3o tentei ver de
+      quem era."
+    proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+  - textoDaEscolha: "Achei o celular e a bateria estava acabando, ent\xE3o coloquei
+      pra carregar para encontrar o dono."
+    proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0

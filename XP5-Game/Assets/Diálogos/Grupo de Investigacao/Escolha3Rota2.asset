@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: Escolha3Rota2
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  mensagens:
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "foi o que eu disse desde o come\xE7o."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: " J\xE1 tentamos."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Mas talvez com o celular como evid\xEAncia mude alguma coisa."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: vale tentar de novo.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Olha.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Voc\xEA est\xE1 com o celular dele."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Pode ser que exista algo na caixa de e-mail.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Apesar de que, n\xE3o sabemos com o que ele estava mexendo"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Todo cuidado \xE9 pouco. "
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "n\xE3o apague nada."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "na per\xEDcia digital, fazemos c\xF3pias do estado do dispositivo
+      assim que os recebemos."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "voc\xEA vai nos ajudar, ent\xE3o?"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "voc\xEA encontrou o celular por alguma raz\xE3o"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "e n\xF3s precisamos achar o John."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "s\xF3 tome cuidado com coisas que podem parecer muito suspeitas."
+    tempoDeDigitacao: 3
+  escolhas: []
