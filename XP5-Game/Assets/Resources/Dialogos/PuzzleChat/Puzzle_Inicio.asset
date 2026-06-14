@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
   m_Name: Puzzle_Inicio
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: Golpista
+  idDoNo: Puzzle_Inicio
   mensagens:
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Ol\xE1, aqui \xE9 do Suporte de Seguran\xE7a Oficial."

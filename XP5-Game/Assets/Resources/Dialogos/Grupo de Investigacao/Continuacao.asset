@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
   m_Name: Continuacao
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: GrupoInicio
+  idDoNo: Continuacao
   mensagens:
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "s\xE9rio?"

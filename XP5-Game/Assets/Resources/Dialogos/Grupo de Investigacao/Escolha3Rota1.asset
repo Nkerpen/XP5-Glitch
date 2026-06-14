@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
   m_Name: Escolha3Rota1
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: GrupoInicio
+  idDoNo: Escolha3Rota1
   mensagens:
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "s\xE9rio? voc\xEA faria isso?"

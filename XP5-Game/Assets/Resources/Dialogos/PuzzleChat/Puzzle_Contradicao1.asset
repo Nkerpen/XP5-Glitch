@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
   m_Name: Puzzle_Contradicao1
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: Golpista
+  idDoNo: Puzzle_Contradicao1
   mensagens:
   - autor: {fileID: 11400000, guid: 01faac7e2e670284abf707dfaa59d1e8, type: 2}
     textoDaMensagem: "Senhor, n\xF3s somos de um setor terceirizado de conting\xEAncia."

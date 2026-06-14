@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
   m_Name: Escolha3Rota3
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: GrupoInicio
+  idDoNo: Escolha3Rota3
   mensagens:
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: parecia algo meio sigiloso.
