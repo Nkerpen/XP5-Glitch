@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using DG.Tweening; // Importante para as animações funcionarem
+using DG.Tweening;
 
 public class SistemaDeChatPuzzle : MonoBehaviour
 {
@@ -11,32 +11,41 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     [SerializeField] private GameObject prefabBalaoNPC;
     [SerializeField] private GameObject prefabBalaoJogador;
     [SerializeField] private ScrollRect scrollDoChat;
-    private RectTransform scrollRectTransform; // Para controlar o tamanho do chat dinamicamente
+    private RectTransform scrollRectTransform;
 
     [Header("Painel de Escolhas")]
-    [SerializeField] private RectTransform painelEscolhas; // Tipo alterado para RectTransform para o DOTween
+    [SerializeField] private RectTransform painelEscolhas;
     [SerializeField] private Button[] botoesDeEscolha;
     [SerializeField] private TextMeshProUGUI[] textosDosBotoes;
 
     [Header("Configurações de Animação (DOTween)")]
     [SerializeField] private Vector2 posicaoEscondido = new Vector2(0, -500);
-    [SerializeField] private Vector2 posicaoVisivel = new Vector2(0, 120); // Ajustado para sua tela       
+    [SerializeField] private Vector2 posicaoVisivel = new Vector2(0, 120);
     [SerializeField] private float duracaoAnimacao = 0.4f;
     [SerializeField] private Ease tipoDeTransicao = Ease.OutBack;
 
     [Header("Configuração do Chat Dinâmico")]
-    [SerializeField] private float margemFundoSemEscolhas = 40f;  // Chat usa a tela toda (área útil livre)
-    [SerializeField] private float margemFundoComEscolhas = 450f; // Chat encolhe para dar espaço às escolhas
+    [SerializeField] private float margemFundoSemEscolhas = 40f;
+    [SerializeField] private float margemFundoComEscolhas = 450f;
+
+    [Header("Ajuste de Posição do Textinho")]
+    [Tooltip("Força as letras a subirem fisicamente, burlando o Layout Group. Aumente este valor para subir o texto.")]
+    [SerializeField] private float deslocamentoYDigitando = 20f;
+
+    [Header("Animação dos Balões")]
+    [SerializeField] private float duracaoSurgimentoBalao = 0.3f;
+    [SerializeField] private Ease transicaoSurgimentoBalao = Ease.OutBack;
 
     [Header("Dados do Puzzle / Chat")]
     [SerializeField] private NoDeDialogo dialogoInicial;
     private NoDeDialogo dialogoAtual;
     private Coroutine rotinaDeMensagens;
+    private Coroutine rotinaAnimacaoDigitando;
 
     [Header("Telas de Fim de Jogo")]
     [SerializeField] private GameObject painelGameOver;
     [SerializeField] private GameObject painelVitoria;
-    [SerializeField] private GameObject botaoContatoGolpista; // Botão "Numero_Anonimo"
+    [SerializeField] private GameObject botaoContatoGolpista;
 
     private void Start()
     {
@@ -46,10 +55,8 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             return;
         }
 
-        // Pega o RectTransform do próprio ScrollRect do chat
         scrollRectTransform = scrollDoChat.GetComponent<RectTransform>();
 
-        // Força o estado inicial limpo (chat ocupando a tela toda)
         painelEscolhas.anchoredPosition = posicaoEscondido;
         painelEscolhas.gameObject.SetActive(false);
         SetChatBottomMargin(margemFundoSemEscolhas);
@@ -57,13 +64,9 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     public void IniciarChat(NoDeDialogo inicio)
     {
-        // Limpa as mensagens da conversa anterior
         foreach (Transform filho in contentArea) Destroy(filho.gameObject);
 
-        // Inicia a nova conversa
         dialogoAtual = inicio;
-
-        // Esconde o painel de escolhas e redefine o tamanho do chat
         EsconderPainelEscolhas();
 
         if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
@@ -72,25 +75,22 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private IEnumerator TocarMensagensDoNPC()
     {
-        // Lê cada mensagem da lista do grupo
         foreach (MensagemNPC msg in dialogoAtual.mensagens)
         {
-            // Espera o tempo de digitação
-            yield return new WaitForSeconds(msg.tempoDeDigitacao);
-
-            // Instancia o contêiner (Content_NPC)
+            // 1. Instancia o balão básico do NPC baseado no prefab anexado
             GameObject balao = Instantiate(prefabBalaoNPC, contentArea);
-
-            // Pega as referências de texto dentro do balão (0 é o Nome, 1 é a Mensagem)
             TextMeshProUGUI[] textos = balao.GetComponentsInChildren<TextMeshProUGUI>();
+
+            VerticalAlignmentOptions alinhamentoOriginal = VerticalAlignmentOptions.Top;
+
             if (textos.Length >= 2)
             {
                 textos[0].text = msg.autor.nome;
                 textos[0].color = msg.autor.corDoNome;
-                textos[1].text = msg.textoDaMensagem;
+                alinhamentoOriginal = textos[1].verticalAlignment;
             }
 
-            // Verifica se existe a foto, se existir declara a foto do personagem no chat
+            // 2. Associa a foto do autor atual
             Transform fotoTransform = balao.transform.Find("FotoPersonagem");
             if (fotoTransform != null)
             {
@@ -101,23 +101,106 @@ public class SistemaDeChatPuzzle : MonoBehaviour
                 }
             }
 
-            // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
+            // 3. Modifica a cor de fundo do balão conforme o NPC
+            Image fundoBalao = null;
             Transform balaoTransform = balao.transform.Find("balaoNPC");
             if (balaoTransform != null)
             {
-                Image fundoBalao = balaoTransform.GetComponent<Image>();
+                fundoBalao = balaoTransform.GetComponent<Image>();
                 if (fundoBalao != null)
                 {
                     fundoBalao.color = msg.autor.corDoBalao;
                 }
             }
 
-            // Empurra a tela para baixo após a mensagem do NPC aparecer
+            // 4. Animação de surgimento elástico (escala do balão de 0 a 1)
+            balao.transform.localScale = Vector3.zero;
+            balao.transform.DOScale(Vector3.one, duracaoSurgimentoBalao).SetEase(transicaoSurgimentoBalao);
+
+            // 5. Lógica de digitação por vértices com proteção de sobreposição de nome
+            if (msg.tempoDeDigitacao > 0f)
+            {
+                // Esconde o nome do NPC para evitar que o Anônimo fique por cima do texto
+                if (textos.Length >= 1) textos[0].enabled = false;
+
+                if (textos.Length >= 2)
+                {
+                    textos[1].text = "<i><color=#888888>digitando...</color></i>";
+                    rotinaAnimacaoDigitando = StartCoroutine(AnimarTextoDigitando(textos[1]));
+                }
+
+                if (fundoBalao != null) fundoBalao.enabled = false;
+
+                StartCoroutine(ForcarScrollParaBaixo());
+
+                // Aguarda o tempo estipulado fingindo que o personagem escreve
+                yield return new WaitForSeconds(msg.tempoDeDigitacao);
+
+                // Finaliza a animação de onda
+                if (rotinaAnimacaoDigitando != null) StopCoroutine(rotinaAnimacaoDigitando);
+
+                // Devolve as configurações de visibilidade normais do balão
+                if (fundoBalao != null) fundoBalao.enabled = true;
+                if (textos.Length >= 2) textos[1].verticalAlignment = alinhamentoOriginal;
+
+                // Traz o nome do personagem de volta
+                if (textos.Length >= 1) textos[0].enabled = true;
+            }
+
+            // 6. Insere a fala definitiva do Scriptable Object
+            if (textos.Length >= 2)
+            {
+                textos[1].text = msg.textoDaMensagem;
+            }
+
+            // Força a atualização imediata dos Layout Groups para não quebrar o layout
+            LayoutRebuilder.ForceRebuildLayoutImmediate(balao.GetComponent<RectTransform>());
+
+            // Pequeno soco ("punch") na escala dando impacto tátil de mensagem nova entregue
+            balao.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0f), 0.2f, 5, 0.5f);
+
             StartCoroutine(ForcarScrollParaBaixo());
         }
 
-        // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
+        // Fim das mensagens do NPC, chama as opções do jogador
         AtualizarBotoesDeEscolha();
+    }
+
+    // Corotina responsável pelo balanço físico de onda e ajuste de altura das letrinhas
+    private IEnumerator AnimarTextoDigitando(TextMeshProUGUI campoTexto)
+    {
+        float velocidadeMetros = 4f;
+        float alturaBalanço = 5f;
+
+        campoTexto.ForceMeshUpdate();
+        TMP_TextInfo textInfo = campoTexto.textInfo;
+
+        while (true)
+        {
+            campoTexto.ForceMeshUpdate();
+            textInfo = campoTexto.textInfo;
+
+            for (int i = 0; i < textInfo.characterCount; i++)
+            {
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+                if (!charInfo.isVisible) continue;
+
+                int materialIndex = charInfo.materialReferenceIndex;
+                int vertexIndex = charInfo.vertexIndex;
+                Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
+
+                float offsetOnda = i * 0.25f;
+                float deslocamentoY = (Mathf.Sin(Time.time * velocidadeMetros + offsetOnda) * alturaBalanço) + deslocamentoYDigitando;
+
+                vertices[vertexIndex + 0].y += deslocamentoY;
+                vertices[vertexIndex + 1].y += deslocamentoY;
+                vertices[vertexIndex + 2].y += deslocamentoY;
+                vertices[vertexIndex + 3].y += deslocamentoY;
+            }
+
+            campoTexto.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices);
+            yield return null;
+        }
     }
 
     private void AtualizarBotoesDeEscolha()
@@ -140,7 +223,6 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             botoesDeEscolha[i].onClick.AddListener(() => FazerEscolha(indexCopia));
         }
 
-        // Ativa e sobe o painel suavemente
         MostrarPainelEscolhas();
     }
 
@@ -150,10 +232,8 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         painelEscolhas.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(painelEscolhas);
 
-        // ANIMAÇÃO 1: Sobe o painel de escolhas
         painelEscolhas.DOAnchorPos(posicaoVisivel, duracaoAnimacao).SetEase(tipoDeTransicao);
 
-        // ANIMAÇÃO 2: "Encolhe" a base do chat para dar espaço às escolhas
         DOTween.To(() => scrollRectTransform.offsetMin.y, x => SetChatBottomMargin(x), margemFundoComEscolhas, duracaoAnimacao)
             .SetEase(tipoDeTransicao)
             .OnUpdate(() => {
@@ -166,11 +246,9 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     {
         painelEscolhas.DOKill();
 
-        // ANIMAÇÃO 1: Desce o painel de escolhas para sumir da tela
         painelEscolhas.DOAnchorPos(posicaoEscondido, duracaoAnimacao * 0.75f).SetEase(Ease.InQuad)
             .OnComplete(() => painelEscolhas.gameObject.SetActive(false));
 
-        // ANIMAÇÃO 2: Faz o chat "descer" e expandir para ocupar a tela inteira novamente
         DOTween.To(() => scrollRectTransform.offsetMin.y, x => SetChatBottomMargin(x), margemFundoSemEscolhas, duracaoAnimacao * 0.75f)
             .SetEase(Ease.InQuad)
             .OnUpdate(() => {
@@ -178,7 +256,6 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             });
     }
 
-    // Função auxiliar que altera o "Bottom" (a base) do RectTransform da UI do Chat
     private void SetChatBottomMargin(float bottomMargin)
     {
         if (scrollRectTransform == null) return;
@@ -198,43 +275,32 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private void FazerEscolha(int index)
     {
-        RespostaJogador escolha = dialogoAtual.escolhas[index];
-
-        // Balão do Jogador
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
         var textoBalao = balao.GetComponentInChildren<TextMeshProUGUI>();
-        if (textoBalao != null) textoBalao.text = escolha.textoDaEscolha;
+        if (textoBalao != null) textoBalao.text = dialogoAtual.escolhas[index].textoDaEscolha;
 
-        // Empurra a tela para baixo após a sua mensagem aparecer
+        // Animação de surgimento suave do balão do JOGADOR
+        balao.transform.localScale = Vector3.zero;
+        balao.transform.DOScale(Vector3.one, duracaoSurgimentoBalao).SetEase(transicaoSurgimentoBalao);
+
         StartCoroutine(ForcarScrollParaBaixo());
-
-        // Esconde o painel com animação de descida
         EsconderPainelEscolhas();
 
-        if (escolha.encerraPuzzle)
+        if (dialogoAtual.escolhas[index].encerraPuzzle)
         {
-            if (escolha.jogadorGanhou)
+            if (dialogoAtual.escolhas[index].jogadorGanhou)
             {
-                Debug.Log("Vitória! O jogador não caiu no golpe.");
-
-                // --- APAGA O CONTATO DA LISTA (Mantido do puzzle antigo) ---
-                if (botaoContatoGolpista != null)
-                {
-                    botaoContatoGolpista.SetActive(false);
-                }
-
+                if (botaoContatoGolpista != null) botaoContatoGolpista.SetActive(false);
                 painelVitoria.SetActive(true);
             }
             else
             {
-                Debug.Log("Game Over!");
                 painelGameOver.SetActive(true);
             }
             return;
         }
 
-        // Se não encerrou o puzzle, continua o papo normalmente...
-        dialogoAtual = escolha.proximoNo;
+        dialogoAtual = dialogoAtual.escolhas[index].proximoNo;
 
         if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
         rotinaDeMensagens = StartCoroutine(TocarMensagensDoNPC());

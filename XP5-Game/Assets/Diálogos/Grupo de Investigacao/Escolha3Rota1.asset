@@ -24,25 +24,28 @@ MonoBehaviour:
     tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: Maicon.
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Qualquer ajuda \xE9 bem-vinda agora."
     tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: Olha.
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Voc\xEA est\xE1 com o celular dele."
     tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: Pode ser que exista algo na caixa de e-mail.
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 2.5
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Apesar de que, n\xE3o sabemos com o que ele estava mexendo"
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 3.5
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Todo cuidado \xE9 pouco. \r\n"
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "n\xE3o apague nada."
+    tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "na per\xEDcia digital, fazemos c\xF3pias do estado do dispositivo
       assim que os recebemos."
@@ -58,5 +61,5 @@ MonoBehaviour:
     tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "s\xF3 tome cuidado com coisas que podem parecer muito suspeitas."
-    tempoDeDigitacao: 2
+    tempoDeDigitacao: 3.5
   escolhas: []

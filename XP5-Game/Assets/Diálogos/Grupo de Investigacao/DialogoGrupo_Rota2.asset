@@ -15,19 +15,19 @@ MonoBehaviour:
   mensagens:
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "como assim n\xE3o \xE9 o John?"
-    tempoDeDigitacao: 1
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Quem \xE9 voc\xEA?"
     tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "E porque est\xE1 com o celular dele?"
-    tempoDeDigitacao: 1.5
+    tempoDeDigitacao: 2.5
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "onde voc\xEA conseguiu esse celular?"
-    tempoDeDigitacao: 1.5
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "cara\u2026 isso n\xE3o t\xE1 fazendo sentido\r\n"
-    tempoDeDigitacao: 1.5
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: 'calma, charles.
 
@@ -35,7 +35,7 @@ MonoBehaviour:
     tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "explica direito o que est\xE1 acontecendo."
-    tempoDeDigitacao: 1.5
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Voc\xEA n\xE3o \xE9 o John."
     tempoDeDigitacao: 1.5
@@ -44,7 +44,7 @@ MonoBehaviour:
     tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "e por que voc\xEA est\xE1 com o celular dele?\r\n"
-    tempoDeDigitacao: 1.5
+    tempoDeDigitacao: 2.5
   escolhas:
   - textoDaEscolha: "Encontrei o celular no ch\xE3o e peguei pra tentar achar o dono."
     proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}

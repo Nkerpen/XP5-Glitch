@@ -15,17 +15,17 @@ MonoBehaviour:
   mensagens:
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "s\xE9rio?"
-    tempoDeDigitacao: 3
+    tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "voc\xEA mexeu em um dispositivo que pode ser evid\xEAncia de
       um desaparecimento."
-    tempoDeDigitacao: 5
+    tempoDeDigitacao: 4
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: Parem.
     tempoDeDigitacao: 1
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Ele n\xE3o est\xE1 dizendo que sabe o que aconteceu"
-    tempoDeDigitacao: 1
+    tempoDeDigitacao: 3
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Ele est\xE1 dizendo que encontrou o celular do John e planejava
       devolver. "
@@ -39,43 +39,43 @@ MonoBehaviour:
     tempoDeDigitacao: 4
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "a Clara tem raz\xE3o. "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "mas ainda n\xE3o estou entendendo. Onde voc\xEA encontrou o
       celular? "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 3
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "e h\xE1 quanto tempo ele est\xE1 sumido? "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: 'a gente nem sabe isso direito. '
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "ele sumiu tipo\u2026 faz uns dias? uma semana? "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 2.5
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "n\xE3o d\xE1 pra saber exatamente quando foi a \xFAltima vez
       que algu\xE9m falou com ele. "
     tempoDeDigitacao: 4
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Eu tentei a pol\xEDcia. "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "N\xE3o levaram a s\xE9rio."
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: disseram que adulto some pra espairecer e depois aparece, que
       era pra esperar.
     tempoDeDigitacao: 4
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "mas o John n\xE3o \xE9 de sumir assim. "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 2.5
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: 'ele estava pesquisando alguma coisa, disse que era importante. '
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 3.5
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "n\xE3o especificou o que era. "
-    tempoDeDigitacao: 4
+    tempoDeDigitacao: 2
   escolhas:
   - textoDaEscolha: "Posso tentar ajudar a encontr\xE1-lo."
     proximoNo: {fileID: 11400000, guid: 0c14fc805e9718b439f32b30f1d4fc8f, type: 2}
