@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; // Precisamos disso para usar a classe Button
+using UnityEngine.UI;
 
 public class GerenciadorDeNarrativa : MonoBehaviour
 {
@@ -12,9 +12,12 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     [Header("Aplicativos (Abertura Direta)")]
     [SerializeField] private GameObject telaAppEmail; 
 
-    [Header("Botões de Contato (Para simular o clique)")]
-    [SerializeField] private Button botaoContatoGrupo;     // O botão do "Grupo de Investigação"
-    [SerializeField] private Button botaoContatoGolpista;  // O botão do "Número Desconhecido"
+    [Header("Botões para Simular Clique (E Esconder)")]
+    [SerializeField] private Button botaoContatoGrupo;     
+    [SerializeField] private Button botaoContatoGolpista;  
+
+    [Header("Travas Visuais (O que começa escondido)")]
+    [SerializeField] private GameObject iconeAppEmailNaHome; // O ícone clicável do Email na tela inicial
 
     private int etapaAtual = 0;
 
@@ -22,6 +25,13 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     {
         if (Instancia == null) Instancia = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        // NOVO: Garante que os ícones comecem desligados (invisíveis)
+        if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(false);
+        if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(false);
     }
 
     public void IniciarJogo()
@@ -39,41 +49,39 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     {
         switch (etapaAtual)
         {
-            case 0:
+            case 0: // Jogo começa -> Notificação do Grupo
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação", 
                     "Charles: o John tá online", 
-                    () => {
-                        // Clica virtualmente no botão do grupo!
-                        if(botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke();
-                    }
+                    () => { if(botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke(); }
                 );
                 break;
-            case 1:
+                
+            case 1: // Jogador conversou -> Notificação do E-mail
+                if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(true); // DESTRANCA O EMAIL
+
                 sistemaNotificacao.MostrarNotificacao(
                     "Suporte PayPal", 
                     "Sua conta será bloqueada hoje!", 
-                    () => navegacaoCelular.AbrirApp(telaAppEmail) // O e-mail continua abrindo normal
+                    () => navegacaoCelular.AbrirApp(telaAppEmail)
                 );
                 break;
-            case 2:
+                
+            case 2: // Jogador venceu o e-mail -> Notificação do Grupo (Parte 2)
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação", 
                     "Eva: Vocês viram aquele email?", 
-                    () => {
-                        // Clica no botão do grupo de novo para a parte 2
-                        if(botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke();
-                    }
+                    () => { if(botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke(); }
                 );
                 break;
-            case 3:
+                
+            case 3: // Jogador falou com o grupo -> Notificação do Golpista
+                if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(true); // DESTRANCA O GOLPISTA
+
                 sistemaNotificacao.MostrarNotificacao(
                     "Desconhecido", 
                     "Me passe o código agora.", 
-                    () => {
-                        // Clica no botão do golpista!
-                        if(botaoContatoGolpista != null) botaoContatoGolpista.onClick.Invoke();
-                    }
+                    () => { if(botaoContatoGolpista != null) botaoContatoGolpista.onClick.Invoke(); }
                 );
                 break;
         }

@@ -5496,6 +5496,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532283094}
   m_CullTransparentMesh: 1
+--- !u!1 &609507946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 118332698208957162, guid: 2f40cca7bedb783418235d94d2d50a2e, type: 3}
+  m_PrefabInstance: {fileID: 3594477828957979782}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -6775,6 +6780,7 @@ MonoBehaviour:
   telaAppEmail: {fileID: 3594477828957979784}
   botaoContatoGrupo: {fileID: 1040646031}
   botaoContatoGolpista: {fileID: 1875410873}
+  iconeAppEmailNaHome: {fileID: 609507946}
 --- !u!114 &1118300445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8152,15 +8158,27 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3594477828957979785}
+      objectReference: {fileID: 1093361131}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1118300443}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1118300443}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
@@ -8168,19 +8186,51 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: BotaoVoltar
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: BotaoVoltar
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: NavegacaoCelular, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: NavegacaoCelular, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 433996655883990394, guid: f7b5def1544350441909c305236d2d5b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5661259914187660028, guid: f7b5def1544350441909c305236d2d5b, type: 3}
@@ -8483,15 +8533,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2829514685667970359, guid: 2f40cca7bedb783418235d94d2d50a2e, type: 3}
       propertyPath: m_ChildAlignment
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2829514685667970359, guid: 2f40cca7bedb783418235d94d2d50a2e, type: 3}
       propertyPath: m_ChildScaleWidth
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2829514685667970359, guid: 2f40cca7bedb783418235d94d2d50a2e, type: 3}
       propertyPath: m_ChildScaleHeight
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2829514685667970359, guid: 2f40cca7bedb783418235d94d2d50a2e, type: 3}
       propertyPath: m_ChildControlWidth
@@ -9269,6 +9319,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909023977116166347, guid: 73d27252c6faf1c4c94d64a7d2f033ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455862743020645988, guid: 73d27252c6faf1c4c94d64a7d2f033ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1118300443}
+    - target: {fileID: 5455862743020645988, guid: 73d27252c6faf1c4c94d64a7d2f033ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: BotaoHome
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455862743020645988, guid: 73d27252c6faf1c4c94d64a7d2f033ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: NavegacaoCelular, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455862743020645988, guid: 73d27252c6faf1c4c94d64a7d2f033ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

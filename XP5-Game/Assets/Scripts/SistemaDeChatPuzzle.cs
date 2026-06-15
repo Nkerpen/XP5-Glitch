@@ -6,6 +6,8 @@ using DG.Tweening;
 
 public class SistemaDeChatPuzzle : MonoBehaviour
 {
+    private bool avancarHistoriaAposChat = false;
+
     [Header("Estrutura da UI")]
     [SerializeField] private Transform contentArea;
     [SerializeField] private GameObject prefabBalaoNPC;
