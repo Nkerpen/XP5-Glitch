@@ -1,48 +1,54 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.Events; // Necess√°rio para a m√°gica do bot√£o
 
 public class SistemaDeNotificacao : MonoBehaviour
 {
-    [Header("Elementos de UI")]
-    [SerializeField] private RectTransform painelNotificacao;
+    [Header("UI da Notifica√ß√£o")]
+    [SerializeField] private GameObject painelNotificacao;
+    [SerializeField] private TextMeshProUGUI textoTitulo;
     [SerializeField] private TextMeshProUGUI textoMensagem;
+    [SerializeField] private Button botaoNotificacao; // Adicione um componente Button no Painel_Notificacao!
 
-    [Header("ConfiguraÁıes")]
-    [SerializeField] private Vector2 posicaoEscondida = new Vector2(0, 200);
-    [SerializeField] private Vector2 posicaoVisivel = new Vector2(0, -50);
-    [SerializeField] private float tempoAnimacao = 0.5f;
-    [SerializeField] private float tempoExibicao = 3f;
+    [Header("Configura√ß√µes")]
+    [SerializeField] private float tempoNaTela = 4f;
 
-    public void MostrarNotificacao(string mensagem)
+    private Coroutine rotinaAtual;
+
+    private void Start()
     {
-        textoMensagem.text = mensagem;
-        StartCoroutine(AnimarNotificacao());
+        if (painelNotificacao != null) painelNotificacao.SetActive(false);
     }
 
-    private IEnumerator AnimarNotificacao()
+    // Agora ela recebe a a√ß√£o de clicar!
+    public void MostrarNotificacao(string titulo, string mensagem, UnityAction acaoAoClicar = null)
     {
-        // Desce a notificaÁ„o (usando Lerp para suavizar a animaÁ„o sem precisar de Animator)
-        float tempo = 0;
-        while (tempo < tempoAnimacao)
-        {
-            painelNotificacao.anchoredPosition = Vector2.Lerp(posicaoEscondida, posicaoVisivel, tempo / tempoAnimacao);
-            tempo += Time.deltaTime;
-            yield return null;
-        }
-        painelNotificacao.anchoredPosition = posicaoVisivel;
+        if (rotinaAtual != null) StopCoroutine(rotinaAtual);
 
-        // Espera o jogador ler
-        yield return new WaitForSeconds(tempoExibicao);
-
-        // Sobe a notificaÁ„o
-        tempo = 0;
-        while (tempo < tempoAnimacao)
+        // Prepara o bot√£o
+        if (botaoNotificacao != null)
         {
-            painelNotificacao.anchoredPosition = Vector2.Lerp(posicaoVisivel, posicaoEscondida, tempo / tempoAnimacao);
-            tempo += Time.deltaTime;
-            yield return null;
+            botaoNotificacao.onClick.RemoveAllListeners();
+            if (acaoAoClicar != null)
+            {
+                botaoNotificacao.onClick.AddListener(() => {
+                    acaoAoClicar(); // Executa a abertura do App
+                    painelNotificacao.SetActive(false); // Fecha a notifica√ß√£o
+                });
+            }
         }
-        painelNotificacao.anchoredPosition = posicaoEscondida;
+
+        rotinaAtual = StartCoroutine(RotinaExibirNotificacao(titulo, mensagem));
+    }
+
+    private IEnumerator RotinaExibirNotificacao(string titulo, string mensagem)
+    {
+        textoTitulo.text = titulo;
+        textoMensagem.text = mensagem;
+        painelNotificacao.SetActive(true);
+        yield return new WaitForSeconds(tempoNaTela);
+        painelNotificacao.SetActive(false);
     }
 }

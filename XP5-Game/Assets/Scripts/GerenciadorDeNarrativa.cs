@@ -1,27 +1,71 @@
-using System.Collections;
 using UnityEngine;
 
 public class GerenciadorDeNarrativa : MonoBehaviour
 {
-    [Header("Dependências")]
-    // Referência ao script de notificação que criamos antes
-    [SerializeField] private SistemaDeNotificacao sistemaDeNotificacao;
+    public static GerenciadorDeNarrativa Instancia;
 
-    [Header("Configurações de Tempo")]
-    [SerializeField] private float atrasoPrimeiraMensagem = 3f;
+    [Header("Sistemas")]
+    [SerializeField] private SistemaDeNotificacao sistemaNotificacao;
+    [SerializeField] private NavegacaoCelular navegacaoCelular;
+    
+    [Header("Aplicativos (Para abrir)")]
+    [SerializeField] private GameObject telaAppChat; // Arraste a Tela_Aplicativos/Tela_Chat (ou Tela_Contatos)
+    [SerializeField] private GameObject telaAppEmail; // Arraste a Tela_Aplicativos/Tela_Email
 
-    // O OnEnable é chamado automaticamente quando o GameObject é ativado na cena
-    private void OnEnable()
+    private int etapaAtual = 0;
+
+    private void Awake()
     {
-        StartCoroutine(EnviarPrimeiraMensagem());
+        // Garante que sÃ³ exista um cÃ©rebro no jogo
+        if (Instancia == null) Instancia = this;
+        else Destroy(gameObject);
     }
 
-    private IEnumerator EnviarPrimeiraMensagem()
+    // Chamado pelo Loading quando o jogo comeÃ§a
+    public void IniciarJogo()
     {
-        // Aguarda os segundos estipulados após a Home aparecer
-        yield return new WaitForSeconds(atrasoPrimeiraMensagem);
+        Invoke(nameof(DispararNotificacaoAtual), 1.5f);
+    }
 
-        // Puxando o diálogo direto do seu GDD para a Rota 1
-        sistemaDeNotificacao.MostrarNotificacao("Você tem um novo Email");
+    // Chamado pelos Puzzles quando o jogador vence/termina o diÃ¡logo
+    public void AvancarHistoria()
+    {
+        etapaAtual++;
+        Invoke(nameof(DispararNotificacaoAtual), 3f); // Pausa dramÃ¡tica de 3 segundos
+    }
+
+    private void DispararNotificacaoAtual()
+    {
+        switch (etapaAtual)
+        {
+            case 0:
+                sistemaNotificacao.MostrarNotificacao(
+                    "Grupo de InvestigaÃ§Ã£o", 
+                    "Charles: o John tÃ¡ online", 
+                    () => navegacaoCelular.AbrirApp(telaAppChat)
+                );
+                break;
+            case 1:
+                sistemaNotificacao.MostrarNotificacao(
+                    "Suporte PayPal", 
+                    "Sua conta serÃ¡ bloqueada hoje!", 
+                    () => navegacaoCelular.AbrirApp(telaAppEmail)
+                );
+                break;
+            case 2:
+                sistemaNotificacao.MostrarNotificacao(
+                    "Grupo de InvestigaÃ§Ã£o", 
+                    "Eva: VocÃªs viram aquele email?", 
+                    () => navegacaoCelular.AbrirApp(telaAppChat)
+                );
+                break;
+            case 3:
+                sistemaNotificacao.MostrarNotificacao(
+                    "Desconhecido", 
+                    "Me passe o cÃ³digo agora.", 
+                    () => navegacaoCelular.AbrirApp(telaAppChat)
+                );
+                break;
+        }
     }
 }

@@ -126,6 +126,11 @@ public class SistemaEmailPuzzle : MonoBehaviour
             if (corpoDoEmail != null) corpoDoEmail.SetActive(false);
             if (painelCaixaVazia != null) painelCaixaVazia.SetActive(true);
             if (painelVitoria != null) painelVitoria.SetActive(true); // Ativa para mostrar o "Continuar"
+            // Avisa a história para avançar!
+            if (GerenciadorDeNarrativa.Instancia != null)
+            {
+                GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+            }
 
             if (botaoLinkArmadilha != null)
             {

@@ -319,10 +319,18 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         }
     }
 
-    private void FazerEscolha(int index)
+   private void FazerEscolha(int index)
     {
         RespostaJogador escolha = dialogoAtual.escolhas[index];
 
+        // NOVO: Se essa escolha finaliza a fase da história, avisa o Cérebro!
+        if (escolha.avancaAHistoria)
+        {
+            if (GerenciadorDeNarrativa.Instancia != null)
+                GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+        }
+        
+        // ... (o resto da função continua igual: Balão do Jogador, etc.)
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
         var textoBalao = balao.GetComponentInChildren<TextMeshProUGUI>();
         if (textoBalao != null) textoBalao.text = escolha.textoDaEscolha;

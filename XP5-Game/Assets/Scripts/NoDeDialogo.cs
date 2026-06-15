@@ -28,11 +28,12 @@ public class MensagemNPC
 }
 
 [System.Serializable]
-public class RespostaJogador
-{
-    [TextArea(2, 3)]
-    public string textoDaEscolha;
-    public NoDeDialogo proximoNo;
-    public bool encerraPuzzle;
-    public bool jogadorGanhou;
-}
+    public class RespostaJogador
+    {
+        [TextArea(2, 3)]
+        public string textoDaEscolha;
+        public NoDeDialogo proximoNo;
+        public bool encerraPuzzle;
+        public bool jogadorGanhou;
+        public bool avancaAHistoria; // MARQUE ISSO NA ÚLTIMA RESPOSTA DO CHAT DE GRUPO!
+    }
