@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NavegacaoCelular : MonoBehaviour
 {
-    [Header("Configurações de Telas")]
+    [Header("Configuraï¿½ï¿½es de Telas")]
     [SerializeField] private GameObject telaHome;
 
     [Tooltip("Arraste aqui o objeto pai 'Tela_Aplicativos'")]
@@ -17,40 +17,50 @@ public class NavegacaoCelular : MonoBehaviour
         telaAtual = telaHome;
     }
 
-    // Chame essa função nos botões dos aplicativos (ex: Clicou no app de E-mail)
+    // Chame essa funï¿½ï¿½o nos botï¿½es dos aplicativos (ex: Clicou no app de E-mail)
     public void AbrirApp(GameObject novoApp)
     {
         if (telaAtual != null)
         {
-            // PROTEÇÃO 1: Só salva no histórico se a tela atual NÃO for a tela mãe/container
+            // PROTEÃ‡ÃƒO 1: SÃ³ salva no histÃ³rico se a tela atual NÃƒO for a tela mÃ£e/container
             if (telaAtual != telaAplicativos)
             {
                 historicoTelas.Push(telaAtual); // Salva a tela atual na pilha
             }
 
-            // Só desativa a tela atual se ela NÃO for a tela mãe
+            // SÃ³ desativa a tela atual se ela NÃƒO for a tela mÃ£e
             if (telaAtual != telaAplicativos)
             {
                 telaAtual.SetActive(false); // Esconde a tela atual
             }
         }
 
+        // --- A SOLUÃ‡ÃƒO ENTRA AQUI ---
+        // Se o novo app que estamos abrindo fica dentro da Tela_Aplicativos, 
+        // precisamos garantir que o PAI (Tela_Aplicativos) seja ligado primeiro!
+        if (telaAplicativos != null && novoApp.transform.IsChildOf(telaAplicativos.transform))
+        {
+            telaAplicativos.SetActive(true);
+            telaHome.SetActive(false); // Esconde a home caso estivÃ©ssemos lÃ¡
+        }
+        // ------------------------------
+
         telaAtual = novoApp;
         telaAtual.SetActive(true); // Mostra o novo app
     }
 
-    // Anexe ao botão "Seta / Triângulo" da barra inferior
+    // Anexe ao botï¿½o "Seta / Triï¿½ngulo" da barra inferior
     public void BotaoVoltar()
     {
         if (historicoTelas.Count > 0)
         {
             telaAtual.SetActive(false);
 
-            // Pega a tela do topo do histórico
+            // Pega a tela do topo do histï¿½rico
             telaAtual = historicoTelas.Pop();
 
-            // PROTEÇÃO 2: Se mesmo com a proteção 1 a tela mãe conseguiu entrar na pilha 
-            // (por causa do botão do puzzle), o 'while' vai limpando até achar uma tela válida
+            // PROTEï¿½ï¿½O 2: Se mesmo com a proteï¿½ï¿½o 1 a tela mï¿½e conseguiu entrar na pilha 
+            // (por causa do botï¿½o do puzzle), o 'while' vai limpando atï¿½ achar uma tela vï¿½lida
             while (telaAtual == telaAplicativos && historicoTelas.Count > 0)
             {
                 telaAtual = historicoTelas.Pop();
@@ -60,7 +70,7 @@ public class NavegacaoCelular : MonoBehaviour
         }
     }
 
-    // Anexe ao botão "Círculo" da barra inferior
+    // Anexe ao botï¿½o "Cï¿½rculo" da barra inferior
     public void BotaoHome()
     {
         if (telaAtual != telaHome)
@@ -73,7 +83,7 @@ public class NavegacaoCelular : MonoBehaviour
                 telaAtual.SetActive(false);
             }
 
-            historicoTelas.Clear(); // Limpa a memória de navegação
+            historicoTelas.Clear(); // Limpa a memï¿½ria de navegaï¿½ï¿½o
             telaAtual = telaHome;
             telaAtual.SetActive(true);
         }

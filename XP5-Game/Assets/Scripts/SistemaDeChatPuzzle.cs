@@ -64,6 +64,7 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     public void IniciarChat(NoDeDialogo noInicial)
     {
+        gameObject.SetActive(true);
         if (noInicial == null) return;
 
         idDoChatAtual = noInicial.idDaConversa;

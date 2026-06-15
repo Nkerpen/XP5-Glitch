@@ -664,11 +664,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SistemaDeNotificacao
   painelNotificacao: {fileID: 8733786653720785074}
+  rectTransformNotificacao: {fileID: 0}
+  textoTitulo: {fileID: 0}
   textoMensagem: {fileID: 1821355328699842730}
-  posicaoEscondida: {x: 0, y: 220}
-  posicaoVisivel: {x: 0, y: -250}
-  tempoAnimacao: 0.5
-  tempoExibicao: 3
+  botaoNotificacao: {fileID: 0}
+  tempoNaTela: 4
+  velocidadeAnimacao: 0.4
+  posicaoYEscondida: 300
+  posicaoYVisivel: -50
 --- !u!114 &2829514685667970359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1660,6 +1663,7 @@ MonoBehaviour:
   contentArea: {fileID: 9059498486522191775}
   prefabBalaoNPC: {fileID: 8314636670684119773, guid: 0297e3b7449452a4a82f5b5eacb83889, type: 3}
   prefabBalaoJogador: {fileID: 4878175037579838335, guid: a178b5dca869bd24e820df36010c6c78, type: 3}
+  scrollDoChat: {fileID: 0}
   painelEscolhas: {fileID: 3175194039047325122}
   botoesDeEscolha:
   - {fileID: 7653881101417926508}
@@ -1669,8 +1673,18 @@ MonoBehaviour:
   - {fileID: 3527153671955138193}
   - {fileID: 7425067574807459689}
   - {fileID: 4546748688425211770}
-  dialogoInicial: {fileID: 11400000, guid: 03034bd1d8280fc47b5fb5da4840a42a, type: 2}
+  posicaoEscondido: {x: 0, y: -500}
+  posicaoVisivel: {x: 0, y: 120}
+  duracaoAnimacao: 0.4
+  tipoDeTransicao: 27
+  margemFundoSemEscolhas: 40
+  margemFundoComEscolhas: 450
+  deslocamentoYDigitando: 20
+  duracaoSurgimentoBalao: 0.3
+  transicaoSurgimentoBalao: 27
   painelGameOver: {fileID: 0}
+  painelVitoria: {fileID: 0}
+  botaoContatoGolpista: {fileID: 0}
 --- !u!1 &3094637542345275666
 GameObject:
   m_ObjectHideFlags: 0
@@ -4455,9 +4469,9 @@ RectTransform:
   m_Children:
   - {fileID: 5352368640456789322}
   - {fileID: 1192264881653961431}
-  - {fileID: 8733786653720785074}
   - {fileID: 8780189587221195057}
   - {fileID: 5515768938373589164}
+  - {fileID: 8733786653720785074}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4477,8 +4491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 136cfc215bb460a448e6ce31e3b9f553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GerenciadorDeNarrativa
-  sistemaDeNotificacao: {fileID: 1305986435912423744}
-  atrasoPrimeiraMensagem: 3
+  sistemaNotificacao: {fileID: 0}
+  navegacaoCelular: {fileID: 0}
+  telaAppChat: {fileID: 0}
+  telaAppEmail: {fileID: 0}
 --- !u!1 &8065882521852732575
 GameObject:
   m_ObjectHideFlags: 0

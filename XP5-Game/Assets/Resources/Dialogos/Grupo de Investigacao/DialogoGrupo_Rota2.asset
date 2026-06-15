@@ -52,13 +52,16 @@ MonoBehaviour:
     proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
+    avancaAHistoria: 1
   - textoDaEscolha: "O celular j\xE1 estava desbloqueado, ent\xE3o tentei ver de
       quem era."
     proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
+    avancaAHistoria: 1
   - textoDaEscolha: "Achei o celular e a bateria estava acabando, ent\xE3o coloquei
       pra carregar para encontrar o dono."
     proximoNo: {fileID: 11400000, guid: aef9669d132710a4aa4a47db8bd7a89d, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
+    avancaAHistoria: 1
