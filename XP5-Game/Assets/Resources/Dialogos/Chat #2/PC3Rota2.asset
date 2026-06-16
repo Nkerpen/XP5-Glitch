@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: PC3Rota2
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: 
+  idDoNo: 
+  mensagens:
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: obrigado.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Mas ent\xE3o o que fazemos?"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: ' esperamos. continuamos procurando por outros meios.'
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "que outros meios? a gente n\xE3o tem nada mais."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "talvez tenha mais coisa no celular que ainda n\xE3o vimos."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Isso \xE9 verdade. Ainda n\xE3o exploramos tudo."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: mas enquanto isso, essa pessoa pode sumir do mapa.
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "ou pode ser a \xFAnica pista que temos."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "eva t\xE1 certa."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "\u2026eu sei."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "eu sei que ela t\xE1 certa."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Olha.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: A gente pode debater isso por horas.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Mas no fim, o ID est\xE1 aqui. E a pessoa que mandou pode saber
+      algo sobre o John."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "eu s\xF3 n\xE3o quero que a gente cometa um erro irrevers\xEDvel."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "maicon, a gente j\xE1 est\xE1 no meio de uma situa\xE7\xE3o
+      que a gente n\xE3o escolheu."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "john est\xE1 desaparecido"
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "e n\xE3o fazer nada tamb\xE9m \xE9 uma escolha."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "\u2026t\xE1."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: mas a gente define o que vai dizer antes.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: nada de improviso.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e n\xE3o revela nada sobre o John at\xE9 a gente saber com
+      quem est\xE1 falando."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Concordo.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "eu tamb\xE9m."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Ent\xE3o aqui est\xE1 o que a gente faz."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Novo amigo (a), adiciona o contato.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Manda uma mensagem curta. Neutra.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "N\xE3o menciona o John pelo nome."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "N\xE3o explica quem voc\xEA \xE9."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "S\xF3 estabelece contato e espera a rea\xE7\xE3o."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e presta aten\xE7\xE3o em tudo que a pessoa disser."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: como ela escreve. o que ela pergunta primeiro.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "voc\xEA consegue fazer isso?"
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: "Certamente, esperem a\xED."
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1

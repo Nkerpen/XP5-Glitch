@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: PC2Rota1
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: 
+  idDoNo: 
+  mensagens:
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Concordo.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "O assunto do email \xE9 s\xF3 'John?' \xE9 uma pergunta."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Quem manda um email assim est\xE1 procurando, n\xE3o oferecendo."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: ou fingindo procurar.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: maicon pelo amor de Deus.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "charles, me mostra uma situa\xE7\xE3o em que a gente tem certeza
+      de alguma coisa aqui."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: ...
+    tempoDeDigitacao: 5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: exato.
+    tempoDeDigitacao: 5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: De qualquer forma, chegamos no mesmo ponto.
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Temos um contato desconhecido que mandou um ID pro John.
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "E o John ou n\xE3o teve chance de responder."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e agora o celular est\xE1 com voc\xEA, desconhecido(a)."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e o ID tamb\xE9m."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: o que a gente faz com isso?
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: 'nosso novo amigo (a) adiciona.
+
+'
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "simples assim. adiciona e pergunta quem \xE9."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: charles.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: maicon.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "voc\xEA quer mandar mensagem pra um desconhecido no celular
+      de um homem desaparecido."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: usando a conta dele.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "sem saber quem est\xE1 do outro lado?"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "quando voc\xEA coloca assim parece errado"
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "porque \xE9."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Mas ignorar pode ser uma escolha ruim.
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: como assim?
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Se essa pessoa estava em contato com o John, ela pode ter informa\xE7\xF5es
+      que a gente n\xE3o tem."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Pode saber o que ele estava procurando.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Onde ele estava indo.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "ou a raz\xE3o pela qual ele sumiu."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: eva.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: estou sendo honesta.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "a gente n\xE3o sabe."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: pode ser aliado, pode ser inimigo.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: pode ser os dois.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "ent\xE3o minha posi\xE7\xE3o continua a mesma. n\xE3o adiciona."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "n\xE3o at\xE9 saber mais."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: E como a gente sabe mais sem entrar em contato?
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "pesquisa ai o nome detective.dragonfly e v\xEA alguma coisa
+      aparece."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "eu j\xE1 tentei."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "s\xF3 resultado aleat\xF3rio."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "A internet \xE9 grande demais."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Quantos milh\xF5es de detective.dragonfly vamos encontrar,
+      at\xE9 encontrar nosso alvo? "
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "a n\xE3o ser que ele nunca tenha estado l\xE1."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Dif\xEDcil de acreditar, estamos em 2026."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "At\xE9 minha V\xF3 est\xE1 nas redes sociais."
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: Acho que devemos tentar entrar em contato. Com cuidado
+    proximoNo: {fileID: 11400000, guid: ff000e6b75290394ba24065b813db639, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: Concordo com o Maicon. Isso pode ser perigoso.
+    proximoNo: {fileID: 11400000, guid: fbba722368d9c4740bf3f868cb06d559, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Antes de qualquer coisa, algu\xE9m consegue rastrear de onde
+      veio o e-mail?"
+    proximoNo: {fileID: 11400000, guid: e97e2c2d85ab8c645995e497647ea2b5, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
