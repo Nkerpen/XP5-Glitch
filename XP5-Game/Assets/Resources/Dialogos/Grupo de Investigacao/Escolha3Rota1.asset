@@ -64,4 +64,9 @@ MonoBehaviour:
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "s\xF3 tome cuidado com coisas que podem parecer muito suspeitas."
     tempoDeDigitacao: 3.5
-  escolhas: []
+  escolhas:
+  - textoDaEscolha: Tomarei cuidado.
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1

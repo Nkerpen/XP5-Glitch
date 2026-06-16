@@ -16,9 +16,11 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     [SerializeField] private Button botaoContatoGrupo;     
     [SerializeField] private Button botaoContatoGolpista;  
 
-    [Header("Travas Visuais (O que começa escondido)")]
-    [SerializeField] private GameObject iconeAppEmailNaHome; // O ícone clicável do Email na tela inicial
-
+[Header("Travas Visuais (O que começa escondido)")]
+    [SerializeField] private GameObject iconeAppEmailNaHome; 
+    [SerializeField] private GameObject botaoEmail1_Puzzle;  
+    [SerializeField] private GameObject botaoEmail2_Anthony; 
+    [SerializeField] private GameObject painelEscondeEmail; // <--- NOVA VARIÁVEL AQUI
     private int etapaAtual = 0;
 
     private void Awake()
@@ -27,12 +29,16 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
+private void Start()
     {
-        // NOVO: Garante que os ícones comecem desligados (invisíveis)
+        // Garante que tudo comece desligado (invisível) até a hora certa
         if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(false);
         if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(false);
+        if (botaoEmail1_Puzzle != null) botaoEmail1_Puzzle.SetActive(false);
+        if (botaoEmail2_Anthony != null) botaoEmail2_Anthony.SetActive(false); 
+        if (painelEscondeEmail != null) painelEscondeEmail.SetActive(true); 
     }
+    
 
     public void IniciarJogo()
     {
@@ -49,7 +55,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     {
         switch (etapaAtual)
         {
-            case 0: // Jogo começa -> Notificação do Grupo
+            case 0: // COMEÇO -> Notificação do Diálogo 1
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação", 
                     "Charles: o John tá online", 
@@ -57,8 +63,9 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 );
                 break;
                 
-            case 1: // Jogador conversou -> Notificação do E-mail
-                if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(true); // DESTRANCA O EMAIL
+            case 1: // FIM DIÁLOGO 1 -> Libera Email 1 (Puzzle)
+                if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(true); // Liga o App na Home
+                if (botaoEmail1_Puzzle != null) botaoEmail1_Puzzle.SetActive(true); // Liga o E-mail 1 na Caixa
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Suporte PayPal", 
@@ -67,16 +74,35 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 );
                 break;
                 
-            case 2: // Jogador venceu o e-mail -> Notificação do Grupo (Parte 2)
+            case 2: // VENCEU PUZZLE EMAIL -> Libera Email 2 (Anthony)
+                
+                // DESLIGA O PAINEL FALSO PRIMEIRO:
+                if (painelEscondeEmail != null) painelEscondeEmail.SetActive(false); 
+                
+                // LIGA O BOTÃO VERDADEIRO DO ANTHONY LOGO EM SEGUIDA:
+                if (botaoEmail2_Anthony != null) botaoEmail2_Anthony.SetActive(true); 
+
+                sistemaNotificacao.MostrarNotificacao(
+                    "Novo E-mail", 
+                    "Anthony: Informações Importantes", 
+                    () => {
+                        navegacaoCelular.AbrirApp(telaAppEmail);
+                        if (botaoEmail2_Anthony != null) 
+                            botaoEmail2_Anthony.GetComponent<Button>().onClick.Invoke();
+                    }
+                );
+                break;
+                
+            case 3: // LEU EMAIL 2 -> Notificação do Diálogo 2
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação", 
                     "Eva: Vocês viram aquele email?", 
                     () => { if(botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke(); }
                 );
                 break;
-                
-            case 3: // Jogador falou com o grupo -> Notificação do Golpista
-                if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(true); // DESTRANCA O GOLPISTA
+
+            case 4: // FIM DIÁLOGO 2 -> Notificação do Golpista
+                if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(true); // Destranca Golpista
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Desconhecido", 

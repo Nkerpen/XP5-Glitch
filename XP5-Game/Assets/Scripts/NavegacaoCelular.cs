@@ -54,38 +54,29 @@ public class NavegacaoCelular : MonoBehaviour
     {
         if (historicoTelas.Count > 0)
         {
-            telaAtual.SetActive(false);
-
-            // Pega a tela do topo do hist�rico
+            if (telaAtual != null) telaAtual.SetActive(false);
+            
             telaAtual = historicoTelas.Pop();
-
-            // PROTE��O 2: Se mesmo com a prote��o 1 a tela m�e conseguiu entrar na pilha 
-            // (por causa do bot�o do puzzle), o 'while' vai limpando at� achar uma tela v�lida
-            while (telaAtual == telaAplicativos && historicoTelas.Count > 0)
-            {
-                telaAtual = historicoTelas.Pop();
-            }
-
             telaAtual.SetActive(true);
+
+            // --- A MÁGICA PARA CONSERTAR O BUG ---
+            // Se a tela que resgatamos do histórico for a Home, garantimos que a gaveta de aplicativos seja fechada!
+            if (telaAtual == telaHome && telaAplicativos != null)
+            {
+                telaAplicativos.SetActive(false);
+            }
         }
     }
 
-    // Anexe ao bot�o "C�rculo" da barra inferior
     public void BotaoHome()
     {
-        if (telaAtual != telaHome)
-        {
-            telaAtual.SetActive(false);
+        if (telaAtual != null) telaAtual.SetActive(false);
+        
+        // Se o jogador clicar no botão Home físico, força o fechamento da gaveta também
+        if (telaAplicativos != null) telaAplicativos.SetActive(false); 
 
-            // Garante que se um app filho estava aberto dentro da Tela_Aplicativos, ele fecha
-            if (telaAtual.transform.IsChildOf(telaAplicativos.transform))
-            {
-                telaAtual.SetActive(false);
-            }
-
-            historicoTelas.Clear(); // Limpa a mem�ria de navega��o
-            telaAtual = telaHome;
-            telaAtual.SetActive(true);
-        }
+        telaAtual = telaHome;
+        telaAtual.SetActive(true);
+        historicoTelas.Clear();
     }
 }

@@ -66,6 +66,8 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     public void IniciarChat(NoDeDialogo noInicial)
     {
+
+        
         gameObject.SetActive(true);
         if (noInicial == null) return;
 
@@ -196,7 +198,27 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         }
         else
         {
-            AtualizarBotoesDeEscolha();
+            AtualizarBotoesDeEscolha(); // Mostra as opções para o jogador (executado apenas uma vez)
+        }
+
+        // 2. Chama o Cérebro SOMENTE AQUI, quando o NPC parou de escrever por completo!
+        if (avancarHistoriaAposChat)
+        {
+            avancarHistoriaAposChat = false; // Destranca a variável
+            
+            // Dá mais 1.5 segundos de margem para o jogador ler a última mensagem do NPC tranquilamente
+            StartCoroutine(TempoParaLeituraEAvanco(1.5f)); 
+        }
+        // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
+        AtualizarBotoesDeEscolha();
+    }
+
+    private IEnumerator TempoParaLeituraEAvanco(float tempo)
+    {
+        yield return new WaitForSeconds(tempo);
+        if (GerenciadorDeNarrativa.Instancia != null)
+        {
+            GerenciadorDeNarrativa.Instancia.AvancarHistoria();
         }
     }
 
@@ -326,14 +348,15 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     {
         RespostaJogador escolha = dialogoAtual.escolhas[index];
 
-        // NOVO: Se essa escolha finaliza a fase da história, avisa o Cérebro!
+        // 1. APENAS ANOTA que a história vai avançar. Não avança agora!
         if (escolha.avancaAHistoria)
         {
-            if (GerenciadorDeNarrativa.Instancia != null)
-                GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+            avancarHistoriaAposChat = true;
         }
-        
-        // ... (o resto da função continua igual: Balão do Jogador, etc.)
+
+        // -> GARANTA QUE APAGOU QUALQUER OUTRO "if (escolha.avancaAHistoria)" DAQUI! <-
+
+        // Cria o balão do jogador
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
         var textoBalao = balao.GetComponentInChildren<TextMeshProUGUI>();
         if (textoBalao != null) textoBalao.text = escolha.textoDaEscolha;
@@ -343,24 +366,31 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
         StartCoroutine(ForcarScrollParaBaixo());
         EsconderPainelEscolhas();
-
         if (escolha.encerraPuzzle)
         {
-            MarcarChatComoConcluido();
-
-            if (escolha.jogadorGanhou)
-            {
-                if (botaoContatoGolpista != null) botaoContatoGolpista.SetActive(false);
-                painelVitoria.SetActive(true);
-            }
-            else
-            {
-                painelGameOver.SetActive(true);
-            }
+            // ... (código de vitória/derrota que já lá está)
             return;
         }
 
         dialogoAtual = escolha.proximoNo;
+
+        // --- NOVA TRAVA DE SEGURANÇA (Em Construção / Fim de Rota) ---
+        if (dialogoAtual == null)
+        {
+            Debug.LogWarning("[SistemaDeChat] O próximo nó está vazio! Encerrando a conversa.");
+            MarcarChatComoConcluido();
+
+            // Como a corrotina não vai rodar para avisar o Cérebro no final, temos de o fazer aqui!
+            if (avancarHistoriaAposChat)
+            {
+                avancarHistoriaAposChat = false;
+                StartCoroutine(TempoParaLeituraEAvanco(1.5f)); // Usa a mesma pausa dramática que criámos!
+            }
+            return; // Aborta a função aqui para não dar erro vermelho!
+        }
+        // -------------------------------------------------------------
+
+        // Se houver um próximo nó, continua normalmente:
         SalvarProgressoAtual();
 
         if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
