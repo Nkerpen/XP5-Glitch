@@ -83,14 +83,14 @@ MonoBehaviour:
     proximoNo: {fileID: 11400000, guid: 0c14fc805e9718b439f32b30f1d4fc8f, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: "Algu\xE9m deveria registrar o desaparecimento formalmente."
     proximoNo: {fileID: 11400000, guid: 5d40570ab6b32a847902202c6d85d124, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: O que exatamente ele estava investigando?
     proximoNo: {fileID: 11400000, guid: 3e4a50379c91ae347b613acce9939c2e, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
