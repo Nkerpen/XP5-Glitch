@@ -9,12 +9,16 @@ public class NavegacaoCelular : MonoBehaviour
     [Tooltip("Arraste aqui o objeto pai 'Tela_Aplicativos'")]
     [SerializeField] private GameObject telaAplicativos;
 
+    [Header("HUD")]
+    [SerializeField] private ClockController relogio;
+
     private GameObject telaAtual;
     private Stack<GameObject> historicoTelas = new Stack<GameObject>();
 
     private void Start()
     {
         telaAtual = telaHome;
+        AtualizarRelogio();
     }
 
     // Chame essa fun��o nos bot�es dos aplicativos (ex: Clicou no app de E-mail)
@@ -47,6 +51,7 @@ public class NavegacaoCelular : MonoBehaviour
 
         telaAtual = novoApp;
         telaAtual.SetActive(true); // Mostra o novo app
+        AtualizarRelogio();
     }
 
     // Anexe ao bot�o "Seta / Tri�ngulo" da barra inferior
@@ -65,6 +70,8 @@ public class NavegacaoCelular : MonoBehaviour
             {
                 telaAplicativos.SetActive(false);
             }
+
+            AtualizarRelogio();
         }
     }
 
@@ -78,5 +85,16 @@ public class NavegacaoCelular : MonoBehaviour
         telaAtual = telaHome;
         telaAtual.SetActive(true);
         historicoTelas.Clear();
+
+        AtualizarRelogio();
+    }
+
+    //Mostra o relogio so na Home
+    private void AtualizarRelogio()
+    {
+        if (relogio == null) return;
+
+        bool naHomeOuApps = (telaAtual == telaHome || telaAtual == telaAplicativos);
+        relogio.SetVisible(naHomeOuApps);
     }
 }

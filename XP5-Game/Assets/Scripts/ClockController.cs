@@ -41,5 +41,11 @@ public class ClockController : MonoBehaviour
         string clockString = string.Format("{0:00}:{1:00} {2}", hours, minutes, ampm);
         clockText.text = clockString;
     }
+
+    //Define a visibilidade do relógio
+    public void SetVisible(bool visible)
+    {
+        clockText.gameObject.SetActive(visible);
+    }
 }
 
