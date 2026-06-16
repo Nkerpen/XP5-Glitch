@@ -122,6 +122,7 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         foreach (MensagemNPC msg in dialogoAtual.mensagens)
         {
             GameObject balao = Instantiate(prefabBalaoNPC, contentArea);
+            if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarMensagemNPC();
             TextMeshProUGUI[] textos = balao.GetComponentsInChildren<TextMeshProUGUI>();
 
             VerticalAlignmentOptions alinhamentoOriginal = VerticalAlignmentOptions.Top;
@@ -358,6 +359,7 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
         // Cria o balão do jogador
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarEnvioMensagem();
         var textoBalao = balao.GetComponentInChildren<TextMeshProUGUI>();
         if (textoBalao != null) textoBalao.text = escolha.textoDaEscolha;
 

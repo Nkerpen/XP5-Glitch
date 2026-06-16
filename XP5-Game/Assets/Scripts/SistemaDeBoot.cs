@@ -13,10 +13,13 @@ public class SistemaDeBoot : MonoBehaviour
     [SerializeField] private float tempoDeLoading = 3f;
     
     [Header("Efeito de Transição")]
-    [SerializeField] private CanvasGroup canvasLoading; // ADICIONE um componente CanvasGroup na sua Tela_Loading!
+    [SerializeField] private CanvasGroup painelPretoFade; // Um painel 100% preto cobrindo tudo
+    [SerializeField] private float velocidadeFade = 0.5f;
 
     void Start()
     {
+        // Garante que o painel preto comece transparente para vermos o loading
+        if (painelPretoFade != null) painelPretoFade.alpha = 0f;
         StartCoroutine(RotinaDeLoading());
     }
 
@@ -24,39 +27,53 @@ public class SistemaDeBoot : MonoBehaviour
     {
         telaLoading.SetActive(true);
         telaHome.SetActive(false);
-        if (canvasLoading != null) canvasLoading.alpha = 1f;
+        barraDeProgresso.fillAmount = 0f;
 
-        float tempoDecorrido = 0f;
-        while (tempoDecorrido < tempoDeLoading)
+        // 1. Enche a barra
+        float tempo = 0f;
+        while (tempo < tempoDeLoading)
         {
-            tempoDecorrido += Time.deltaTime;
-            barraDeProgresso.fillAmount = tempoDecorrido / tempoDeLoading;
+            tempo += Time.deltaTime;
+            barraDeProgresso.fillAmount = tempo / tempoDeLoading;
             yield return null;
         }
-
         barraDeProgresso.fillAmount = 1f;
 
-        // --- FADE OUT E TROCA ---
-        telaHome.SetActive(true); // Liga a home escondida atrás do loading
+        // --- 2. TOCA O SOM DE PLAY ---
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarPlay();
 
-        if (canvasLoading != null)
+        // --- 3. FADE OUT (Escurece a tela toda) ---
+        if (painelPretoFade != null)
         {
-            float fadeTime = 0.5f;
-            tempoDecorrido = 0f;
-            while (tempoDecorrido < fadeTime)
+            tempo = 0f;
+            while (tempo < velocidadeFade)
             {
-                tempoDecorrido += Time.deltaTime;
-                canvasLoading.alpha = 1f - (tempoDecorrido / fadeTime);
+                tempo += Time.deltaTime;
+                painelPretoFade.alpha = tempo / velocidadeFade;
                 yield return null;
             }
+            painelPretoFade.alpha = 1f;
         }
 
-        telaLoading.SetActive(false); // Desliga o loading
+        // Troca as telas no escuro e liga a música!
+        telaLoading.SetActive(false);
+        telaHome.SetActive(true);
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.IniciarMusicaFundo();
 
-        // Manda o Gerenciador disparar a primeira notificação!
-        if (GerenciadorDeNarrativa.Instancia != null)
+        // --- 4. FADE IN (Clareia a tela revelando a Home) ---
+        if (painelPretoFade != null)
         {
-            GerenciadorDeNarrativa.Instancia.IniciarJogo();
+            tempo = 0f;
+            while (tempo < velocidadeFade)
+            {
+                tempo += Time.deltaTime;
+                painelPretoFade.alpha = 1f - (tempo / velocidadeFade);
+                yield return null;
+            }
+            painelPretoFade.alpha = 0f;
         }
+
+        // Inicia as notificações!
+        if (GerenciadorDeNarrativa.Instancia != null) GerenciadorDeNarrativa.Instancia.IniciarJogo();
     }
 }

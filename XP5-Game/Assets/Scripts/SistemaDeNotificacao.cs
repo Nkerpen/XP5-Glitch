@@ -68,6 +68,7 @@ public class SistemaDeNotificacao : MonoBehaviour
         textoMensagem.text = mensagem;
         
         painelNotificacao.SetActive(true);
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarNotificacao();
         
         // 1. Anima a descida
         yield return StartCoroutine(AnimarDeslizamento(posicaoYVisivel, false));
