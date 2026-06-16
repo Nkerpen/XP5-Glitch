@@ -2,56 +2,138 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SistemaDeChatPuzzle : MonoBehaviour
 {
+    private bool avancarHistoriaAposChat = false;
+
     [Header("Estrutura da UI")]
     [SerializeField] private Transform contentArea;
     [SerializeField] private GameObject prefabBalaoNPC;
     [SerializeField] private GameObject prefabBalaoJogador;
+    [SerializeField] private ScrollRect scrollDoChat;
+    private RectTransform scrollRectTransform;
 
     [Header("Painel de Escolhas")]
-    [SerializeField] private GameObject painelEscolhas;
+    [SerializeField] private RectTransform painelEscolhas;
     [SerializeField] private Button[] botoesDeEscolha;
     [SerializeField] private TextMeshProUGUI[] textosDosBotoes;
 
-    [Header("Dados do Puzzle / Chat")]
-    [SerializeField] private NoDeDialogo dialogoInicial;
+    [Header("Configurações de Animação (DOTween)")]
+    [SerializeField] private Vector2 posicaoEscondido = new Vector2(0, -500);
+    [SerializeField] private Vector2 posicaoVisivel = new Vector2(0, 120);
+    [SerializeField] private float duracaoAnimacao = 0.4f;
+    [SerializeField] private Ease tipoDeTransicao = Ease.OutBack;
+
+    [Header("Configuração do Chat Dinâmico")]
+    [SerializeField] private float margemFundoSemEscolhas = 40f;
+    [SerializeField] private float margemFundoComEscolhas = 450f;
+
+    [Header("Ajuste de Posição do Textinho")]
+    [Tooltip("Força as letras a subirem fisicamente, burlando o Layout Group.")]
+    [SerializeField] private float deslocamentoYDigitando = 20f;
+
+    [Header("Animação dos Balões")]
+    [SerializeField] private float duracaoSurgimentoBalao = 0.3f;
+    [SerializeField] private Ease transicaoSurgimentoBalao = Ease.OutBack;
+
+    [Header("Dados do Puzzle / Chat Atual")]
     private NoDeDialogo dialogoAtual;
+    private Coroutine rotinaDeMensagens;
+    private Coroutine rotinaAnimacaoDigitando;
+    private string idDoChatAtual;
 
     [Header("Telas de Fim de Jogo")]
     [SerializeField] private GameObject painelGameOver;
-    // Se quiser, pode criar um painelVitoria também no futuro!
+    [SerializeField] private GameObject painelVitoria;
+    [SerializeField] private GameObject botaoContatoGolpista;
 
-    public void IniciarChat(NoDeDialogo inicio)
+    private void Start()
     {
-        // Limpa as mensagens da conversa anterior
+        if (painelEscolhas == null || scrollDoChat == null)
+        {
+            Debug.LogError($"[SistemaDeChatPuzzle] Referências faltando no Inspector!");
+            return;
+        }
+
+        scrollRectTransform = scrollDoChat.GetComponent<ScrollRect>().GetComponent<RectTransform>();
+
+        painelEscolhas.anchoredPosition = posicaoEscondido;
+        painelEscolhas.gameObject.SetActive(false);
+        SetChatBottomMargin(margemFundoSemEscolhas);
+    }
+
+    public void IniciarChat(NoDeDialogo noInicial)
+    {
+
+        
+        gameObject.SetActive(true);
+        if (noInicial == null) return;
+
+        idDoChatAtual = noInicial.idDaConversa;
+
+        // Verifica se essa conversa inteira já foi finalizada pelo jogador
+        if (PlayerPrefs.GetInt(idDoChatAtual + "_Finalizada", 0) == 1)
+        {
+            Debug.Log($"[SistemaDeChat] A conversa '{idDoChatAtual}' já foi concluída em definitivo. Acesso bloqueado.");
+            return;
+        }
+
         foreach (Transform filho in contentArea) Destroy(filho.gameObject);
 
-        // Inicia a nova conversa
-        dialogoAtual = inicio;
-        painelEscolhas.SetActive(false);
-        StartCoroutine(TocarMensagensDoNPC());
+        // Sistema de checkpoints: Recupera onde o jogador parou
+        string ultimoNoSalvo = PlayerPrefs.GetString(idDoChatAtual + "_UltimoNo", "");
+
+        if (!string.IsNullOrEmpty(ultimoNoSalvo) && ultimoNoSalvo != noInicial.idDoNo)
+        {
+            NoDeDialogo noCarregado = Resources.Load<NoDeDialogo>("Dialogos/" + ultimoNoSalvo);
+            if (noCarregado != null)
+            {
+                dialogoAtual = noCarregado;
+                Debug.Log($"[SistemaDeChat] Continuando '{idDoChatAtual}' a partir do nó '{ultimoNoSalvo}'.");
+            }
+            else
+            {
+                dialogoAtual = noInicial;
+            }
+        }
+        else
+        {
+            dialogoAtual = noInicial;
+            SalvarProgressoAtual();
+        }
+
+        EsconderPainelEscolhas();
+
+        if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
+        rotinaDeMensagens = StartCoroutine(TocarMensagensDoNPC());
+    }
+
+    private void SalvarProgressoAtual()
+    {
+        if (dialogoAtual == null) return;
+        PlayerPrefs.SetString(idDoChatAtual + "_UltimoNo", dialogoAtual.idDoNo);
+        PlayerPrefs.Save();
     }
 
     private IEnumerator TocarMensagensDoNPC()
     {
-        // Lê cada mensagem da lista do grupo
         foreach (MensagemNPC msg in dialogoAtual.mensagens)
         {
-            // Espera o tempo de digitação
-            yield return new WaitForSeconds(msg.tempoDeDigitacao);
-
-            // Instancia o contêiner (Content_NPC)
             GameObject balao = Instantiate(prefabBalaoNPC, contentArea);
-
-            // Pega as referências de texto dentro do balão (0 é o Nome, 1 é a Mensagem)
+            if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarMensagemNPC();
             TextMeshProUGUI[] textos = balao.GetComponentsInChildren<TextMeshProUGUI>();
-            textos[0].text = msg.autor.nome;
-            textos[0].color = msg.autor.corDoNome;
-            textos[1].text = msg.textoDaMensagem;
 
-           // verifica se existe a foto, se existir declara a foto do personagem no chat
+            VerticalAlignmentOptions alinhamentoOriginal = VerticalAlignmentOptions.Top;
+
+            if (textos.Length >= 2)
+            {
+                textos[0].text = msg.autor.nome;
+                textos[0].color = msg.autor.corDoNome;
+                alinhamentoOriginal = textos[1].verticalAlignment;
+            }
+
             Transform fotoTransform = balao.transform.Find("FotoPersonagem");
             if (fotoTransform != null)
             {
@@ -61,37 +143,150 @@ public class SistemaDeChatPuzzle : MonoBehaviour
                     fotoImage.sprite = msg.autor.foto;
                 }
             }
-            
-            // --- A MÁGICA DA COR ENTRA AQUI ---
-            // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
+
+            Image fundoBalao = null;
             Transform balaoTransform = balao.transform.Find("balaoNPC");
             if (balaoTransform != null)
             {
-                Image fundoBalao = balaoTransform.GetComponent<Image>();
+                fundoBalao = balaoTransform.GetComponent<Image>();
                 if (fundoBalao != null)
                 {
                     fundoBalao.color = msg.autor.corDoBalao;
                 }
             }
-            // --- A MÁGICA DA COR ENTRA AQUI ---
-            // Procura o componente Image (que está no BalaoNpc) e pinta com a cor do Personagem
-            //Image fundoBalao = balao.GetComponentInChildren<Image>();
-            //if (fundoBalao != null)
-            //{
-            //    fundoBalao.color = msg.autor.corDoBalao;
-            //}
+
+            balao.transform.localScale = Vector3.zero;
+            balao.transform.DOScale(Vector3.one, duracaoSurgimentoBalao).SetEase(transicaoSurgimentoBalao);
+
+            if (msg.tempoDeDigitacao > 0f)
+            {
+                if (textos.Length >= 1) textos[0].enabled = false;
+
+                if (textos.Length >= 2)
+                {
+                    textos[1].text = "<i><color=#888888>digitando...</color></i>";
+                    rotinaAnimacaoDigitando = StartCoroutine(AnimarTextoDigitando(textos[1]));
+                }
+
+                if (fundoBalao != null) fundoBalao.enabled = false;
+
+                StartCoroutine(ForcarScrollParaBaixo());
+
+                yield return new WaitForSeconds(msg.tempoDeDigitacao);
+
+                if (rotinaAnimacaoDigitando != null) StopCoroutine(rotinaAnimacaoDigitando);
+
+                if (fundoBalao != null) fundoBalao.enabled = true;
+                if (textos.Length >= 2) textos[1].verticalAlignment = alinhamentoOriginal;
+
+                if (textos.Length >= 1) textos[0].enabled = true;
+            }
+
+            if (textos.Length >= 2)
+            {
+                textos[1].text = msg.textoDaMensagem;
+            }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(balao.GetComponent<RectTransform>());
+            balao.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0f), 0.2f, 5, 0.5f);
+
+            StartCoroutine(ForcarScrollParaBaixo());
         }
 
+        if (dialogoAtual.escolhas == null || dialogoAtual.escolhas.Length == 0)
+        {
+            MarcarChatComoConcluido();
+        }
+        else
+        {
+            AtualizarBotoesDeEscolha(); // Mostra as opções para o jogador (executado apenas uma vez)
+        }
+
+        // 2. Chama o Cérebro SOMENTE AQUI, quando o NPC parou de escrever por completo!
+        if (avancarHistoriaAposChat)
+        {
+            avancarHistoriaAposChat = false; // Destranca a variável
+            
+            // Dá mais 1.5 segundos de margem para o jogador ler a última mensagem do NPC tranquilamente
+            StartCoroutine(TempoParaLeituraEAvanco(1.5f)); 
+        }
         // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
         AtualizarBotoesDeEscolha();
     }
+
+    private IEnumerator TempoParaLeituraEAvanco(float tempo)
+    {
+        yield return new WaitForSeconds(tempo);
+        if (GerenciadorDeNarrativa.Instancia != null)
+        {
+            GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+        }
+    }
+
+    private void MarcarChatComoConcluido()
+    {
+        Debug.Log($"player completou chat ({idDoChatAtual})");
+
+        PlayerPrefs.SetInt(idDoChatAtual + "_Finalizada", 1);
+        PlayerPrefs.DeleteKey(idDoChatAtual + "_UltimoNo");
+        PlayerPrefs.Save();
+    }
+
+    private IEnumerator AnimarTextoDigitando(TextMeshProUGUI campoTexto)
+    {
+        float velocidadeMetros = 4f;
+        float alturaBalanço = 5f;
+
+        campoTexto.ForceMeshUpdate();
+        TMP_TextInfo textInfo = campoTexto.textInfo;
+
+        while (true)
+        {
+            campoTexto.ForceMeshUpdate();
+            textInfo = campoTexto.textInfo;
+
+            for (int i = 0; i < textInfo.characterCount; i++)
+            {
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+                if (!charInfo.isVisible) continue;
+
+                int materialIndex = charInfo.materialReferenceIndex;
+                int vertexIndex = charInfo.vertexIndex;
+                Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
+
+                float offsetOnda = i * 0.25f;
+                float deslocamentoY = (Mathf.Sin(Time.time * velocidadeMetros + offsetOnda) * alturaBalanço) + deslocamentoYDigitando;
+
+                vertices[vertexIndex + 0].y += deslocamentoY;
+                vertices[vertexIndex + 1].y += deslocamentoY;
+                vertices[vertexIndex + 2].y += deslocamentoY;
+                vertices[vertexIndex + 3].y += deslocamentoY;
+            }
+
+            campoTexto.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices);
+            yield return null;
+        }
+    }
+
+    // ATUALIZADO: Método Update totalmente reescrito usando o Novo Input System da Unity
+    private void Update()
+    {
+        if (UnityEngine.InputSystem.Keyboard.current != null &&
+            UnityEngine.InputSystem.Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("[SistemaDeChat] TODOS OS SAVES FORAM RESETADOS PARA TESTE!");
+        }
+    }
+
     private void AtualizarBotoesDeEscolha()
     {
-        painelEscolhas.SetActive(true);
         foreach (var btn in botoesDeEscolha) btn.gameObject.SetActive(false);
 
         for (int i = 0; i < dialogoAtual.escolhas.Length; i++)
         {
+            if (i >= botoesDeEscolha.Length) break;
+
             botoesDeEscolha[i].gameObject.SetActive(true);
             textosDosBotoes[i].text = dialogoAtual.escolhas[i].textoDaEscolha;
 
@@ -99,39 +294,108 @@ public class SistemaDeChatPuzzle : MonoBehaviour
             botoesDeEscolha[i].onClick.RemoveAllListeners();
             botoesDeEscolha[i].onClick.AddListener(() => FazerEscolha(indexCopia));
         }
+
+        MostrarPainelEscolhas();
     }
 
-    private void FazerEscolha(int index)
+    private void MostrarPainelEscolhas()
+    {
+        painelEscolhas.DOKill();
+        painelEscolhas.gameObject.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(painelEscolhas);
+
+        painelEscolhas.DOAnchorPos(posicaoVisivel, duracaoAnimacao).SetEase(tipoDeTransicao);
+
+        DOTween.To(() => scrollRectTransform.offsetMin.y, x => SetChatBottomMargin(x), margemFundoComEscolhas, duracaoAnimacao)
+            .SetEase(tipoDeTransicao)
+            .OnUpdate(() => {
+                if (scrollDoChat != null) scrollDoChat.verticalNormalizedPosition = 0f;
+            })
+            .OnComplete(() => StartCoroutine(ForcarScrollParaBaixo()));
+    }
+
+    private void EsconderPainelEscolhas()
+    {
+        painelEscolhas.DOKill();
+
+        painelEscolhas.DOAnchorPos(posicaoEscondido, duracaoAnimacao * 0.75f).SetEase(Ease.InQuad)
+            .OnComplete(() => painelEscolhas.gameObject.SetActive(false));
+
+        DOTween.To(() => scrollRectTransform.offsetMin.y, x => SetChatBottomMargin(x), margemFundoSemEscolhas, duracaoAnimacao * 0.75f)
+            .SetEase(Ease.InQuad)
+            .OnUpdate(() => {
+                if (scrollDoChat != null) scrollDoChat.verticalNormalizedPosition = 0f;
+            });
+    }
+
+    private void SetChatBottomMargin(float bottomMargin)
+    {
+        if (scrollRectTransform == null) return;
+        scrollRectTransform.offsetMin = new Vector2(scrollRectTransform.offsetMin.x, bottomMargin);
+    }
+
+    private IEnumerator ForcarScrollParaBaixo()
+    {
+        Canvas.ForceUpdateCanvases();
+        yield return new WaitForEndOfFrame();
+
+        if (scrollDoChat != null)
+        {
+            scrollDoChat.verticalNormalizedPosition = 0f;
+        }
+    }
+
+   private void FazerEscolha(int index)
     {
         RespostaJogador escolha = dialogoAtual.escolhas[index];
 
-        // Balão do Jogador
-        GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
-        balao.GetComponentInChildren<TextMeshProUGUI>().text = escolha.textoDaEscolha;
-
-        painelEscolhas.SetActive(false);
-
-        if (escolha.encerraPuzzle)
+        // 1. APENAS ANOTA que a história vai avançar. Não avança agora!
+        if (escolha.avancaAHistoria)
         {
-            if (escolha.jogadorGanhou)
-            {
-                Debug.Log("Vitória! O jogador não caiu no golpe.");
-                // Futuramente você liga uma tela de vitória ou libera uma pista nova aqui.
-            }
-            else
-            {
-                Debug.Log("Game Over!");
-                // Mostra a tela de erro
-                painelGameOver.SetActive(true);
-            }
-            return; // Termina a função para não tentar carregar a próxima mensagem
+            avancarHistoriaAposChat = true;
         }
 
-        // Se não encerrou o puzzle, continua o papo normalmente...
-        dialogoAtual = escolha.proximoNo;
-        StartCoroutine(TocarMensagensDoNPC());
+        // -> GARANTA QUE APAGOU QUALQUER OUTRO "if (escolha.avancaAHistoria)" DAQUI! <-
+
+        // Cria o balão do jogador
+        GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarEnvioMensagem();
+        var textoBalao = balao.GetComponentInChildren<TextMeshProUGUI>();
+        if (textoBalao != null) textoBalao.text = escolha.textoDaEscolha;
+
+        balao.transform.localScale = Vector3.zero;
+        balao.transform.DOScale(Vector3.one, duracaoSurgimentoBalao).SetEase(transicaoSurgimentoBalao);
+
+        StartCoroutine(ForcarScrollParaBaixo());
+        EsconderPainelEscolhas();
+        if (escolha.encerraPuzzle)
+        {
+            // ... (código de vitória/derrota que já lá está)
+            return;
+        }
 
         dialogoAtual = escolha.proximoNo;
-        StartCoroutine(TocarMensagensDoNPC());
+
+        // --- NOVA TRAVA DE SEGURANÇA (Em Construção / Fim de Rota) ---
+        if (dialogoAtual == null)
+        {
+            Debug.LogWarning("[SistemaDeChat] O próximo nó está vazio! Encerrando a conversa.");
+            MarcarChatComoConcluido();
+
+            // Como a corrotina não vai rodar para avisar o Cérebro no final, temos de o fazer aqui!
+            if (avancarHistoriaAposChat)
+            {
+                avancarHistoriaAposChat = false;
+                StartCoroutine(TempoParaLeituraEAvanco(1.5f)); // Usa a mesma pausa dramática que criámos!
+            }
+            return; // Aborta a função aqui para não dar erro vermelho!
+        }
+        // -------------------------------------------------------------
+
+        // Se houver um próximo nó, continua normalmente:
+        SalvarProgressoAtual();
+
+        if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
+        rotinaDeMensagens = StartCoroutine(TocarMensagensDoNPC());
     }
 }

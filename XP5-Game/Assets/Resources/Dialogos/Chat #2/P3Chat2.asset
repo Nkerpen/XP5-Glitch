@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: P3Chat2
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: 
+  idDoNo: P3Chat2
+  mensagens:
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: oito tres quatro cinco.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "isso \xE9 um id de contato."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "a pergunta \xE9 quem mandou."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: detective.dragonfly.
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "algu\xE9m conhece esse nome?"
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "N\xE3o."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: 'nunca vi. '
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "eu tamb\xE9m n\xE3o."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e certamente o John nunca apresentaria ningu\xE9m com esse
+      nome kkkkk "
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "e certamente o John nunca apresentaria ningu\xE9m com esse
+      nome kkkkk "
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "por que algu\xE9m mandaria s\xF3 um id?"
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: 'sem contexto nenhum
+
+'
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "s\xF3 um n\xFAmero."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Gente, \xE9 exatamente o que parece."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Talvez ele n\xE3o tenha John adicionado e est\xE1 tentando
+      se comunicar.\r\n"
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "ou \xE9 o sequestrador, tentando nos pegar em uma armadilha."
+    tempoDeDigitacao: 2.5
+  escolhas:
+  - textoDaEscolha: "Esse e-mail \xE9 recente. Foi mandado depois que ele sumiu."
+    proximoNo: {fileID: 11400000, guid: a051ef21570b7544f86204def0b1b413, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1
+  - textoDaEscolha: "A caixa de entrada t\xE1 quase vazia. Esse \xE9 o \xFAnico e-mail
+      n\xE3o lido."
+    proximoNo: {fileID: 11400000, guid: d3323602530de2d498eac8b0c81b7cd9, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1
+  - textoDaEscolha: "N\xE3o tem mais nada importante. S\xF3 esse e-mail."
+    proximoNo: {fileID: 11400000, guid: 6025fe15cb130f64a9434df9e558d61b, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1

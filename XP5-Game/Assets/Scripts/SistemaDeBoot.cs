@@ -1,58 +1,79 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI; // Importante para usar o componente Image
+using UnityEngine.UI;
 
 public class SistemaDeBoot : MonoBehaviour
 {
-    [Header("Telas do Sistema")]
+    [Header("Telas")]
     [SerializeField] private GameObject telaLoading;
-    [SerializeField] private GameObject telaLogo;
     [SerializeField] private GameObject telaHome;
 
-    [Header("Elementos de UI")]
-    [SerializeField] private Image barraDeProgresso; // Arraste a Barra_Preenchimento aqui
+    [Header("Elementos do Loading")]
+    [SerializeField] private Image barraDeProgresso;
+    [SerializeField] private float tempoDeLoading = 3f;
+    
+    [Header("Efeito de TransiÃ§Ã£o")]
+    [SerializeField] private CanvasGroup painelPretoFade; // Um painel 100% preto cobrindo tudo
+    [SerializeField] private float velocidadeFade = 0.5f;
 
-    private void Start()
+    void Start()
     {
-        StartCoroutine(FluxoDeInicializacaoEPreparos());
+        // Garante que o painel preto comece transparente para vermos o loading
+        if (painelPretoFade != null) painelPretoFade.alpha = 0f;
+        StartCoroutine(RotinaDeLoading());
     }
 
-    private IEnumerator FluxoDeInicializacaoEPreparos()
+    private IEnumerator RotinaDeLoading()
     {
-        // 1. Inicia a Tela de Loading
         telaLoading.SetActive(true);
-        telaLogo.SetActive(false);
         telaHome.SetActive(false);
-        
         barraDeProgresso.fillAmount = 0f;
 
-        /* * AQUI COMEÇAM OS PREPARATIVOS!
-         * Na Sprint 1, como ainda não temos o sistema de save pronto, 
-         * vamos simular o progresso em 3 etapas (ex: 33% para cada etapa concluída).
-         */
-
-        // Tarefa 1: Simular a inicialização do Gerenciador de Áudio/Configs
-        yield return new WaitForSeconds(0.5f); // Tempo que a tarefa levou
-        barraDeProgresso.fillAmount = 0.33f;
-
-        // Tarefa 2: Simular a leitura do JSON do sistema de Chats/Rotas
-        yield return new WaitForSeconds(1.0f);
-        barraDeProgresso.fillAmount = 0.66f;
-
-        // Tarefa 3: Simular a instancialização dos ícones e apps da Home
-        yield return new WaitForSeconds(0.8f);
+        // 1. Enche a barra
+        float tempo = 0f;
+        while (tempo < tempoDeLoading)
+        {
+            tempo += Time.deltaTime;
+            barraDeProgresso.fillAmount = tempo / tempoDeLoading;
+            yield return null;
+        }
         barraDeProgresso.fillAmount = 1f;
 
-        // Dá um pequeno respiro visual de 0.5s para o jogador ver a barra cheia (100%)
-        yield return new WaitForSeconds(0.5f); 
+        // --- 2. TOCA O SOM DE PLAY ---
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.TocarPlay();
 
-        // 2. Troca para a Tela de Logo
+        // --- 3. FADE OUT (Escurece a tela toda) ---
+        if (painelPretoFade != null)
+        {
+            tempo = 0f;
+            while (tempo < velocidadeFade)
+            {
+                tempo += Time.deltaTime;
+                painelPretoFade.alpha = tempo / velocidadeFade;
+                yield return null;
+            }
+            painelPretoFade.alpha = 1f;
+        }
+
+        // Troca as telas no escuro e liga a mÃºsica!
         telaLoading.SetActive(false);
-        telaLogo.SetActive(true);
-        yield return new WaitForSeconds(2f); // Tempo de exibição da logo
-
-        // 3. Finalmente, abre a Home do celular
-        telaLogo.SetActive(false);
         telaHome.SetActive(true);
+        if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.IniciarMusicaFundo();
+
+        // --- 4. FADE IN (Clareia a tela revelando a Home) ---
+        if (painelPretoFade != null)
+        {
+            tempo = 0f;
+            while (tempo < velocidadeFade)
+            {
+                tempo += Time.deltaTime;
+                painelPretoFade.alpha = 1f - (tempo / velocidadeFade);
+                yield return null;
+            }
+            painelPretoFade.alpha = 0f;
+        }
+
+        // Inicia as notificaÃ§Ãµes!
+        if (GerenciadorDeNarrativa.Instancia != null) GerenciadorDeNarrativa.Instancia.IniciarJogo();
     }
 }

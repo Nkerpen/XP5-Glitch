@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class NavegacaoCelular : MonoBehaviour
 {
+    [Header("ConfiguraÔøΩÔøΩes de Telas")]
     [SerializeField] private GameObject telaHome;
+
+    [Tooltip("Arraste aqui o objeto pai 'Tela_Aplicativos'")]
+    [SerializeField] private GameObject telaAplicativos;
 
     private GameObject telaAtual;
     private Stack<GameObject> historicoTelas = new Stack<GameObject>();
@@ -13,39 +17,66 @@ public class NavegacaoCelular : MonoBehaviour
         telaAtual = telaHome;
     }
 
-    // Chame essa funÁ„o nos botıes dos aplicativos (ex: Clicou no app de E-mail)
+    // Chame essa funÔøΩÔøΩo nos botÔøΩes dos aplicativos (ex: Clicou no app de E-mail)
     public void AbrirApp(GameObject novoApp)
     {
         if (telaAtual != null)
         {
-            historicoTelas.Push(telaAtual); // Salva a tela atual na pilha
-            telaAtual.SetActive(false);     // Esconde a tela atual
+            // PROTE√á√ÉO 1: S√≥ salva no hist√≥rico se a tela atual N√ÉO for a tela m√£e/container
+            if (telaAtual != telaAplicativos)
+            {
+                historicoTelas.Push(telaAtual); // Salva a tela atual na pilha
+            }
+
+            // S√≥ desativa a tela atual se ela N√ÉO for a tela m√£e
+            if (telaAtual != telaAplicativos)
+            {
+                telaAtual.SetActive(false); // Esconde a tela atual
+            }
         }
+
+        // --- A SOLU√á√ÉO ENTRA AQUI ---
+        // Se o novo app que estamos abrindo fica dentro da Tela_Aplicativos, 
+        // precisamos garantir que o PAI (Tela_Aplicativos) seja ligado primeiro!
+        if (telaAplicativos != null && novoApp.transform.IsChildOf(telaAplicativos.transform))
+        {
+            telaAplicativos.SetActive(true);
+            telaHome.SetActive(false); // Esconde a home caso estiv√©ssemos l√°
+        }
+        // ------------------------------
 
         telaAtual = novoApp;
         telaAtual.SetActive(true); // Mostra o novo app
     }
 
-    // Anexe ao bot„o "Seta / Tri‚ngulo" da barra inferior
+    // Anexe ao botÔøΩo "Seta / TriÔøΩngulo" da barra inferior
     public void BotaoVoltar()
     {
         if (historicoTelas.Count > 0)
         {
-            telaAtual.SetActive(false);
-            telaAtual = historicoTelas.Pop(); // Tira a ˙ltima tela da pilha e volta pra ela
+            if (telaAtual != null) telaAtual.SetActive(false);
+            
+            telaAtual = historicoTelas.Pop();
             telaAtual.SetActive(true);
+
+            // --- A M√ÅGICA PARA CONSERTAR O BUG ---
+            // Se a tela que resgatamos do hist√≥rico for a Home, garantimos que a gaveta de aplicativos seja fechada!
+            if (telaAtual == telaHome && telaAplicativos != null)
+            {
+                telaAplicativos.SetActive(false);
+            }
         }
     }
 
-    // Anexe ao bot„o "CÌrculo" da barra inferior
     public void BotaoHome()
     {
-        if (telaAtual != telaHome)
-        {
-            telaAtual.SetActive(false);
-            historicoTelas.Clear(); // Limpa a memÛria de navegaÁ„o
-            telaAtual = telaHome;
-            telaAtual.SetActive(true);
-        }
+        if (telaAtual != null) telaAtual.SetActive(false);
+        
+        // Se o jogador clicar no bot√£o Home f√≠sico, for√ßa o fechamento da gaveta tamb√©m
+        if (telaAplicativos != null) telaAplicativos.SetActive(false); 
+
+        telaAtual = telaHome;
+        telaAtual.SetActive(true);
+        historicoTelas.Clear();
     }
 }

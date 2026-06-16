@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28925c74c269e124dab39a3c23e16a39, type: 3}
+  m_Name: PC1Rota1P1
+  m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
+  idDaConversa: 
+  idDoNo: 
+  mensagens:
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: como assim depois?
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "ent\xE3o detective.dragonfly n\xE3o sabe que ele desapareceu."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Isso muda muita coisa.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Se a pessoa mandou esperando resposta, ela pode estar esperando
+      at\xE9 agora."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "ela n\xE3o sabe."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: ' ela mandou esse id achando que o John ia ver.'
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "o fato \xE9 que a gente n\xE3o sabe quem \xE9 essa pessoa."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: pode ser uma fonte do John.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "pode ser algu\xE9m envolvido no desaparecimento."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "maicon, voc\xEA acha que qualquer um \xE9 suspeito."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "charles, algu\xE9m fez alguma coisa com o John."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "ent\xE3o sim. todo mundo \xE9 suspeito\r\n"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Maicon tem raz\xE3o nisso.\r\n"
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "N\xE3o podemos partir do princ\xEDpio que esse contato \xE9
+      seguro."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "mas tamb\xE9m n\xE3o podemos ignorar."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: 'se essa pessoa tinha contato com o John antes de ele sumir
+
+'
+    tempoDeDigitacao: 3.4
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "ent\xE3o ela pode saber alguma coisa. "
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: 'detective.dragonfly. '
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "isso \xE9 um nome de usu\xE1rio. "
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "ningu\xE9m usa o nome real numa conta assim."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "seja bem-vindo ao chat, Capit\xE3o \xD3bvio! "
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: cara, eu to dizendo que pode ser qualquer pessoa.
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "pode ser algu\xE9m do brasil, pode ser algu\xE9m do outro lado
+      do mundo."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: "o John falava ingl\xEAs."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: 'ele tinha contatos internacionais por causa das reportagens. '
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Isso n\xE3o ajuda muito a restringir."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "o que eu quero saber \xE9 o seguinte."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: o John recebia emails de muita gente.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: por que esse especificamente ficou no celular?
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
+    textoDaMensagem: "por que n\xE3o no computador, no email de trabalho?"
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: Porque era pessoal.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
+    textoDaMensagem: "Ou porque era uma comunica\xE7\xE3o que ele n\xE3o queria misturar
+      com o resto."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: ele era cuidadoso com isso.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
+    textoDaMensagem: 'separava muito bem o que era pessoal e o que era profissional. '
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
+    textoDaMensagem: "ent\xE3o esse contato \xE9 o qu\xEA? os dois?"
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: Parece que essa pessoa estava esperando o John entrar em contato.
+    proximoNo: {fileID: 11400000, guid: 4998c43ef4d88a746a7330001b0fab88, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1
+  - textoDaEscolha: O ID pode ser pra outro canal. Talvez queira continuar a conversa
+      em outro lugar.
+    proximoNo: {fileID: 11400000, guid: dc927d816396e784e87ab5a7a30d91b6, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1
+  - textoDaEscolha: "N\xE3o sei o que interpretar. Parece deliberadamente vago."
+    proximoNo: {fileID: 11400000, guid: d873fb525c272cb4b893f594684bfa52, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 1
