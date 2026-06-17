@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "h\xE1 quanto tempo?"
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: "N\xE3o sabemos ao certo."
+    proximoNo: {fileID: 11400000, guid: f7c6791cf9809a5478bb7e7dce1bc690, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

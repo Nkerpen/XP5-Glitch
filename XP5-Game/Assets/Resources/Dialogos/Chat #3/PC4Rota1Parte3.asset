@@ -14,5 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: posso.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "mas n\xE3o aqui."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: vou te dizer uma coisa.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "de gra\xE7a. camaradagem, sabe?"
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: o john era muito cuidadoso.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ele n\xE3o deixa rastro por acidente, e se deixou, foi porque
+      quis. "
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ent\xE3o, o celular que voc\xEA encontrou n\xE3o estava perdido."
+    tempoDeDigitacao: 2.5
+  escolhas:
+  - textoDaEscolha: "O que voc\xEA est\xE1 dizendo?"
+    proximoNo: {fileID: 11400000, guid: 074874a3b0789be4b99492720404253c, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Voc\xEA acha que ele foi for\xE7ado a sumir?"
+    proximoNo: {fileID: 11400000, guid: 9e2953b36afc88a4bbdb23977f5b1629, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Voc\xEA sabia que ele estava em perigo e n\xE3o fez nada?"
+    proximoNo: {fileID: 11400000, guid: b0ca283c9aefae44e970bc716a6975b8, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

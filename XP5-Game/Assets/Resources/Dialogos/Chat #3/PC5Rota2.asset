@@ -14,5 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "n\xE3o acho nada ainda."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: mas o john me pediu pra investigar algo que envolve pessoas
+      com recursos.
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "pessoas com recursos t\xEAm formas de resolver problemas"
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: e john era um problema em potencial.
+    tempoDeDigitacao: 1.5
+  escolhas:
+  - textoDaEscolha: "Acha que John est\xE1 morto?"
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

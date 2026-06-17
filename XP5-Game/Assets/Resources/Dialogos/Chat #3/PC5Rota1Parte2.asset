@@ -14,5 +14,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ou que algu\xE9m o deixou por ele."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: ou que ele precisou se livrar de algo que podia ser rastreado.
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: existem algumas possibilidades.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "mas 'perdido' \xE9 ing\xEAnuo demais e o john n\xE3o \xE9 ing\xEAnuo."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: " n\xE3o sei se voc\xEA \xE9 quem diz ser, se voc\xEA est\xE1
+      tentando ajudar ou atrapalhar."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: 'mas o john confiava nas pessoas com cuidado.
+
+'
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "e em algum momento decidiu confiar em algu\xE9m que n\xE3o
+      devia."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "h\xE1 uma coisa que talvez voc\xEA devia verificar fora daqui."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: 'abra o app de notas do celular quando puder. '
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "talvez ele deixou algo l\xE1."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: vou entrar em contato no futuro, por um canal seguro.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "isso, \xE9 claro, se voc\xEA quiser continuar essa conversa
+      de um jeito que n\xE3o seja esse celular. "
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "aparentemente, porque esse celular n\xE3o \xE9 seguro."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: mais uma coisa.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "tome cuidado com quem voc\xEA conta sobre essa conversa."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "n\xE3o estou dizendo que algu\xE9m no c\xEDrculo do john est\xE1
+      envolvido."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "estou dizendo que quando algu\xE9m some, geralmente, em algum
+      lugar, h\xE1 uma porta aberta que algu\xE9m deixou. "
+    tempoDeDigitacao: 4
   escolhas: []

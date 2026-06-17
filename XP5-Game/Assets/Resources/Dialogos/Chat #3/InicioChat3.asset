@@ -15,4 +15,19 @@ MonoBehaviour:
   idDaConversa: 
   idDoNo: 
   mensagens: []
-  escolhas: []
+  escolhas:
+  - textoDaEscolha: "Ol\xE1."
+    proximoNo: {fileID: 11400000, guid: f07b4e5f1b4427d45a1a7839401c4d88, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Voc\xEA conhecia o John?"
+    proximoNo: {fileID: 11400000, guid: d32fd0d2995881e4fa1b38b547d90e15, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Voc\xEA est\xE1 bem?"
+    proximoNo: {fileID: 11400000, guid: 4b4b4ef8b3b11ac44b8b8f4d98b65ba4, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

@@ -14,5 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "conhecia \xE9 uma escolha de palavras interessante."
+    tempoDeDigitacao: 4
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "por que voc\xEA usou o passado?"
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "quem est\xE1 com o celular dele?"
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: "Encontrei o celular. N\xE3o conhe\xE7o o John pessoalmente."
+    proximoNo: {fileID: 11400000, guid: c7486652a9b5baa4c8228e1870fe79e9, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Sou amigo(a) dos amigos do John. Estamos tentando ach\xE1-lo."
+    proximoNo: {fileID: 11400000, guid: fba971e75830e6e4aa1cb22cdc7eefd6, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Prefiro n\xE3o dizer quem sou ainda."
+    proximoNo: {fileID: 11400000, guid: 7b649429d32c73249ae8d72da1ab0b5e, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

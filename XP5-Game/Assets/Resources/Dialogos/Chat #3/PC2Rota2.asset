@@ -14,5 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: amigo(a) de amigos?
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "n\xE3o dele diretamente?"
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: "n\xE3o, mas as pessoas que o conhecem est\xE3o preocupadas e
+      eu tenho o celular dele."
+    proximoNo: {fileID: 11400000, guid: e79deb04e309c2b498546b8f422198b6, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

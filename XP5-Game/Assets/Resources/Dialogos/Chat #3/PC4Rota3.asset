@@ -14,5 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "n\xE3o pode."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: e vale o mesmo pra mim.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "voc\xEA acabou de aparecer com o celular de algu\xE9m que eu
+      n\xE3o ou\xE7o falar faz semanas."
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "pode ser a pessoa mais honesta do mundo. pode n\xE3o ser."
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "eu n\xE3o tenho como saber."
+    tempoDeDigitacao: 1.5
+  escolhas:
+  - textoDaEscolha: "E mesmo assim voc\xEA est\xE1 conversando comigo."
+    proximoNo: {fileID: 11400000, guid: a3cb4f32d1e666c42884128d84cea399, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

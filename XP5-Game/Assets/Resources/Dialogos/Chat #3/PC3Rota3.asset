@@ -14,5 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ent\xE3o n\xE3o conta."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "s\xE9rio. n\xE3o conta."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "se voc\xEA tem d\xFAvida, \xE9 porque tem uma raz\xE3o pra
+      ter d\xFAvida."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: confie nesse instinto.
+    tempoDeDigitacao: 1.5
+  escolhas:
+  - textoDaEscolha: "voc\xEA est\xE1 me dizendo pra n\xE3o confiar em voc\xEA."
+    proximoNo: {fileID: 11400000, guid: 203a3433016ed284cab185967401a78f, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

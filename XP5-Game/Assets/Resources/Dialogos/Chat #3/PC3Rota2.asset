@@ -14,5 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: procurando.
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ent\xE3o j\xE1 faz tempo."
+    tempoDeDigitacao: 1.5
+  escolhas:
+  - textoDaEscolha: O que te faz dizer isso?
+    proximoNo: {fileID: 0}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

@@ -14,5 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "os amigos dele n\xE3o sabem quando o viram pela \xFAltima vez?"
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "isso \xE9\u2026 inusitado."
+    tempoDeDigitacao: 1
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "eu mandei um relat\xF3rio pro john faz algumas semanas."
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: ele pediu pra eu investigar uma coisa e eu mandei o que encontrei.
+    tempoDeDigitacao: 3.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "n\xE3o tive resposta, desde ent\xE3o."
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "at\xE9 descobrir que voc\xEA est\xE1 com o celular dele."
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "ent\xE3o ou ele n\xE3o chegou a ler, ou leu e n\xE3o p\xF4de
+      responder,  ou leu e decidiu n\xE3o responder."
+    tempoDeDigitacao: 4
+  escolhas:
+  - textoDaEscolha: "Que tipo de investiga\xE7\xE3o ele pediu?"
+    proximoNo: {fileID: 11400000, guid: ad545d1830627a6468ef3d72537e7a64, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Voc\xEA pode me mandar esse relat\xF3rio?"
+    proximoNo: {fileID: 11400000, guid: 64b1a6fea598d634dabbcff03114a9d0, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Como eu sei que posso confiar em voc\xEA?"
+    proximoNo: {fileID: 11400000, guid: 64b1a6fea598d634dabbcff03114a9d0, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

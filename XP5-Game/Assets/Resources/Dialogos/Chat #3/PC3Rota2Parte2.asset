@@ -14,5 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "porque voc\xEA n\xE3o teria chegado at\xE9 mim se fosse recente.\r\n"
+    tempoDeDigitacao: 3
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: teria tentado outras coisas primeiro.
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "delegacia. hospital. fam\xEDlia."
+    tempoDeDigitacao: 2
+  escolhas:
+  - textoDaEscolha: "j\xE1 tentamos algumas dessas coisas."
+    proximoNo: {fileID: 11400000, guid: 077990ef067de624cae43cf1a594fdbd, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

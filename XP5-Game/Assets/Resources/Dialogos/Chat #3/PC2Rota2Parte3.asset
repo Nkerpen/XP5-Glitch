@@ -14,5 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: 'hahahahahaha. '
+    tempoDeDigitacao: 2
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: interessante.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: vou perguntar uma coisa simples.
+    tempoDeDigitacao: 2.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: "o john est\xE1 bem?"
+    tempoDeDigitacao: 1.5
+  escolhas:
+  - textoDaEscolha: "N\xE3o sabemos. Ele sumiu."
+    proximoNo: {fileID: 11400000, guid: 17c637a513b96fd4eb1a0728a410c77a, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: Estamos procurando ele. Por isso encontrei seu contato.
+    proximoNo: {fileID: 11400000, guid: c7a9225988d398c4bafa51a2f3b42cbf, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
+  - textoDaEscolha: "Vou ser honesto: n\xE3o sei se devia te contar isso."
+    proximoNo: {fileID: 11400000, guid: 35a5f05ccc940684bb21d03cb8709c52, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0

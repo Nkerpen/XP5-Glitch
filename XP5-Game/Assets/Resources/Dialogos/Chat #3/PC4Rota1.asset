@@ -14,5 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
   idDoNo: 
-  mensagens: []
-  escolhas: []
+  mensagens:
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: direta, gosto disso.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: ele me mandou um nome.
+    tempoDeDigitacao: 1.5
+  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
+    textoDaMensagem: pediu pra eu cruzar esse nome com algumas empresas e ver o que
+      aparecia.
+    tempoDeDigitacao: 3.5
+  escolhas:
+  - textoDaEscolha: E o que apareceu?
+    proximoNo: {fileID: 11400000, guid: cd7edf7fc607f4243b7f11612e024bf4, type: 2}
+    encerraPuzzle: 0
+    jogadorGanhou: 0
+    avancaAHistoria: 0
