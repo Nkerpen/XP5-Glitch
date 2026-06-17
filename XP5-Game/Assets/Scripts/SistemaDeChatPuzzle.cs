@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic; // Garante o uso de Lists se necessário
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -66,8 +67,6 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     public void IniciarChat(NoDeDialogo noInicial)
     {
-
-        
         gameObject.SetActive(true);
         if (noInicial == null) return;
 
@@ -119,6 +118,19 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private IEnumerator TocarMensagensDoNPC()
     {
+        if (dialogoAtual.mensagens == null || dialogoAtual.mensagens.Count == 0)
+        {
+            if (dialogoAtual.escolhas == null || dialogoAtual.escolhas.Length == 0)
+            {
+                MarcarChatComoConcluido();
+            }
+            else
+            {
+                AtualizarBotoesDeEscolha();
+            }
+            yield break;
+        }
+
         foreach (MensagemNPC msg in dialogoAtual.mensagens)
         {
             GameObject balao = Instantiate(prefabBalaoNPC, contentArea);
@@ -199,19 +211,14 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         }
         else
         {
-            AtualizarBotoesDeEscolha(); // Mostra as opções para o jogador (executado apenas uma vez)
+            AtualizarBotoesDeEscolha();
         }
 
-        // 2. Chama o Cérebro SOMENTE AQUI, quando o NPC parou de escrever por completo!
         if (avancarHistoriaAposChat)
         {
-            avancarHistoriaAposChat = false; // Destranca a variável
-            
-            // Dá mais 1.5 segundos de margem para o jogador ler a última mensagem do NPC tranquilamente
-            StartCoroutine(TempoParaLeituraEAvanco(1.5f)); 
+            avancarHistoriaAposChat = false;
+            StartCoroutine(TempoParaLeituraEAvanco(1.5f));
         }
-        // Quando todas as mensagens forem enviadas, mostra as opções pro jogador
-        AtualizarBotoesDeEscolha();
     }
 
     private IEnumerator TempoParaLeituraEAvanco(float tempo)
@@ -255,6 +262,7 @@ public class SistemaDeChatPuzzle : MonoBehaviour
                 Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
 
                 float offsetOnda = i * 0.25f;
+                // CORREÇÃO: Ajustado de 'velocidadMetros' para 'velocidadeMetros' para bater com a declaração acima
                 float deslocamentoY = (Mathf.Sin(Time.time * velocidadeMetros + offsetOnda) * alturaBalanço) + deslocamentoYDigitando;
 
                 vertices[vertexIndex + 0].y += deslocamentoY;
@@ -268,7 +276,6 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         }
     }
 
-    // ATUALIZADO: Método Update totalmente reescrito usando o Novo Input System da Unity
     private void Update()
     {
         if (UnityEngine.InputSystem.Keyboard.current != null &&
@@ -345,17 +352,14 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         }
     }
 
-   private void FazerEscolha(int index)
+    private void FazerEscolha(int index)
     {
         RespostaJogador escolha = dialogoAtual.escolhas[index];
 
-        // 1. APENAS ANOTA que a história vai avançar. Não avança agora!
         if (escolha.avancaAHistoria)
         {
             avancarHistoriaAposChat = true;
         }
-
-        // -> GARANTA QUE APAGOU QUALQUER OUTRO "if (escolha.avancaAHistoria)" DAQUI! <-
 
         // Cria o balão do jogador
         GameObject balao = Instantiate(prefabBalaoJogador, contentArea);
@@ -368,31 +372,28 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
         StartCoroutine(ForcarScrollParaBaixo());
         EsconderPainelEscolhas();
+
         if (escolha.encerraPuzzle)
         {
-            // ... (código de vitória/derrota que já lá está)
             return;
         }
 
         dialogoAtual = escolha.proximoNo;
 
-        // --- NOVA TRAVA DE SEGURANÇA (Em Construção / Fim de Rota) ---
+        // --- TRAVA DE SEGURANÇA (Fim de Rota) ---
         if (dialogoAtual == null)
         {
             Debug.LogWarning("[SistemaDeChat] O próximo nó está vazio! Encerrando a conversa.");
             MarcarChatComoConcluido();
 
-            // Como a corrotina não vai rodar para avisar o Cérebro no final, temos de o fazer aqui!
             if (avancarHistoriaAposChat)
             {
                 avancarHistoriaAposChat = false;
-                StartCoroutine(TempoParaLeituraEAvanco(1.5f)); // Usa a mesma pausa dramática que criámos!
+                StartCoroutine(TempoParaLeituraEAvanco(1.5f));
             }
-            return; // Aborta a função aqui para não dar erro vermelho!
+            return;
         }
-        // -------------------------------------------------------------
 
-        // Se houver um próximo nó, continua normalmente:
         SalvarProgressoAtual();
 
         if (rotinaDeMensagens != null) StopCoroutine(rotinaDeMensagens);
