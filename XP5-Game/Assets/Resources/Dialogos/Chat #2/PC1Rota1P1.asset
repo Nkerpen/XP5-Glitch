@@ -131,15 +131,15 @@ MonoBehaviour:
     proximoNo: {fileID: 11400000, guid: 4998c43ef4d88a746a7330001b0fab88, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: O ID pode ser pra outro canal. Talvez queira continuar a conversa
       em outro lugar.
     proximoNo: {fileID: 11400000, guid: dc927d816396e784e87ab5a7a30d91b6, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: "N\xE3o sei o que interpretar. Parece deliberadamente vago."
     proximoNo: {fileID: 11400000, guid: d873fb525c272cb4b893f594684bfa52, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0

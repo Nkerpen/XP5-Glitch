@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PC5Rota2Parte2
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
-  idDoNo: 
+  idDoNo: PC5Rota2Parte2
   mensagens:
   - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
     textoDaMensagem: "\xE9 s\xF3 uma observa\xE7\xE3o sobre como o mundo funciona."

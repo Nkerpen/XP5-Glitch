@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PC5Rota3
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
-  idDoNo: 
+  idDoNo: PC5Rota3
   mensagens:
   - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
     textoDaMensagem: "eu n\xE3o sabia, eu suspeitava."

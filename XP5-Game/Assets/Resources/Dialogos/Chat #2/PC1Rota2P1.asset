@@ -24,4 +24,4 @@ MonoBehaviour:
     proximoNo: {fileID: 11400000, guid: d93d5fe5971735e40bbf2ae3a0406d53, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0

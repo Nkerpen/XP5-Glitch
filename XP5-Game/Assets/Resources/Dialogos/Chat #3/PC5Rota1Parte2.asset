@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PC5Rota1Parte2
   m_EditorClassIdentifier: Assembly-CSharp::NoDeDialogo
   idDaConversa: 
-  idDoNo: 
+  idDoNo: PC5Rota1Parte2
   mensagens:
   - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
     textoDaMensagem: "ou que algu\xE9m o deixou por ele."

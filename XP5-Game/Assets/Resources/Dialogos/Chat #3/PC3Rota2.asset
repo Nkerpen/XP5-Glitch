@@ -23,7 +23,7 @@ MonoBehaviour:
     tempoDeDigitacao: 1.5
   escolhas:
   - textoDaEscolha: O que te faz dizer isso?
-    proximoNo: {fileID: 0}
+    proximoNo: {fileID: 11400000, guid: 8f6f07e35494a314d904932417479953, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
     avancaAHistoria: 0

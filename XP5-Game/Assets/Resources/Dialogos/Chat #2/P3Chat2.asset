@@ -73,15 +73,15 @@ MonoBehaviour:
     proximoNo: {fileID: 11400000, guid: a051ef21570b7544f86204def0b1b413, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: "A caixa de entrada t\xE1 quase vazia. Esse \xE9 o \xFAnico e-mail
       n\xE3o lido."
     proximoNo: {fileID: 11400000, guid: d3323602530de2d498eac8b0c81b7cd9, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0
   - textoDaEscolha: "N\xE3o tem mais nada importante. S\xF3 esse e-mail."
     proximoNo: {fileID: 11400000, guid: 6025fe15cb130f64a9434df9e558d61b, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
-    avancaAHistoria: 1
+    avancaAHistoria: 0

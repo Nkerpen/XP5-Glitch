@@ -30,7 +30,7 @@ MonoBehaviour:
     tempoDeDigitacao: 1.5
   escolhas:
   - textoDaEscolha: "Acha que John est\xE1 morto?"
-    proximoNo: {fileID: 0}
+    proximoNo: {fileID: 11400000, guid: 26c3177ceeab96f428a45766cfab0003, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
     avancaAHistoria: 0

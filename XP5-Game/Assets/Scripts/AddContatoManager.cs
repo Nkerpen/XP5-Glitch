@@ -165,6 +165,12 @@ public class AddContatoManager : MonoBehaviour
             Debug.LogWarning("⚠️ Falta adicionar o componente 'Canvas Group' nos cards do Anthony para ver o efeito!");
             contatoBloqueadoAnthony.SetActive(false);
             contatoDesbloqueadoAnthony.SetActive(true);
+
+            // Se der ruim no componente visual, ainda assim precisamos empurrar a história para a Etapa 5
+            if (GerenciadorDeNarrativa.Instancia != null)
+            {
+                GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+            }
             return;
         }
 
@@ -176,11 +182,19 @@ public class AddContatoManager : MonoBehaviour
         // Dá um leve feedback de pulo "yoyo" no card antigo indicando que começou a decodificação
         contatoBloqueadoAnthony.transform.DOScale(1.05f, 0.15f).SetLoops(2, LoopType.Yoyo);
 
-        // 4. CROSSFADE (Efeito de fusão da Opção 3)
-        // O bloqueado vai sumindo e some de vez no final
+        // 4. CROSSFADE (Efeito de fusão visual)
+        // O bloqueado vai sumindo e desativa de vez no final da animação
         cgBloqueado.DOFade(0f, 0.6f).SetDelay(0.2f).OnComplete(() => {
             contatoBloqueadoAnthony.SetActive(false);
             contatoBloqueadoAnthony.transform.localScale = Vector3.one;
+
+            // LINK DO GATILHO DA NARRATIVA:
+            // Assim que o card antigo termina de sumir e o novo se consolida, a história vai para a Etapa 5!
+            if (GerenciadorDeNarrativa.Instancia != null)
+            {
+                Debug.Log("[ADD CONTATO] Sucesso! Anthony liberado. Avançando para a Etapa 5.");
+                GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+            }
         });
 
         // O desbloqueado vai aparecendo suavemente no mesmo ritmo
@@ -209,7 +223,7 @@ public class AddContatoManager : MonoBehaviour
     {
         foreach (var input in numeroInputs)
         {
-            input.text = "";
+            if (input != null) input.text = "";
         }
     }
 }
