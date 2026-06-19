@@ -1982,7 +1982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &298635193482059471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7095,7 +7095,6 @@ MonoBehaviour:
   transicaoSurgimentoBalao: 27
   painelGameOver: {fileID: 0}
   painelVitoria: {fileID: 0}
-  botaoContatoGolpista: {fileID: 6637795934218857302}
 --- !u!1 &6250928082182856291
 GameObject:
   m_ObjectHideFlags: 0
@@ -7809,7 +7808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7501111694899156744
 RectTransform:
   m_ObjectHideFlags: 0

@@ -10,10 +10,10 @@ public class SistemaEmailPuzzle : MonoBehaviour
     [SerializeField] private GameObject painelCaixaVazia;
 
     [Header("Referências de Navegação")]
-    [Tooltip("Arraste aqui o objeto que tem o script NavegacaoCelular")]
-    [SerializeField] private NavegacaoCelular gerenciadorNavegacao;
+    [Tooltip("Arraste aqui o objeto que tem o script GerenciadorDeTelas")]
+    [SerializeField] private GerenciadorDeTelas gerenciadorTelas;
 
-    [Tooltip("Arraste aqui o objeto irmão 'Tela_Mailbox' da hierarquia")]
+    [Tooltip("Arraste aqui o objeto irmão 'Tela_Mailbox' da hierarquia (Mantido para Fallback)")]
     [SerializeField] private GameObject telaMailbox;
 
     [Tooltip("Arraste aqui o objeto principal pai 'Tela_Email'")]
@@ -154,22 +154,23 @@ public class SistemaEmailPuzzle : MonoBehaviour
             if (transform.parent != null) transform.parent.gameObject.SetActive(false);
         }
 
-        // 3. Ativa a tela irmã da Mailbox de verdade através da navegação do celular
-        if (telaMailbox != null)
+        // 3. Ativa a tela irmã da Mailbox através do novo gerenciador unificado por ID
+        if (gerenciadorTelas != null)
         {
-            if (gerenciadorNavegacao != null)
-            {
-                gerenciadorNavegacao.AbrirApp(telaMailbox);
-            }
-            else
-            {
-                telaMailbox.SetActive(true);
-            }
+            gerenciadorTelas.AbrirTela("Mailbox");
+        }
+        else if (telaMailbox != null)
+        {
+            // Fallback caso o script não tenha sido arrastado no Inspector
+            telaMailbox.SetActive(true);
         }
         else
         {
-            Debug.LogError("Faltando referenciar a 'Tela Mailbox' no Inspector!");
-            if (gerenciadorNavegacao != null) gerenciadorNavegacao.BotaoHome();
+            Debug.LogError("[SistemaEmailPuzzle] Erro: Faltando referenciar o Gerenciador de Telas ou a Tela Mailbox!");
+            if (GerenciadorDeTelas.Instancia != null)
+            {
+                GerenciadorDeTelas.Instancia.VoltarParaHome();
+            }
         }
     }
 

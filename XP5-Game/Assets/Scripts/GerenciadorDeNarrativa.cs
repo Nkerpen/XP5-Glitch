@@ -8,7 +8,6 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
     [Header("Sistemas Globais")]
     [SerializeField] private SistemaDeNotificacao sistemaNotificacao;
-    [SerializeField] private NavegacaoCelular navegacaoCelular;
 
     [Header("Panels de Chat (Scripts Atribuídos nos Panels)")]
     [SerializeField] private SistemaDeChatPuzzle sistemaDeChatPrincipal;
@@ -20,14 +19,15 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     [SerializeField] private NoDeDialogo chat3_Detetive;
 
     [Header("Aplicativos / Panels (Abertura Direta)")]
-    [SerializeField] private GameObject telaAppEmail;
-    [SerializeField] private GameObject telaAppNotas;
+    [Tooltip("Tela de chamada ainda pode ser controlada separadamente se for um pop-up por cima.")]
     [SerializeField] private GameObject telaChamadaRecebida;
 
     [Header("Botões de Contato (Para Invocar Cliques)")]
     [SerializeField] private Button botaoContatoGrupo;
     [SerializeField] private Button botaoContatoGolpista;
     [SerializeField] private Button botaoContatoDetetive;
+    [Tooltip("Arraste o botão de '+' usado para adicionar novos contatos")]
+    [SerializeField] private Button botaoAdicionarContato;
 
     [Header("Contatos na Hierarquia (Para Efeito de Desbloqueio)")]
     [Tooltip("Arraste o objeto 'ContatoBloqueado(Golpista)' que tem Canvas Group")]
@@ -47,6 +47,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
     private int etapaAtual = 0;
     private Tweener tweenPiscarVermelho; // Guarda a animação para poder pará-la depois
+    private Tweener tweenPulsarBotaoMais; // Guarda a animação de pulsação do botão +
 
     private void Awake()
     {
@@ -70,6 +71,12 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         // Estado inicial do Golpista
         if (contatoBloqueadoGolpista != null) contatoBloqueadoGolpista.SetActive(true);
         if (contatoDesbloqueadoGolpista != null) contatoDesbloqueadoGolpista.SetActive(false);
+
+        // Configura o clique do botão + para parar a pulsação quando for usado pelo jogador
+        if (botaoAdicionarContato != null)
+        {
+            botaoAdicionarContato.onClick.AddListener(PararEfeitoPulsarBotaoMais);
+        }
     }
 
     public void IniciarJogo()
@@ -111,7 +118,19 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 {
                     botaoContatoGrupo.onClick.RemoveAllListeners();
                     botaoContatoGrupo.onClick.AddListener(() => {
-                        sistemaDeChatPrincipal.IniciarChat(chat1_Inicial, limparHistorico: true);
+                        if (etapaAtual == 0)
+                        {
+                            if (NavegacaoCelular.Instancia != null)
+                            {
+                                NavegacaoCelular.Instancia.AbrirApp("Contatos");
+                                NavegacaoCelular.Instancia.AbrirApp("Chat");
+                            }
+                            sistemaDeChatPrincipal.IniciarChat(chat1_Inicial, limparHistorico: true);
+                        }
+                        else
+                        {
+                            Debug.Log("[GerenciadorDeNarrativa] Chat #1 do Grupo já foi finalizado e está inacessível.");
+                        }
                     });
                 }
 
@@ -127,7 +146,13 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 sistemaNotificacao.MostrarNotificacao(
                     "Suporte PayPal",
                     "Alerta de segurança na sua conta!",
-                    () => navegacaoCelular.AbrirApp(telaAppEmail)
+                    () => {
+                        if (NavegacaoCelular.Instancia != null)
+                        {
+                            NavegacaoCelular.Instancia.AbrirApp("Mailbox");
+                            NavegacaoCelular.Instancia.AbrirApp("EmailPuzzle");
+                        }
+                    }
                 );
                 break;
 
@@ -139,9 +164,11 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                     "Novo E-mail",
                     "detective.dragonfly: Me adicione.",
                     () => {
-                        navegacaoCelular.AbrirApp(telaAppEmail);
-                        if (botaoEmail2_Detective != null)
-                            botaoEmail2_Detective.GetComponent<Button>().onClick.Invoke();
+                        if (NavegacaoCelular.Instancia != null)
+                        {
+                            NavegacaoCelular.Instancia.AbrirApp("Mailbox");
+                            NavegacaoCelular.Instancia.AbrirApp("EmailAnthony");
+                        }
                     }
                 );
                 break;
@@ -151,7 +178,19 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 {
                     botaoContatoGrupo.onClick.RemoveAllListeners();
                     botaoContatoGrupo.onClick.AddListener(() => {
-                        sistemaDeChatPrincipal.IniciarChat(chat2_SobreDetetive, limparHistorico: false);
+                        if (etapaAtual == 3)
+                        {
+                            if (NavegacaoCelular.Instancia != null)
+                            {
+                                NavegacaoCelular.Instancia.AbrirApp("Contatos");
+                                NavegacaoCelular.Instancia.AbrirApp("Chat");
+                            }
+                            sistemaDeChatPrincipal.IniciarChat(chat2_SobreDetetive, limparHistorico: false);
+                        }
+                        else
+                        {
+                            Debug.Log("[GerenciadorDeNarrativa] Chat #2 do Grupo já foi finalizado e está inacessível.");
+                        }
                     });
                 }
 
@@ -171,8 +210,20 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                     botaoContatoGolpista.onClick.RemoveAllListeners();
                     botaoContatoGolpista.onClick.AddListener(() => {
-                        PararEfeitoPiscarGolpista();
-                        sistemaDeChatPrincipal.IniciarChat(chatGolpista, limparHistorico: true);
+                        if (etapaAtual == 4)
+                        {
+                            PararEfeitoPiscarGolpista();
+                            if (NavegacaoCelular.Instancia != null)
+                            {
+                                NavegacaoCelular.Instancia.AbrirApp("Contatos");
+                                NavegacaoCelular.Instancia.AbrirApp("Chat");
+                            }
+                            sistemaDeChatPrincipal.IniciarChat(chatGolpista, limparHistorico: true);
+                        }
+                        else
+                        {
+                            Debug.Log("[GerenciadorDeNarrativa] Conversa com o Golpista encerrada. Acesso bloqueado.");
+                        }
                     });
 
                     IniciarEfeitoPiscarGolpista();
@@ -191,6 +242,11 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                     botaoContatoDetetive.gameObject.SetActive(true);
                     botaoContatoDetetive.onClick.RemoveAllListeners();
                     botaoContatoDetetive.onClick.AddListener(() => {
+                        if (NavegacaoCelular.Instancia != null)
+                        {
+                            NavegacaoCelular.Instancia.AbrirApp("Contatos");
+                            NavegacaoCelular.Instancia.AbrirApp("Chat");
+                        }
                         sistemaDeChatPrincipal.IniciarChat(chat3_Detetive, limparHistorico: true);
                     });
                 }
@@ -203,13 +259,17 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 break;
 
             case 6: // ----------------- LIBERA BOTÃO DO APP NOTAS -----------------
-                // Ativa o botão de Notas na Home exatamente agora após o Chat #3 finalizar!
                 if (botaoAppNotasNaHome != null) botaoAppNotasNaHome.SetActive(true);
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Notas",
                     "Nota criptografada encontrada.",
-                    () => navegacaoCelular.AbrirApp(telaAppNotas)
+                    () => {
+                        if (NavegacaoCelular.Instancia != null)
+                        {
+                            NavegacaoCelular.Instancia.AbrirApp("Notas");
+                        }
+                    }
                 );
                 break;
 
@@ -221,19 +281,15 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
     private void ExecutarDesbloqueioVisualGolpista()
     {
-        if (contatoBloqueadoGolpista == null || contatoDesbloqueadoGolpista == null) return;
+        if (contatoBloqueadoGolpista == null || Refugee_Get_CanvasGroup(contatoBloqueadoGolpista) == null)
+        {
+            if (contatoBloqueadoGolpista != null) contatoBloqueadoGolpista.SetActive(false);
+            if (contatoDesbloqueadoGolpista != null) contatoDesbloqueadoGolpista.SetActive(true);
+            return;
+        }
 
         CanvasGroup cgBloqueado = Refugee_Get_CanvasGroup(contatoBloqueadoGolpista);
         CanvasGroup cgDesbloqueado = Refugee_Get_CanvasGroup(contatoDesbloqueadoGolpista);
-
-        CanvasGroup Refugee_Get_CanvasGroup(GameObject obj) => obj.GetComponent<CanvasGroup>();
-
-        if (cgBloqueado == null || cgDesbloqueado == null)
-        {
-            contatoBloqueadoGolpista.SetActive(false);
-            contatoDesbloqueadoGolpista.SetActive(true);
-            return;
-        }
 
         contatoDesbloqueadoGolpista.SetActive(true);
         cgDesbloqueado.alpha = 0f;
@@ -247,6 +303,11 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         });
 
         cgDesbloqueado.DOFade(1f, 0.6f).SetDelay(0.2f);
+    }
+
+    private CanvasGroup Refugee_Get_CanvasGroup(GameObject obj)
+    {
+        return obj != null ? obj.GetComponent<CanvasGroup>() : null;
     }
 
     private void IniciarEfeitoPiscarGolpista()
@@ -275,6 +336,45 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         {
             Image imagemBotao = botaoContatoGolpista.GetComponent<Image>();
             if (imagemBotao != null) imagemBotao.color = Color.white;
+        }
+    }
+
+    // --- FUNÇÕES PÚBLICAS E MÉTODOS DE PULSAÇÃO DO BOTÃO + ---
+
+    /// <summary>
+    /// Chamado externamente pelo SistemaDeChatPuzzle quando as flags booleanas do nó indicarem vitória.
+    /// </summary>
+    public void AtivarPulsoBotaoAdicionar()
+    {
+        Debug.Log("[GerenciadorDeNarrativa] Puzzle do golpista concluído com sucesso. Iniciando pulsação visual.");
+        IniciarEfeitoPulsarBotaoMais();
+    }
+
+    private void IniciarEfeitoPulsarBotaoMais()
+    {
+        if (botaoAdicionarContato == null) return;
+
+        if (tweenPulsarBotaoMais != null) tweenPulsarBotaoMais.Kill();
+
+        botaoAdicionarContato.transform.localScale = Vector3.one;
+
+        // Faz o botão pulsar (escala de 1.0x para 1.15x continuamente)
+        tweenPulsarBotaoMais = botaoAdicionarContato.transform.DOScale(1.15f, 0.5f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutQuad);
+    }
+
+    private void PararEfeitoPulsarBotaoMais()
+    {
+        if (tweenPulsarBotaoMais != null)
+        {
+            tweenPulsarBotaoMais.Kill();
+            tweenPulsarBotaoMais = null;
+        }
+
+        if (botaoAdicionarContato != null)
+        {
+            botaoAdicionarContato.transform.localScale = Vector3.one;
         }
     }
 

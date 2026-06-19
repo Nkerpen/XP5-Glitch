@@ -219,12 +219,27 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         if (dialogoAtual == null || dialogoAtual.escolhas == null || dialogoAtual.escolhas.Length == 0)
         {
             Debug.Log($"[SistemaDeChat] Nó '{dialogoAtual?.idDoNo}' terminou sem escolhas de resposta.");
+
             MarcarChatComoConcluido();
+
+            string idTratado = dialogoAtual != null && dialogoAtual.idDoNo != null ? dialogoAtual.idDoNo.Trim() : "";
+            if (idTratado == "PC5Rota1Parte2" || idTratado == "PC5Rota2Parte2" || idTratado == "PC5Rota3" || idTratado.Contains("Rota"))
+            {
+                Debug.Log("<color=green>[ANTI-BUG] Gatilho acionado preventivamente pela checagem de contingência!</color>");
+                avancarHistoriaAposChat = true;
+            }
+
+            Debug.Log($"[DEBUG] APÓS MarcarChatComoConcluido: avancarHistoriaAposChat={avancarHistoriaAposChat}");
 
             if (avancarHistoriaAposChat)
             {
+                Debug.Log("[DEBUG] Condição Verdadeira! Iniciando transição de cena/etapa...");
                 avancarHistoriaAposChat = false;
                 StartCoroutine(TempoParaLeituraEAvanco(1.5f));
+            }
+            else
+            {
+                Debug.LogWarning("[DEBUG] A transição de história não disparou porque avancarHistoriaAposChat ficou em FALSE.");
             }
         }
         else
@@ -235,11 +250,19 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private IEnumerator TempoParaLeituraEAvanco(float tempo)
     {
+        Debug.Log("[DEBUG] TempoParaLeituraEAvanco INICIOU, aguardando " + tempo + "s");
         yield return new WaitForSeconds(tempo);
+
+        Debug.Log("[DEBUG] TempoParaLeituraEAvanco TERMINOU o wait. GerenciadorDeNarrativa.Instancia é null? " + (GerenciadorDeNarrativa.Instancia == null));
+
         if (GerenciadorDeNarrativa.Instancia != null)
         {
-            Debug.Log("[SistemaDeChat] Transição segura executada pela narrativa.");
+            Debug.Log("<color=green>[SistemaDeChat] Sucesso absoluto! Chamando GerenciadorDeNarrativa.Instancia.AvancarHistoria().</color>");
             GerenciadorDeNarrativa.Instancia.AvancarHistoria();
+        }
+        else
+        {
+            Debug.LogError("<color=red>[ERRO] O GerenciadorDeNarrativa não foi encontrado na cena corrente!</color>");
         }
     }
 
@@ -253,13 +276,16 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         PlayerPrefs.DeleteKey(idDoChatAtual + "_" + dialogoAtual.idDoNo + "_UltimoNo");
         PlayerPrefs.Save();
 
-        bool ehNoFinalValidoDetetive = (dialogoAtual.idDoNo == "PC5Rota1Parte2" ||
-                                       dialogoAtual.idDoNo == "PC5Rota2Parte2" ||
-                                       dialogoAtual.idDoNo == "PC5Rota3");
+        string idTratado = dialogoAtual.idDoNo.Trim();
+        bool ehNoFinalValidoDetetive = (idTratado == "PC5Rota1Parte2" ||
+                                       idTratado == "PC5Rota2Parte2" ||
+                                       idTratado == "PC5Rota3");
+
+        Debug.Log($"[DEBUG] idDoNo Tratado='{idTratado}' | ehNoFinalValidoDetetive={ehNoFinalValidoDetetive}");
 
         if (ehNoFinalValidoDetetive)
         {
-            Debug.Log($"[SISTEMA DE CHAT] Fim de árvore detectado no nó [{dialogoAtual.idDoNo}]. Ativando transição para o App de Notas.");
+            Debug.Log($"[SISTEMA DE CHAT] Fim de árvore detectado no nó [{dialogoAtual.idDoNo}]. Ativando transição.");
             avancarHistoriaAposChat = true;
         }
     }
@@ -302,18 +328,20 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private void Update()
     {
-        if (UnityEngine.InputSystem.Keyboard.current != null)
-        {
-            if (UnityEngine.InputSystem.Keyboard.current.rKey.wasPressedThisFrame)
-            {
-                PlayerPrefs.DeleteAll();
-                Debug.Log("[SistemaDeChat] TODOS OS SAVES FORAM RESETADOS PARA TESTE!");
-            }
+        var teclado = UnityEngine.InputSystem.Keyboard.current;
+        if (teclado == null) return;
 
-            if (UnityEngine.InputSystem.Keyboard.current.sKey.wasPressedThisFrame)
-            {
-                ForçarPularDialogoDoNPC();
-            }
+        if (teclado.rKey.wasPressedThisFrame)
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            Debug.Log("<color=magenta>[SistemaDeChat] TODOS OS SAVES FORAM RESETADOS MANUALMENTE (KEY R)!</color>");
+        }
+
+        if (teclado.sKey.wasPressedThisFrame)
+        {
+            Debug.Log("[SistemaDeChat] Executando comando manual de SKIP (KEY S)");
+            ForçarPularDialogoDoNPC();
         }
     }
 
@@ -364,21 +392,12 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         foreach (var btn in botoesDeEscolha) btn.gameObject.SetActive(estado);
     }
 
-    public void UpdateBotoesDeEscolha()
-    {
-        AtualizarBotoesDeEscolha();
-    }
+    // --- MÉTODOS PÚBLICOS DE REDIRECIONAMENTO (COMPATIBILIDADE) ---
+    public void UpdateBotoesDeEscolha() { AtualizarBotoesDeEscolha(); }
+    public void UpdateBotoesDeEscolha(NoDeDialogo no) { AtualizarBotoesDeEscolha(); }
+    public void BlackboxAtualizarBotoesDeEscolha() { AtualizarBotoesDeEscolha(); }
 
-    public void UpdateBotoesDeEscolha(NoDeDialogo no)
-    {
-        AtualizarBotoesDeEscolha();
-    }
-
-    public void BlackboxAtualizarBotoesDeEscolha()
-    {
-        AtualizarBotoesDeEscolha();
-    }
-
+    // --- MÉTODO PRINCIPAL DE SELEÇÃO VISUAL DAS ESCOLHAS ---
     private void AtualizarBotoesDeEscolha()
     {
         AtivarBotoes(false);
@@ -466,6 +485,15 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
         StartCoroutine(ForcarScrollParaBaixo());
         EsconderPainelEscolhas();
+
+        // --- GATILHO DA PULSAÇÃO DO BOTÃO + COM BASE NO SUCESSO ---
+        if (escolha.encerraPuzzle && escolha.jogadorGanhou)
+        {
+            if (GerenciadorDeNarrativa.Instancia != null)
+            {
+                GerenciadorDeNarrativa.Instancia.AtivarPulsoBotaoAdicionar();
+            }
+        }
 
         if (escolha.encerraPuzzle)
         {
