@@ -47,5 +47,11 @@ public class ClockController : MonoBehaviour
     {
         clockText.gameObject.SetActive(visible);
     }
+
+    private void Awake()
+    {
+    if (clockText != null)
+        clockText.gameObject.SetActive(false);
+    }
 }
 
