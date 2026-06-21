@@ -18,7 +18,6 @@ public class NavegacaoCelular : MonoBehaviour
     private void Start()
     {
         telaAtual = telaHome;
-        AtualizarRelogio();
     }
 
     // Chame essa fun��o nos bot�es dos aplicativos (ex: Clicou no app de E-mail)
@@ -96,5 +95,11 @@ public class NavegacaoCelular : MonoBehaviour
 
         bool naHomeOuApps = (telaAtual == telaHome || telaAtual == telaAplicativos);
         relogio.SetVisible(naHomeOuApps);
+    }
+
+    // Chamado pelo SistemaDeBoot quando o carregamento termina de verdade
+    public void OnBootCompleto()
+    {
+        AtualizarRelogio();
     }
 }

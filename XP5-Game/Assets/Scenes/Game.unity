@@ -5972,6 +5972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SistemaDeBoot
   telaLoading: {fileID: 5120687194026539979}
   telaHome: {fileID: 6525393198667884802}
+  navegacao: {fileID: 1118300443}
   barraDeProgresso: {fileID: 7728011634816531528}
   tempoDeLoading: 3
   painelPretoFade: {fileID: 1025012119}

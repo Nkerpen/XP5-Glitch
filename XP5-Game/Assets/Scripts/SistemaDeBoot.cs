@@ -8,6 +8,9 @@ public class SistemaDeBoot : MonoBehaviour
     [SerializeField] private GameObject telaLoading;
     [SerializeField] private GameObject telaHome;
 
+    [Header("HUD")]
+    [SerializeField] private NavegacaoCelular navegacao;
+
     [Header("Elementos do Loading")]
     [SerializeField] private Image barraDeProgresso;
     [SerializeField] private float tempoDeLoading = 3f;
@@ -59,6 +62,9 @@ public class SistemaDeBoot : MonoBehaviour
         telaLoading.SetActive(false);
         telaHome.SetActive(true);
         if (GerenciadorDeAudio.Instancia != null) GerenciadorDeAudio.Instancia.IniciarMusicaFundo();
+
+        // Libera o relógio junto com a Home, ainda no escuro
+        if (navegacao != null) navegacao.OnBootCompleto();
 
         // --- 4. FADE IN (Clareia a tela revelando a Home) ---
         if (painelPretoFade != null)
