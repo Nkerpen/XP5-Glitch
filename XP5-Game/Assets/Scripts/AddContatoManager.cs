@@ -3,55 +3,57 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using DG.Tweening;
-using UnityEngine.InputSystem; // Importante para o Novo Input System da Unity
+using UnityEngine.InputSystem;
 
 public class AddContatoManager : MonoBehaviour
 {
     [Header("Botão de Ativação")]
-    [SerializeField] private Button botaoAddContato; // Arraste o botão "+" do topo aqui
+    [SerializeField] private Button botaoAddContato;
 
     [Header("Paineis de UI")]
-    [SerializeField] private GameObject painelMaeAddContatoScreen; // O objeto "AddContatoScreen" inteiro
-    [SerializeField] private GameObject painelPretoDoShake; // O quadrado preto interno que vai tremer
+    [SerializeField] private GameObject painelMaeAddContatoScreen;
+    [SerializeField] private GameObject painelPretoDoShake;
 
     [Header("UI Elementos")]
-    [SerializeField] private TMP_InputField[] numeroInputs; // Arraste os 4 inputs na ordem (0 a 3)
+    [SerializeField] private TMP_InputField[] numeroInputs;
+
+    [Header("Efeito de Brilho (Glow)")]
+    [SerializeField] private Image[] glowImages;
+    [SerializeField] private float duracaoPulsoGlow = 0.8f;
 
     [Header("Contatos (Hierarquia Unity)")]
-    [SerializeField] private GameObject contatoBloqueadoAnthony; // Requer um componente 'Canvas Group'
-    [SerializeField] private GameObject contatoDesbloqueadoAnthony; // Requer um componente 'Canvas Group'
+    [SerializeField] private GameObject contatoBloqueadoAnthony;
+    [SerializeField] private GameObject contatoDesbloqueadoAnthony;
 
     private string codigoCorreto = "8345";
     private bool estaVerificando = false;
+    private Coroutine mudancaFocoCoroutine;
 
     void Start()
     {
-        // Vincula o clique do botão "+" à função de abrir a tela
         if (botaoAddContato != null)
         {
             botaoAddContato.onClick.AddListener(AbrirTelaAddContato);
         }
 
-        // Configura os listeners de mudança de texto dos inputs
         for (int i = 0; i < numeroInputs.Length; i++)
         {
             int index = i;
             numeroInputs[i].onValueChanged.AddListener(delegate { AoDigitar(index); });
         }
 
-        // Garante que a tela comece FECHADA ao iniciar o jogo
         if (painelMaeAddContatoScreen != null)
         {
             painelMaeAddContatoScreen.SetActive(false);
         }
+
+        DesativarBrilho();
     }
 
     void Update()
     {
-        // Se a tela mãe não estiver ativa, não precisa monitorar o teclado
         if (painelMaeAddContatoScreen == null || !painelMaeAddContatoScreen.activeSelf) return;
 
-        // SUPORTE PARA PC/NOTE (Novo Input System): Detecta Backspace para voltar o quadrado
         if (Keyboard.current != null && Keyboard.current.backspaceKey.wasPressedThisFrame)
         {
             for (int i = 1; i < numeroInputs.Length; i++)
@@ -61,7 +63,7 @@ public class AddContatoManager : MonoBehaviour
                     if (string.IsNullOrEmpty(numeroInputs[i].text))
                     {
                         numeroInputs[i - 1].text = "";
-                        numeroInputs[i - 1].ActivateInputField();
+                        MudarFocoPara(i - 1);
                     }
                     break;
                 }
@@ -73,12 +75,12 @@ public class AddContatoManager : MonoBehaviour
     {
         if (painelMaeAddContatoScreen != null)
         {
-            // Reseta a opacidade da tela mãe caso use Canvas Group nela
             CanvasGroup cgTelaCodigo = painelMaeAddContatoScreen.GetComponent<CanvasGroup>();
             if (cgTelaCodigo != null) cgTelaCodigo.alpha = 1f;
 
             painelMaeAddContatoScreen.SetActive(true);
             StartCoroutine(FocarPrimeiroCampoComDelay());
+            IniciarBrilhoPulsante();
         }
     }
 
@@ -106,14 +108,33 @@ public class AddContatoManager : MonoBehaviour
 
             if (index < numeroInputs.Length - 1)
             {
-                numeroInputs[index + 1].ActivateInputField();
+                MudarFocoPara(index + 1);
             }
         }
 
-        // Se preencheu os 4 campos, roda a validação
         if (VerificarCamposPreenchidos())
         {
             ChecarCodigo();
+        }
+    }
+
+    // Método auxiliar para transferir o foco sem fechar o teclado mobile
+    void MudarFocoPara(int próximoIndex)
+    {
+        if (mudancaFocoCoroutine != null) StopCoroutine(mudancaFocoCoroutine);
+        mudancaFocoCoroutine = StartCoroutine(MudarFocoCoroutine(próximoIndex));
+    }
+
+    IEnumerator MudarFocoCoroutine(int próximoIndex)
+    {
+        // Aguarda o fim do frame atual para que a Unity processe a mudança de texto interna
+        yield return new WaitForEndOfFrame();
+
+        if (próximoIndex >= 0 && próximoIndex < numeroInputs.Length)
+        {
+            numeroInputs[próximoIndex].ActivateInputField();
+            // Garante a seleção total do texto interno (caso já tenha algo) para o teclado continuar ativo
+            numeroInputs[próximoIndex].Select();
         }
     }
 
@@ -142,7 +163,14 @@ public class AddContatoManager : MonoBehaviour
 
     void Sucesso()
     {
-        // 1. Esconde a tela de digitar o ID usando Fade Out do DOTween
+        DesativarBrilho();
+
+        // Desfoca o input ativo para fechar o teclado mobile de forma limpa no sucesso
+        foreach (var input in numeroInputs)
+        {
+            if (input.isFocused) input.DeactivateInputField();
+        }
+
         CanvasGroup cgTelaCodigo = painelMaeAddContatoScreen.GetComponent<CanvasGroup>();
         if (cgTelaCodigo != null)
         {
@@ -155,18 +183,15 @@ public class AddContatoManager : MonoBehaviour
             painelMaeAddContatoScreen.SetActive(false);
         }
 
-        // 2. Coleta os Canvas Groups dos cards dos contatos
         CanvasGroup cgBloqueado = contatoBloqueadoAnthony.GetComponent<CanvasGroup>();
         CanvasGroup cgDesbloqueado = contatoDesbloqueadoAnthony.GetComponent<CanvasGroup>();
 
-        // Fail-safe: Caso falte o componente Canvas Group na Unity, avisa e faz a troca seca padrão
         if (cgBloqueado == null || cgDesbloqueado == null)
         {
             Debug.LogWarning("⚠️ Falta adicionar o componente 'Canvas Group' nos cards do Anthony para ver o efeito!");
             contatoBloqueadoAnthony.SetActive(false);
             contatoDesbloqueadoAnthony.SetActive(true);
 
-            // Se der ruim no componente visual, ainda assim precisamos empurrar a história para a Etapa 5
             if (GerenciadorDeNarrativa.Instancia != null)
             {
                 GerenciadorDeNarrativa.Instancia.AvancarHistoria();
@@ -174,22 +199,16 @@ public class AddContatoManager : MonoBehaviour
             return;
         }
 
-        // 3. Preparação do card desbloqueado (ativa invisível para a fusão suave)
         contatoDesbloqueadoAnthony.SetActive(true);
         cgDesbloqueado.alpha = 0f;
         cgBloqueado.alpha = 1f;
 
-        // Dá um leve feedback de pulo "yoyo" no card antigo indicando que começou a decodificação
         contatoBloqueadoAnthony.transform.DOScale(1.05f, 0.15f).SetLoops(2, LoopType.Yoyo);
 
-        // 4. CROSSFADE (Efeito de fusão visual)
-        // O bloqueado vai sumindo e desativa de vez no final da animação
         cgBloqueado.DOFade(0f, 0.6f).SetDelay(0.2f).OnComplete(() => {
             contatoBloqueadoAnthony.SetActive(false);
             contatoBloqueadoAnthony.transform.localScale = Vector3.one;
 
-            // LINK DO GATILHO DA NARRATIVA:
-            // Assim que o card antigo termina de sumir e o novo se consolida, a história vai para a Etapa 5!
             if (GerenciadorDeNarrativa.Instancia != null)
             {
                 Debug.Log("[ADD CONTATO] Sucesso! Anthony liberado. Avançando para a Etapa 5.");
@@ -197,7 +216,6 @@ public class AddContatoManager : MonoBehaviour
             }
         });
 
-        // O desbloqueado vai aparecendo suavemente no mesmo ritmo
         cgDesbloqueado.DOFade(1f, 0.6f).SetDelay(0.2f);
     }
 
@@ -209,14 +227,14 @@ public class AddContatoManager : MonoBehaviour
         Handheld.Vibrate();
 #endif
 
-        // Animação de tremor (Shake) usando o DOTween especificamente no painel do quadrado preto
         painelPretoDoShake.transform.DOShakePosition(0.4f, new Vector3(15f, 0f, 0f), 20, 90, false, true);
 
-        // Aguarda a animação de erro acabar antes de limpar os campos
         yield return new WaitForSeconds(0.4f);
 
         yield return FocarPrimeiroCampoComDelay();
         estaVerificando = false;
+
+        IniciarBrilhoPulsante();
     }
 
     void LimparCampos()
@@ -224,6 +242,31 @@ public class AddContatoManager : MonoBehaviour
         foreach (var input in numeroInputs)
         {
             if (input != null) input.text = "";
+        }
+    }
+
+    private void IniciarBrilhoPulsante()
+    {
+        foreach (var glow in glowImages)
+        {
+            if (glow != null)
+            {
+                glow.DOKill();
+                glow.DOFade(0.1f, 0f);
+                glow.DOFade(0.8f, duracaoPulsoGlow).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+            }
+        }
+    }
+
+    private void DesativarBrilho()
+    {
+        foreach (var glow in glowImages)
+        {
+            if (glow != null)
+            {
+                glow.DOKill();
+                glow.DOFade(0f, 0.1f);
+            }
         }
     }
 }
