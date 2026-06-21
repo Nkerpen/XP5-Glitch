@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 public class GerenciadorDeNarrativa : MonoBehaviour
 {
@@ -8,6 +11,10 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
     [Header("Sistemas Globais")]
     [SerializeField] private SistemaDeNotificacao sistemaNotificacao;
+
+    [Header("Burlar Hierarquia (Contingência Objeto Desativado)")]
+    [Tooltip("Arraste aqui o objeto pai 'Ligacoes' para podermos ativá-lo antes do início das Coroutines")]
+    [SerializeField] private GameObject objetoLigacoesPai;
 
     [Header("Panels de Chat (Scripts Atribuídos nos Panels)")]
     [SerializeField] private SistemaDeChatPuzzle sistemaDeChatPrincipal;
@@ -17,10 +24,6 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     [SerializeField] private NoDeDialogo chat2_SobreDetetive;
     [SerializeField] private NoDeDialogo chatGolpista;
     [SerializeField] private NoDeDialogo chat3_Detetive;
-
-    [Header("Aplicativos / Panels (Abertura Direta)")]
-    [Tooltip("Tela de chamada ainda pode ser controlada separadamente se for um pop-up por cima.")]
-    [SerializeField] private GameObject telaChamadaRecebida;
 
     [Header("Botões de Contato (Para Invocar Cliques)")]
     [SerializeField] private Button botaoContatoGrupo;
@@ -60,7 +63,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         // Garante o estado inicial correto da interface ao abrir a demo
         if (iconeAppEmailNaHome != null) iconeAppEmailNaHome.SetActive(false);
         if (botaoContatoGolpista != null) botaoContatoGolpista.gameObject.SetActive(false);
-        if (botaoContatoDetetive != null) botaoContatoDetetive.gameObject.SetActive(false);
+        if (botaoContatoDetetive != null) ParadoxSetActive(botaoContatoDetetive.gameObject, false);
         if (botaoEmail1_Puzzle != null) botaoEmail1_Puzzle.SetActive(false);
         if (botaoEmail2_Detective != null) botaoEmail2_Detective.SetActive(false);
         if (painelEscondeEmail != null) painelEscondeEmail.SetActive(true);
@@ -77,6 +80,11 @@ public class GerenciadorDeNarrativa : MonoBehaviour
         {
             botaoAdicionarContato.onClick.AddListener(PararEfeitoPulsarBotaoMais);
         }
+    }
+
+    private void ParadoxSetActive(GameObject obj, bool state)
+    {
+        if (obj != null) obj.SetActive(state);
     }
 
     public void IniciarJogo()
@@ -136,7 +144,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação",
-                    "Charles: O que você tá fazendo com o celular do John?",
+                    "Charles: Cara",
                     () => { if (botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke(); }
                 );
                 break;
@@ -144,7 +152,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
             case 1: // ----------------- PUZZLE EMAIL (PAYPAL FALSO) -----------------
                 AtivarElementosEtapa1();
                 sistemaNotificacao.MostrarNotificacao(
-                    "Suporte PayPal",
+                    "Suporte PiyPal",
                     "Alerta de segurança na sua conta!",
                     () => {
                         if (NavegacaoCelular.Instancia != null)
@@ -162,7 +170,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Novo E-mail",
-                    "detective.dragonfly: Me adicione.",
+                    "detective.dragonfly: John?",
                     () => {
                         if (NavegacaoCelular.Instancia != null)
                         {
@@ -196,7 +204,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Grupo de Investigação",
-                    "Eva: Quem é esse tal de detetive?",
+                    "Novo chat desbloqueado.",
                     () => { if (botaoContatoGrupo != null) botaoContatoGrupo.onClick.Invoke(); }
                 );
                 break;
@@ -253,7 +261,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Detetive Dragonfly",
-                    "Fiquei sabendo que você está com o celular do John. Precisamos conversar.",
+                    "Novo chat desbloqueado.",
                     () => { if (botaoContatoDetetive != null) botaoContatoDetetive.onClick.Invoke(); }
                 );
                 break;
@@ -263,7 +271,7 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
                 sistemaNotificacao.MostrarNotificacao(
                     "Notas",
-                    "Nota criptografada encontrada.",
+                    "Aplicativo desbloqueado.",
                     () => {
                         if (NavegacaoCelular.Instancia != null)
                         {
@@ -273,8 +281,31 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 );
                 break;
 
-            case 7: // ----------------- LIGAÇÃO RECEBIDA -----------------
-                if (telaChamadaRecebida != null) telaChamadaRecebida.SetActive(true);
+            case 7: // ----------------- LIGAÇÃO RECEBIDA (CLIFFHANGER) -----------------
+                // 1. O ScreenManager limpa a UI e força a abertura direta de "LigaçãoRecebida",
+                // além de já garantir a ativação do objeto do script de ligação.
+                if (GerenciadorDeTelas.Instancia != null)
+                {
+                    GerenciadorDeTelas.Instancia.ForçarFechamentoParaChamada();
+                }
+
+                // 2. Busca o script unificado (pela Instancia ou nos filhos de contingência)
+                GerenciadorDeLigacao manager = GerenciadorDeLigacao.Instancia;
+                if (manager == null && objetoLigacoesPai != null)
+                {
+                    manager = objetoLigacoesPai.GetComponentInChildren<GerenciadorDeLigacao>(true);
+                }
+
+                // 3. Quem dispara a Coroutine do timer de toque é a Narrativa para evitar que 
+                // a oscilação de estados visuais interrompa a contagem.
+                if (manager != null)
+                {
+                    StartCoroutine(manager.RotinaAguardarParaLigar(0.5f));
+                }
+                else
+                {
+                    Debug.LogError("[NARRATIVA] Erro Crítico: O GerenciadorDeLigacao não foi localizado na cena!");
+                }
                 break;
         }
     }
@@ -341,9 +372,6 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
     // --- FUNÇÕES PÚBLICAS E MÉTODOS DE PULSAÇÃO DO BOTÃO + ---
 
-    /// <summary>
-    /// Chamado externamente pelo SistemaDeChatPuzzle quando as flags booleanas do nó indicarem vitória.
-    /// </summary>
     public void AtivarPulsoBotaoAdicionar()
     {
         Debug.Log("[GerenciadorDeNarrativa] Puzzle do golpista concluído com sucesso. Iniciando pulsação visual.");
@@ -358,7 +386,6 @@ public class GerenciadorDeNarrativa : MonoBehaviour
 
         botaoAdicionarContato.transform.localScale = Vector3.one;
 
-        // Faz o botão pulsar (escala de 1.0x para 1.15x continuamente)
         tweenPulsarBotaoMais = botaoAdicionarContato.transform.DOScale(1.15f, 0.5f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutQuad);
@@ -382,4 +409,32 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     {
         AvancarHistoria();
     }
+
+    /// <summary>
+    /// Força o avanço da história direto para o estado do Cliffhanger.
+    /// </summary>
+    public void AvançarEstadoCliffhanger()
+    {
+        etapaAtual = 7;
+        Debug.LogWarning("[NARRATIVA] Avançando diretamente para o Cliffhanger Final (Etapa 7).");
+        DispararNotificacaoAtual();
+    }
+
+    private void Update()
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+    if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame)
+    {
+        Debug.LogWarning("[DEV] Pulando diretamente para a etapa da ligação.");
+
+        CancelInvoke(nameof(DispararNotificacaoAtual));
+
+        etapaAtual = 6;
+        DispararNotificacaoAtual();
+    }
+
+#endif
+    }
+
 }

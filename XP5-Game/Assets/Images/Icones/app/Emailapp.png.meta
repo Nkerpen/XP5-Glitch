@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3e75640e83aaba44eb23279f33ea8b5c
+guid: 64a725e4908a70f4781777abd91f34ea
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5244754093011444007
-    second: Mensagemapp_0
+      213: 4269884202009201276
+    second: Emailapp_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,11 +96,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mensagemapp_0
+      name: Emailapp_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72129384f0c19c840800000000000000
-      internalID: 5244754093011444007
+      spriteID: c7a8fc41f0da14b30800000000000000
+      internalID: 4269884202009201276
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mensagemapp_0: 5244754093011444007
+      Emailapp_0: 4269884202009201276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

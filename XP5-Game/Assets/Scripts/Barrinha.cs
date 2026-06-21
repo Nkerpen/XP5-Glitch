@@ -38,11 +38,13 @@ public class RotatingBarSlider : MonoBehaviour,
     [Header("Puzzle - Cifra de César")]
     [TextArea]
     public string encryptedMessage = "PRWT D PCIWDCN.";
-
     public int correctShift = 15;
 
-    private readonly List<RectTransform> bars =
-        new List<RectTransform>();
+    [Header("Burlar Hierarquia (Contingência Objeto Desativado)")]
+    [Tooltip("Arraste aqui o objeto pai 'Ligacoes' que contém o script GerenciadorDeLigacao")]
+    [SerializeField] private GerenciadorDeLigacao gerenciadorDeLigacaoDireto;
+
+    private readonly List<RectTransform> bars = new List<RectTransform>();
 
     private float currentPosition = 0f;
     private float targetPosition = 0f;
@@ -68,8 +70,7 @@ public class RotatingBarSlider : MonoBehaviour,
             previewText.text = encryptedMessage;
 
         if (objectiveText != null)
-            objectiveText.text =
-                "Descriptografe a nota usando a Cifra de César.";
+            objectiveText.text = "Descriptografe a nota usando a Cifra de César.";
 
         UpdateBars();
         UpdatePuzzle();
@@ -107,9 +108,7 @@ public class RotatingBarSlider : MonoBehaviour,
 
         for (int i = 0; i < barCount; i++)
         {
-            RectTransform newBar =
-                Instantiate(barTemplate, barsContainer);
-
+            RectTransform newBar = Instantiate(barTemplate, barsContainer);
             newBar.gameObject.SetActive(true);
             bars.Add(newBar);
         }
@@ -125,25 +124,19 @@ public class RotatingBarSlider : MonoBehaviour,
         {
             RectTransform bar = bars[i];
 
-            float x =
-                (i * spacing) -
-                (currentPosition * spacing);
+            float x = (i * spacing) - (currentPosition * spacing);
 
             bar.anchoredPosition = new Vector2(x, 0);
 
             float distance = Mathf.Abs(x - selectionX);
 
-            float normalized =
-                Mathf.Clamp01(distance / (spacing * 5f));
+            float normalized = Mathf.Clamp01(distance / (spacing * 5f));
 
-            float height =
-                Mathf.Lerp(maxHeight, minHeight, normalized);
+            float height = Mathf.Lerp(maxHeight, minHeight, normalized);
 
             bar.sizeDelta = new Vector2(bar.sizeDelta.x, height);
 
-            float angle =
-                Mathf.Clamp(-(x / spacing) * maxRotation,
-                -maxRotation, maxRotation);
+            float angle = Mathf.Clamp(-(x / spacing) * maxRotation, -maxRotation, maxRotation);
 
             bar.localRotation = Quaternion.Euler(0f, 0f, angle);
 
@@ -174,25 +167,17 @@ public class RotatingBarSlider : MonoBehaviour,
         {
             lastShift = shift;
 
-            string decodedText =
-                CaesarDecrypt(encryptedMessage, shift);
+            string decodedText = CaesarDecrypt(encryptedMessage, shift);
 
             if (previewText != null)
             {
                 previewText.text = decodedText;
                 previewText.DOKill();
 
-                // COR / ERRO DINÂMICO
-                Color targetColor =
-                    (shift == correctShift)
-                    ? correctColor
-                    : wrongColor;
-
+                Color targetColor = (shift == correctShift) ? correctColor : wrongColor;
                 previewText.color = targetColor;
 
-                previewText
-                    .DOFade(0.75f, 0.08f)
-                    .SetLoops(2, LoopType.Yoyo);
+                previewText.DOFade(0.75f, 0.08f).SetLoops(2, LoopType.Yoyo);
             }
         }
 
@@ -207,30 +192,44 @@ public class RotatingBarSlider : MonoBehaviour,
     {
         successTriggered = true;
         isLocked = true;
-        hasBeenSolved = true; // Marca que o "feedback inicial" já aconteceu
+        hasBeenSolved = true;
 
         if (objectiveText != null)
             objectiveText.text = "Mensagem descriptografada.";
 
-        // FLASH VERDE ESCURO
+        // FLASH VERDE ESCURO COM DOTWEEN
         if (previewText != null)
         {
             previewText.DOKill();
-
             Sequence seq = DOTween.Sequence();
-
-            // Modificado de Color.green para correctColor (seu verde escuro)
             seq.Append(previewText.DOColor(correctColor, 0.15f));
             seq.Append(previewText.DOFade(0.4f, 0.1f));
             seq.Append(previewText.DOFade(1f, 0.1f));
         }
 
-        // Interrompe o arrasto atual se o player estiver segurando a barra
         dragging = false;
         targetPosition = correctShift;
 
-        yield return new WaitForSeconds(2.0f); // 2 segundinhos como planejado
+        // 1. Ativa o objeto pai das ligações imediatamente para garantir referências prontas
+        if (gerenciadorDeLigacaoDireto != null)
+        {
+            gerenciadorDeLigacaoDireto.gameObject.SetActive(true);
+        }
 
+        // 2. Espera os 2 segundos do feedback visual para o jogador conseguir ler o texto descriptografado
+        yield return new WaitForSeconds(2.0f);
+
+        // 3. PASSO SALVADOR: Passamos o controle da história para a Narrativa antes do painel fechar!
+        if (GerenciadorDeNarrativa.Instancia != null)
+        {
+            GerenciadorDeNarrativa.Instancia.AvançarEstadoCliffhanger();
+        }
+        else
+        {
+            Debug.LogError("[PUZZLE] Erro Crítico: GerenciadorDeNarrativa não foi encontrado!");
+        }
+
+        // Reseta flags de controle interno por segurança
         isLocked = false;
         successTriggered = false;
     }
@@ -272,12 +271,7 @@ public class RotatingBarSlider : MonoBehaviour,
         if (isLocked) return;
 
         currentPosition -= eventData.delta.x * dragSensitivity;
-
-        currentPosition = Mathf.Clamp(
-            currentPosition,
-            0f,
-            barCount - 1
-        );
+        currentPosition = Mathf.Clamp(currentPosition, 0f, barCount - 1);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -285,9 +279,7 @@ public class RotatingBarSlider : MonoBehaviour,
         if (isLocked) return;
 
         dragging = false;
-
-        targetPosition =
-            Mathf.Round(currentPosition);
+        targetPosition = Mathf.Round(currentPosition);
     }
 
     public int GetSelectedShift()

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2cdef68ed519af1409bf427c28c073cc
+guid: 8de2fa2fb80b02b4ab54b3c6506a7b48
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4269884202009201276
-    second: Emailapp_0
+      213: -8024890581814094551
+    second: Notaapp_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,11 +96,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Emailapp_0
+      name: Notaapp_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7a8fc41f0da14b30800000000000000
-      internalID: 4269884202009201276
+      spriteID: 925d795988cd1a090800000000000000
+      internalID: -8024890581814094551
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Emailapp_0: 4269884202009201276
+      Notaapp_0: -8024890581814094551
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

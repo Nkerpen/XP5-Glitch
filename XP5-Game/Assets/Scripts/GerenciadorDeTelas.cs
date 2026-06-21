@@ -91,7 +91,6 @@ public class GerenciadorDeTelas : MonoBehaviour
     /// <summary>
     /// Abre o aplicativo ou sub-tela correspondente ao ID enviado, salvando a tela anterior na memória.
     /// </summary>
-    /// <param name="idTelaParaAbrir">IDs válidos: Mailbox, Notas, Caesar, EmailPuzzle, EmailAnthony, Contatos, Chat</param>
     public void AbrirTela(string idTelaParaAbrir)
     {
         if (string.IsNullOrEmpty(idTelaParaAbrir)) return;
@@ -100,14 +99,13 @@ public class GerenciadorDeTelas : MonoBehaviour
 
         if (idTratado.ToLower() == "home")
         {
-            VoltarParaHome();
+            StringVoltarHomeSegura();
             return;
         }
 
         Debug.Log($"[ScreenManager] Solicitando abertura do App/Subtela: <color=yellow>{idTratado}</color>");
 
         // --- SISTEMA DE HISTÓRICO ---
-        // Salva onde estávamos antes de mudar
         if (idTelaAtual != idTratado)
         {
             historicoTelas.Push(idTelaAtual);
@@ -164,7 +162,6 @@ public class GerenciadorDeTelas : MonoBehaviour
         }
         else
         {
-            // Sem histórico? Força a Home por segurança
             VoltarParaHome();
         }
     }
@@ -172,8 +169,10 @@ public class GerenciadorDeTelas : MonoBehaviour
     private bool ExecutarTrocaVisivel(string idAlvo)
     {
         bool encontrouTela = false;
-        bool abrindoCaesar = idAlvo.ToLower() == "caesar" || idAlvo.ToLower() == "notacaesar";
-        bool abrindoChat = idAlvo.ToLower() == "chat";
+        string alvoLower = idAlvo.ToLower();
+
+        bool abrindoCaesar = alvoLower == "caesar" || alvoLower == "notacaesar";
+        bool abrindoChat = alvoLower == "chat";
 
         foreach (var tela in todasAsTelas)
         {
@@ -181,15 +180,15 @@ public class GerenciadorDeTelas : MonoBehaviour
 
             string idConfigurado = tela.idDaTela.Trim().ToLower();
 
-            // Regra de ativação do ID exato
-            if (idConfigurado == idAlvo.ToLower())
+            // 1. Regra de ativação do ID exato (Liga o painel atual solicitado)
+            if (idConfigurado == alvoLower)
             {
                 tela.painelDaTela.SetActive(true);
                 encontrouTela = true;
                 AplicarFadeSeConfigurado(tela);
                 Debug.Log($"<color=green>[ScreenManager] Tela [{tela.idDaTela}] ATIVADA.</color>");
             }
-            // Regras especiais de contingência (Telas filhas / aninhadas)
+            // 2. Regras especiais de contingência (Telas filhas / aninhadas)
             else if (abrindoCaesar && idConfigurado == "notas")
             {
                 tela.painelDaTela.SetActive(true);
@@ -198,7 +197,7 @@ public class GerenciadorDeTelas : MonoBehaviour
             {
                 tela.painelDaTela.SetActive(true);
             }
-            // Desativa o restante
+            // 3. REGRA GERAL BASEADA EM PANELS: Se não for a tela atual ou uma sub-tela válida, desliga o painel completamente.
             else
             {
                 tela.painelDaTela.SetActive(false);
@@ -210,22 +209,27 @@ public class GerenciadorDeTelas : MonoBehaviour
 
     private void AplicarFadeSeConfigurado(TelaConfig tela)
     {
-        if (usarFade && tela.canvasGroupDaTela != null)
+        if (tela.canvasGroupDaTela != null)
         {
-            tela.canvasGroupDaTela.DOKill();
-            tela.canvasGroupDaTela.alpha = 0f;
-            tela.canvasGroupDaTela.DOFade(1f, duracaoFade).SetUpdate(true);
-        }
-        else if (tela.canvasGroupDaTela != null)
-        {
-            tela.canvasGroupDaTela.alpha = 1f;
+            tela.canvasGroupDaTela.blocksRaycasts = true;
+            tela.canvasGroupDaTela.interactable = true;
+
+            if (usarFade)
+            {
+                tela.canvasGroupDaTela.DOKill();
+                tela.canvasGroupDaTela.alpha = 0f;
+                tela.canvasGroupDaTela.DOFade(1f, duracaoFade).SetUpdate(true);
+            }
+            else
+            {
+                tela.canvasGroupDaTela.alpha = 1f;
+            }
         }
     }
 
     private void Update()
     {
         // --- CORREÇÃO DO NOVO INPUT SYSTEM ---
-        // Obtém o teclado usando o pacote Input System ativo
         var teclado = UnityEngine.InputSystem.Keyboard.current;
         if (teclado == null) return;
 
@@ -236,16 +240,66 @@ public class GerenciadorDeTelas : MonoBehaviour
         }
     }
 
-    private void AktualizarRelogio() // Corrigido erro de digitação para manter consistência interna
+    /// <summary>
+    /// Força o fechamento imediato de qualquer interface de aplicativo ou puzzle aberta,
+    /// limpando a navegação e abrindo o layout registrado de ligação recebida.
+    /// </summary>
+    public void ForçarFechamentoParaChamada()
+    {
+        Debug.LogWarning("[ScreenManager] Limpando telas para a entrada do Cliffhanger de Voz.");
+
+        // 1. Desativamos manualmente os painéis antigos para evitar problemas de concorrência com IDs falsos
+        if (telaHome != null)
+            telaHome.SetActive(false);
+
+        if (painelMãeTelaAplicativos != null)
+            painelMãeTelaAplicativos.SetActive(false);
+
+        // 2. Como o objeto pai "Ligações" contém o GerenciadorDeLigacao, garantimos que 
+        // o script ganhe contexto de execução ativo caso ele estivesse desativado na hierarquia.
+        var scriptLigacao = GerenciadorDeLigacao.Instancia;
+        if (scriptLigacao == null)
+        {
+            scriptLigacao = FindAnyObjectByType<GerenciadorDeLigacao>(FindObjectsInactive.Include);
+        }
+
+        if (scriptLigacao != null)
+        {
+            scriptLigacao.gameObject.SetActive(true);
+
+            // Garante visibilidade e interatividade caso o objeto pai "Ligações" possua um CanvasGroup
+            CanvasGroup cgPai = scriptLigacao.GetComponent<CanvasGroup>();
+            if (cgPai != null)
+            {
+                cgPai.alpha = 1f;
+                cgPai.blocksRaycasts = true;
+                cgPai.interactable = true;
+            }
+        }
+
+        // 3. Limpa a pilha de navegação para evitar que o jogador aperte "Voltar" durante uma chamada prioritária
+        historicoTelas.Clear();
+
+        // 4. Abre diretamente o layout da chamada recebida registrado na sua lista struct
+        AbrirTela("LigaçãoRecebida");
+    }
+
+    private void StringVoltarHomeSegura()
+    {
+        VoltarParaHome();
+    }
+
+    private void UpdateRelogio() // Alias para compatibilidade caso necessário
     {
         AtualizarRelogio();
     }
 
-    private void CorrigirChamada() { } // Apenas metódo auxiliar de segurança
+    private void Desktop_UpdateRelogio() // Caso tenha dependências externas
+    {
+        AtualizarRelogio();
+    }
 
-    private void OnValidate() { } // Proteção do Editor
-
-    private void AtualizarRelogio()
+    private void @AtualizarRelogio()
     {
         if (relogio == null) return;
 

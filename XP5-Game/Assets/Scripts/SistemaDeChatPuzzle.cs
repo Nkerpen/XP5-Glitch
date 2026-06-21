@@ -30,6 +30,8 @@ public class SistemaDeChatPuzzle : MonoBehaviour
     [Header("Configuração do Chat Dinâmico")]
     [SerializeField] private float margemFundoSemEscolhas = 40f;
     [SerializeField] private float margemFundoComEscolhas = 450f;
+    [Tooltip("Espaçamento em pixels para afastar a primeira mensagem do topo da tela.")]
+    [SerializeField] private float margemTopoDoChat = 100f; // <-- NOVA VARIÁVEL AQUI
 
     [Header("Ajuste de Posição do Textinho")]
     [Tooltip("Força as letras a subirem fisicamente, burlando o Layout Group.")]
@@ -51,13 +53,25 @@ public class SistemaDeChatPuzzle : MonoBehaviour
 
     private void Start()
     {
-        if (painelEscolhas == null || scrollDoChat == null)
+        if (painelEscolhas == null || scrollDoChat == null || contentArea == null)
         {
             Debug.LogError($"[SistemaDeChatPuzzle] Referências faltando no Inspector em {gameObject.name}!");
             return;
         }
 
         scrollRectTransform = scrollDoChat.GetComponent<ScrollRect>().GetComponent<RectTransform>();
+
+        // --- AJUSTE DINÂMICO DA MARGEM DO TOPO (PADDING) ---
+        VerticalLayoutGroup layoutGrupo = contentArea.GetComponent<VerticalLayoutGroup>();
+        if (layoutGrupo != null)
+        {
+            // Aplica o valor definido no Inspector mantendo os outros paddings intactos
+            layoutGrupo.padding.top = Mathf.RoundToInt(margemTopoDoChat);
+        }
+        else
+        {
+            Debug.LogWarning("[SistemaDeChatPuzzle] Nenhum VerticalLayoutGroup encontrado no objeto ContentArea!");
+        }
 
         painelEscolhas.anchoredPosition = posicaoEscondido;
         painelEscolhas.gameObject.SetActive(false);
@@ -277,13 +291,13 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         PlayerPrefs.Save();
 
         string idTratado = dialogoAtual.idDoNo.Trim();
-        bool ehNoFinalValidoDetetive = (idTratado == "PC5Rota1Parte2" ||
+        bool ehNoFinalValidodetetive = (idTratado == "PC5Rota1Parte2" ||
                                        idTratado == "PC5Rota2Parte2" ||
                                        idTratado == "PC5Rota3");
 
-        Debug.Log($"[DEBUG] idDoNo Tratado='{idTratado}' | ehNoFinalValidoDetetive={ehNoFinalValidoDetetive}");
+        Debug.Log($"[DEBUG] idDoNo Tratado='{idTratado}' | ehNoFinalValidodetetive={ehNoFinalValidodetetive}");
 
-        if (ehNoFinalValidoDetetive)
+        if (ehNoFinalValidodetetive)
         {
             Debug.Log($"[SISTEMA DE CHAT] Fim de árvore detectado no nó [{dialogoAtual.idDoNo}]. Ativando transição.");
             avancarHistoriaAposChat = true;
@@ -392,12 +406,10 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         foreach (var btn in botoesDeEscolha) btn.gameObject.SetActive(estado);
     }
 
-    // --- MÉTODOS PÚBLICOS DE REDIRECIONAMENTO (COMPATIBILIDADE) ---
     public void UpdateBotoesDeEscolha() { AtualizarBotoesDeEscolha(); }
     public void UpdateBotoesDeEscolha(NoDeDialogo no) { AtualizarBotoesDeEscolha(); }
     public void BlackboxAtualizarBotoesDeEscolha() { AtualizarBotoesDeEscolha(); }
 
-    // --- MÉTODO PRINCIPAL DE SELEÇÃO VISUAL DAS ESCOLHAS ---
     private void AtualizarBotoesDeEscolha()
     {
         AtivarBotoes(false);
@@ -486,7 +498,6 @@ public class SistemaDeChatPuzzle : MonoBehaviour
         StartCoroutine(ForcarScrollParaBaixo());
         EsconderPainelEscolhas();
 
-        // --- GATILHO DA PULSAÇÃO DO BOTÃO + COM BASE NO SUCESSO ---
         if (escolha.encerraPuzzle && escolha.jogadorGanhou)
         {
             if (GerenciadorDeNarrativa.Instancia != null)
