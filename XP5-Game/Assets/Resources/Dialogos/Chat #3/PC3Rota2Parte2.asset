@@ -25,7 +25,7 @@ MonoBehaviour:
     textoDaMensagem: "delegacia. hospital. fam\xEDlia."
     tempoDeDigitacao: 2
   escolhas:
-  - textoDaEscolha: "j\xE1 tentamos algumas dessas coisas."
+  - textoDaEscolha: "J\xE1 tentamos algumas dessas coisas."
     proximoNo: {fileID: 11400000, guid: 077990ef067de624cae43cf1a594fdbd, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0

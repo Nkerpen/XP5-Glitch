@@ -12,6 +12,10 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     [Header("Sistemas Globais")]
     [SerializeField] private SistemaDeNotificacao sistemaNotificacao;
 
+    [Header("Efeito de Glitch da Tela")]
+    [Tooltip("Arraste aqui o script GlitchManager do seu Canvas_EfeitoGlitch")]
+    [SerializeField] private GlitchManager glitchManager;
+
     [Header("Burlar Hierarquia (Contingência Objeto Desativado)")]
     [Tooltip("Arraste aqui o objeto pai 'Ligacoes' para podermos ativá-lo antes do início das Coroutines")]
     [SerializeField] private GameObject objetoLigacoesPai;
@@ -212,6 +216,13 @@ public class GerenciadorDeNarrativa : MonoBehaviour
             case 4: // ----------------- INTERRUPÇÃO VISUAL DO GOLPISTA -----------------
                 ExecutarDesbloqueioVisualGolpista();
 
+                // Dispara um pico rápido de estática/glitch (Intensidade 0.5) por 0.3 segundos
+                if (glitchManager != null)
+                {
+                    glitchManager.IniciarGlitch(0.5f);
+                    DOVirtual.DelayedCall(0.3f, () => glitchManager.PararGlitch());
+                }
+
                 if (botaoContatoGolpista != null)
                 {
                     botaoContatoGolpista.gameObject.SetActive(true);
@@ -282,21 +293,25 @@ public class GerenciadorDeNarrativa : MonoBehaviour
                 break;
 
             case 7: // ----------------- LIGAÇÃO RECEBIDA (CLIFFHANGER) -----------------
-                // 1. O ScreenManager limpa a UI e força a abertura direta de "LigaçãoRecebida",
-                // além de já garantir a ativação do objeto do script de ligação.
+                Debug.Log($"[NARRATIVA] glitchManager é nulo? {glitchManager == null}");
+                if (glitchManager != null)
+                {
+                    glitchManager.GlitchRapido(0.5f, 0.3f); // intensidade 0.5, dura 0.3 segundos
+                }
+
                 if (GerenciadorDeTelas.Instancia != null)
                 {
                     GerenciadorDeTelas.Instancia.ForçarFechamentoParaChamada();
                 }
 
-                // 2. Busca o script unificado (pela Instancia ou nos filhos de contingência)
+                // Busca o script unificado (pela Instancia ou nos filhos de contingência)
                 GerenciadorDeLigacao manager = GerenciadorDeLigacao.Instancia;
                 if (manager == null && objetoLigacoesPai != null)
                 {
                     manager = objetoLigacoesPai.GetComponentInChildren<GerenciadorDeLigacao>(true);
                 }
 
-                // 3. Quem dispara a Coroutine do timer de toque é a Narrativa para evitar que 
+                // Quem dispara a Coroutine do timer de toque é a Narrativa para evitar que 
                 // a oscilação de estados visuais interrompa a contagem.
                 if (manager != null)
                 {
@@ -423,18 +438,15 @@ public class GerenciadorDeNarrativa : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            Debug.LogWarning("[DEV] Pulando diretamente para a etapa da ligação.");
 
-    if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame)
-    {
-        Debug.LogWarning("[DEV] Pulando diretamente para a etapa da ligação.");
+            CancelInvoke(nameof(DispararNotificacaoAtual));
 
-        CancelInvoke(nameof(DispararNotificacaoAtual));
-
-        etapaAtual = 6;
-        DispararNotificacaoAtual();
-    }
-
+            etapaAtual = 6;
+            DispararNotificacaoAtual();
+        }
 #endif
     }
-
 }

@@ -43,10 +43,6 @@ MonoBehaviour:
     textoDaMensagem: "e certamente o John nunca apresentaria ningu\xE9m com esse
       nome kkkkk "
     tempoDeDigitacao: 3.5
-  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
-    textoDaMensagem: "e certamente o John nunca apresentaria ningu\xE9m com esse
-      nome kkkkk "
-    tempoDeDigitacao: 3.5
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "por que algu\xE9m mandaria s\xF3 um id?"
     tempoDeDigitacao: 2.5

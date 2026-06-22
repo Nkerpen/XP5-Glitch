@@ -6,9 +6,9 @@ public class GerenciadorDeAudio : MonoBehaviour
     public static GerenciadorDeAudio Instancia;
 
     [Header("Fontes de Áudio")]
-    [SerializeField] private AudioSource canalSFX;      
-    [SerializeField] private AudioSource canalNPC;      
-    [SerializeField] private AudioSource canalMusica;   
+    [SerializeField] private AudioSource canalSFX;
+    [SerializeField] private AudioSource canalNPC;
+    [SerializeField] private AudioSource canalMusica;
 
     [Header("Clipes de Áudio")]
     public AudioClip somClique;
@@ -19,6 +19,7 @@ public class GerenciadorDeAudio : MonoBehaviour
 
     // Nova variável para guardar o volume original da música
     private float volumeMaximoMusica = 1f;
+    private Coroutine rotinaFadeMusica; // Guarda a rotina atual de fade para evitar conflitos
 
     private void Awake()
     {
@@ -41,23 +42,34 @@ public class GerenciadorDeAudio : MonoBehaviour
     public void TocarNotificacao() { if (somNotificacao != null) canalSFX.PlayOneShot(somNotificacao); }
     public void TocarPlay() { if (somPlay != null) canalSFX.PlayOneShot(somPlay); }
 
-    public void TocarMensagemNPC() 
-    { 
-        if (somMensagemNPC != null) 
+    public void TocarMensagemNPC()
+    {
+        if (somMensagemNPC != null)
         {
-            canalNPC.pitch = Random.Range(0.85f, 1.15f); 
-            canalNPC.PlayOneShot(somMensagemNPC); 
+            canalNPC.pitch = Random.Range(0.85f, 1.15f);
+            canalNPC.PlayOneShot(somMensagemNPC);
         }
     }
 
     // --- Funções de Música com Fade ---
-    public void IniciarMusicaFundo() 
+    public void IniciarMusicaFundo()
     {
         if (canalMusica != null && !canalMusica.isPlaying)
         {
+            if (rotinaFadeMusica != null) StopCoroutine(rotinaFadeMusica);
             canalMusica.volume = 0f; // Tira todo o som
             canalMusica.Play();      // Dá o play no mudo
-            StartCoroutine(FadeInMusica(1.5f)); // Chama a mágica para durar 1.5 segundos
+            rotinaFadeMusica = StartCoroutine(FadeInMusica(1.5f)); // Chama a mágica para durar 1.5 segundos
+        }
+    }
+
+    // Novo Comando: Para chamar o Fade Out da ambientação pelo Gerenciador de Ligação
+    public void PararMusicaFundoComFade(float duracaoFade)
+    {
+        if (canalMusica != null && canalMusica.isPlaying)
+        {
+            if (rotinaFadeMusica != null) StopCoroutine(rotinaFadeMusica);
+            rotinaFadeMusica = StartCoroutine(FadeOutMusica(duracaoFade));
         }
     }
 
@@ -69,12 +81,27 @@ public class GerenciadorDeAudio : MonoBehaviour
         while (tempo < duracaoFade)
         {
             tempo += Time.deltaTime;
-            // O Lerp calcula matematicamente a transição suave do 0 até o volume original
             canalMusica.volume = Mathf.Lerp(0f, volumeMaximoMusica, tempo / duracaoFade);
             yield return null; // Espera o próximo frame
         }
 
-        // Garante que cravou no volume exato no final
-        canalMusica.volume = volumeMaximoMusica; 
+        canalMusica.volume = volumeMaximoMusica;
+    }
+
+    // Nova Coroutine: Diminui o som suavemente até parar de vez
+    private IEnumerator FadeOutMusica(float duracaoFade)
+    {
+        float tempo = 0f;
+        float volumeInicial = canalMusica.volume;
+
+        while (tempo < duracaoFade)
+        {
+            tempo += Time.deltaTime;
+            canalMusica.volume = Mathf.Lerp(volumeInicial, 0f, tempo / duracaoFade);
+            yield return null;
+        }
+
+        canalMusica.volume = 0f;
+        canalMusica.Stop(); // Para o áudio definitivamente após o fade
     }
 }

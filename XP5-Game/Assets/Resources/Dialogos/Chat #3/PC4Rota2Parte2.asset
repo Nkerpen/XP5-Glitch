@@ -36,9 +36,6 @@ MonoBehaviour:
     textoDaMensagem: e ele sabia disso.
     tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
-    textoDaMensagem: e ele sabia disso.
-    tempoDeDigitacao: 1.5
-  - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}
     textoDaMensagem: vou te dizer uma coisa.
     tempoDeDigitacao: 1.5
   - autor: {fileID: 11400000, guid: dadee4420f427d941b531a67f5c26199, type: 2}

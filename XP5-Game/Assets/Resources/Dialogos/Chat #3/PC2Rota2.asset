@@ -22,7 +22,7 @@ MonoBehaviour:
     textoDaMensagem: "n\xE3o dele diretamente?"
     tempoDeDigitacao: 2
   escolhas:
-  - textoDaEscolha: "n\xE3o, mas as pessoas que o conhecem est\xE3o preocupadas e
+  - textoDaEscolha: "N\xE3o, mas as pessoas que o conhecem est\xE3o preocupadas e
       eu tenho o celular dele."
     proximoNo: {fileID: 11400000, guid: e79deb04e309c2b498546b8f422198b6, type: 2}
     encerraPuzzle: 0

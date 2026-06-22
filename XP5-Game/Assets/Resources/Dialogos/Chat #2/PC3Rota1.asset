@@ -21,9 +21,6 @@ MonoBehaviour:
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: com muito cuidado, mas concordo.
     tempoDeDigitacao: 2
-  - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
-    textoDaMensagem: com muito cuidado, mas concordo.
-    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: defina cuidado.
     tempoDeDigitacao: 1
@@ -79,13 +76,6 @@ MonoBehaviour:
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: nada de improviso.
     tempoDeDigitacao: 2
-  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
-    textoDaMensagem: nada de improviso.
-    tempoDeDigitacao: 2
-  - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
-    textoDaMensagem: " e n\xE3o revela nada sobre o John at\xE9 a gente saber com
-      quem est\xE1 falando."
-    tempoDeDigitacao: 3
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: " e n\xE3o revela nada sobre o John at\xE9 a gente saber com
       quem est\xE1 falando."

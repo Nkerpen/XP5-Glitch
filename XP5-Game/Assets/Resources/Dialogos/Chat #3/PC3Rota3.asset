@@ -29,7 +29,7 @@ MonoBehaviour:
     textoDaMensagem: confie nesse instinto.
     tempoDeDigitacao: 1.5
   escolhas:
-  - textoDaEscolha: "voc\xEA est\xE1 me dizendo pra n\xE3o confiar em voc\xEA."
+  - textoDaEscolha: "Voc\xEA est\xE1 me dizendo pra n\xE3o confiar em voc\xEA."
     proximoNo: {fileID: 11400000, guid: 203a3433016ed284cab185967401a78f, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0

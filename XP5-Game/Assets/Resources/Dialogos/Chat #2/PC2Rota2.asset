@@ -35,10 +35,10 @@ MonoBehaviour:
     tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "n\xE3o fala assim."
-    tempoDeDigitacao: 1
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 86feeb07780abc3478b22f3455e54446, type: 2}
     textoDaMensagem: "eu n\xE3o consigo."
-    tempoDeDigitacao: 1
+    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 4e422c919cbd68844b0c1443205dc551, type: 2}
     textoDaMensagem: "eva, eu n\xE3o quero falar assim."
     tempoDeDigitacao: 2

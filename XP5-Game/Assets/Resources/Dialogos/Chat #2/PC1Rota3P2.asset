@@ -92,9 +92,6 @@ MonoBehaviour:
   - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
     textoDaMensagem: "Isso n\xE3o ajuda muito a restringir."
     tempoDeDigitacao: 2
-  - autor: {fileID: 11400000, guid: a047b8c4124616c44a84795fd6f3a21a, type: 2}
-    textoDaMensagem: "Isso n\xE3o ajuda muito a restringir."
-    tempoDeDigitacao: 2
   - autor: {fileID: 11400000, guid: 14c0ac273066fd94ca4e749fb1b0904a, type: 2}
     textoDaMensagem: "o que eu quero saber \xE9 o seguinte."
     tempoDeDigitacao: 2

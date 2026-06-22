@@ -49,7 +49,7 @@ MonoBehaviour:
     jogadorGanhou: 0
     avancaAHistoria: 0
   - textoDaEscolha: "Como eu sei que posso confiar em voc\xEA?"
-    proximoNo: {fileID: 11400000, guid: 64b1a6fea598d634dabbcff03114a9d0, type: 2}
+    proximoNo: {fileID: 11400000, guid: 40a8cd151504c8a469a8a764541a2a17, type: 2}
     encerraPuzzle: 0
     jogadorGanhou: 0
     avancaAHistoria: 0

@@ -26,7 +26,7 @@ MonoBehaviour:
       um contato e mandar mensagem?"
     tempoDeDigitacao: 4.5
   escolhas:
-  - textoDaEscolha: o celular estava desbloqueado. vi o grupo de amigos dele. eles
+  - textoDaEscolha: O celular estava desbloqueado. vi o grupo de amigos dele. eles
       estavam preocupados.
     proximoNo: {fileID: 11400000, guid: 02660086133a0b945873660ad75c84a8, type: 2}
     encerraPuzzle: 0
